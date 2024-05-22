@@ -12,7 +12,7 @@
       </a>
       <a href="#" class="text-2xl text-gray-800">
         <i class="fab fa-instagram"></i>
-      </a>Hi
+      </a>
       
       <a href="#" class="text-2xl text-gray-800">
         <i class="fab fa-facebook-messenger"></i>
@@ -34,7 +34,7 @@ export default {
   name: "Main",
   data() {
     return {
-      profileImg: "../img/profile.png",
+      profileImg: "/img/profile.png",
       profileName: "真的有鬼",
     };
   },

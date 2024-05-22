@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar flex justify-between items-center p-4 bg-white">
+    <div class="navbar flex justify-between items-center p-4 bg-white border-b border-gray-300">
       <a href="#" class="menu-icon text-2xl text-gray-800">
         <i class="fas fa-bars"></i>
       </a>
