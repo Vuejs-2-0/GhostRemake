@@ -1,7 +1,8 @@
 ---
-import Navbar from '../components/Navbar.vue';
+import TopNavbar from '../components/TopNavbar.vue';
 import ProductList from '../components/ProductList.vue';
 import Main from '../components/Main.vue'
+import Footer from '../components/Footer.vue'
 
 const products = [
   { id: 1, name: '真的友鬼 1', price: 'RM 25.00', img: '/path/to/image1.png' },
@@ -18,13 +19,14 @@ const profile = {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Website</title>
+  <title>Ghost Remake</title>
 </head>
 <body>
   <div class="container">
-    <Navbar profileName={profile.name} />
-	<Main />
-  <ProductList :products="products" />
+    <TopNavbar client:load profileName={profile.name} />
+	  <Main />
+    <ProductList :products="products" />
+    <Footer />
   </div>
 </body>
 </html>
@@ -35,7 +37,10 @@ const profile = {
   margin: 0 auto;
   border: 1px solid #ddd;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 70px; /* Increased to accommodate the footer */
+  position: relative; /* Make container a positioning context */
+  min-height: 100vh; /* Ensure the container can fill the viewport */
 }
 
 @media (min-width: 768px) {
