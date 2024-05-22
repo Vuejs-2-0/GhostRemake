@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       profileImg: "../img/profile.png",
-      profileName: "真的有鬼",
+      profileName: "真的友鬼",
     };
   },
 };
