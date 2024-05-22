@@ -1,0 +1,46 @@
+---
+import Navbar from '../components/Navbar.vue';
+import ProductList from '../components/ProductList.vue';
+import Main from '../components/Main.vue'
+
+const products = [
+  { id: 1, name: '真的友鬼 1', price: 'RM 25.00', img: '/path/to/image1.png' },
+  { id: 2, name: '真的友鬼 2', price: 'RM 25.00', img: '/path/to/image2.png' },
+  // Add more products here
+];
+
+const profile = {
+  name: '真的有鬼',
+};
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Website</title>
+</head>
+<body>
+  <div class="container">
+    <Navbar profileName={profile.name} />
+    <ProductList :products="products" />
+	<Main />
+  </div>
+</body>
+</html>
+
+<style>
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+  }
+}
+</style>
