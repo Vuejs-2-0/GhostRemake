@@ -23,8 +23,10 @@ const profile = {
 </head>
 <body>
   <div class="container">
-    <TopNavbar client:load profileName={profile.name} />
-	  <Main />
+    <div class="bg-[#F6EAFF]">
+      <TopNavbar client:visible profileName={profile.name} />
+      <Main />
+    </div>
     <ProductList :products="products" />
     <Footer />
   </div>
@@ -35,9 +37,6 @@ const profile = {
 .container {
   max-width: 375px;
   margin: 0 auto;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding-top: 16px;
   padding-bottom: 70px; /* Increased to accommodate the footer */
   position: relative; /* Make container a positioning context */
   min-height: 100vh; /* Ensure the container can fill the viewport */

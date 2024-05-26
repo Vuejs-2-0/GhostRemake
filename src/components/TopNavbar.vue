@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="navbar flex justify-between items-center p-4 bg-white border-b border-gray-300">
-      <button class="menu-icon text-2xl text-gray-800" @click="toggleMenu">
-        <i class="fas fa-bars"></i>
+    <div class="navbar flex justify-between items-center p-4">
+      <button class="menu-icon text-lg text-[#B551F3]" @click="toggleMenu">
+        <p>账户设置</p>
       </button>
-      <button class="profile-icon text-2xl text-gray-800">
-        <i class="fas fa-user-circle"></i>
+      <button class="profile-icon text-lg text-[#B551F3]">
+        <p>购买记录</p>
       </button>
     </div>
     <LeftNavbar :isOpen="isMenuOpen" @close="toggleMenu"/>
@@ -38,8 +38,6 @@ export default {
 .container {
   max-width: 375px;
   margin: 0 auto;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 768px) {
