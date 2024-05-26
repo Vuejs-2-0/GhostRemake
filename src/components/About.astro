@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro'
+title: '关于'
+---
+<Layout title='Layout'>
+  <div class="container">
+    <h1 class="title">关于</h1>
+  
+    <div class="section section-large">
+      <img src="img/horizontal.png" alt="Horizontal">
+    </div>
+    <div class="section-row">
+      <div class="section section-small section-col">
+        <img src="img/temporaryimg.png" alt="Temporary">
+      </div>
+      <div class="section section-small section-col">
+        <img src="img/temporaryimg.png" alt="Temporary">
+      </div>
+    </div>
+    <div class="section section-large">
+      <img src="img/horizontal.png" alt="Horizontal">
+    </div>
+  </div>
+</Layout>
+
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.section {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.section-large {
+  height: 300px;
+}
+
+.section-small {
+  height: 150px;
+}
+
+.section-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.section-col {
+  flex: 1;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+</style>

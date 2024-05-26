@@ -8,18 +8,13 @@
         <p>购买记录</p>
       </button>
     </div>
-    <LeftNavbar :isOpen="isMenuOpen" @close="toggleMenu"/>
   </div>
 </template>
 
 <script>
-import LeftNavbar from './LeftNavbar.vue';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 export default {
-  components: {
-    LeftNavbar
-  },
   data() {
     return {
       isMenuOpen: false
@@ -32,7 +27,6 @@ export default {
   }
 };
 </script>
-
   
 <style scoped>
 .container {

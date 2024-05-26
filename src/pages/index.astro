@@ -2,6 +2,9 @@
 import TopNavbar from '../components/TopNavbar.vue';
 import ProductList from '../components/ProductList.vue';
 import Main from '../components/Main.vue'
+import Navbar from '../components/Navbar.vue'
+import Bracelet from '../components/Bracelet.vue'
+import About from '../components/About.astro'
 import Footer from '../components/Footer.vue'
 
 const products = [
@@ -22,14 +25,32 @@ const profile = {
   <title>Ghost Remake</title>
 </head>
 <body>
-  <div class="container">
-    <div class="bg-[#F6EAFF]">
+  <div class="bg-[#F6EAFF]">
+    <div class="container">
       <TopNavbar client:visible profileName={profile.name} />
       <Main />
     </div>
-    <ProductList :products="products" />
-    <Footer />
   </div>
+  <div>
+    <Navbar client:visible />
+  </div>
+  <div class="bg-[#FFFFFF]">
+    <div class="container">
+      <div class=" border-b border-gray-200">
+        <ProductList :products="products"/>
+      </div>
+      <div class=" border-b border-gray-200 pb-6">
+        <Bracelet />
+      </div>
+      <div>
+        <About />
+      </div>
+      <div class="pb-[40px] text-center">
+        <p>© 真的友鬼 2024</p>
+      </div>
+    </div>
+  </div>
+  
 </body>
 </html>
 
@@ -37,9 +58,7 @@ const profile = {
 .container {
   max-width: 375px;
   margin: 0 auto;
-  padding-bottom: 70px; /* Increased to accommodate the footer */
   position: relative; /* Make container a positioning context */
-  min-height: 100vh; /* Ensure the container can fill the viewport */
 }
 
 @media (min-width: 768px) {
