@@ -37,7 +37,7 @@ const profile = {
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
-        <ProductList :products="products"/>
+        <ProductList client:visible :products="products"/>
       </div>
       <div id="braceletSection" class=" border-b border-gray-200 pb-6">
         <Bracelet />
