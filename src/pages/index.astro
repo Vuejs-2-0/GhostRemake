@@ -31,18 +31,18 @@ const profile = {
       <Main />
     </div>
   </div>
-  <div>
+  <div class="navbar-container">
     <Navbar client:visible />
   </div>
   <div class="bg-[#FFFFFF]">
     <div class="container">
-      <div class=" border-b border-gray-200">
+      <div id="mainSection" class=" border-b border-gray-200">
         <ProductList :products="products"/>
       </div>
-      <div class=" border-b border-gray-200 pb-6">
+      <div id="braceletSection" class=" border-b border-gray-200 pb-6">
         <Bracelet />
       </div>
-      <div>
+      <div id="aboutSection">
         <About />
       </div>
       <div class="pb-[40px] text-center">
@@ -59,6 +59,13 @@ const profile = {
   max-width: 375px;
   margin: 0 auto;
   position: relative; /* Make container a positioning context */
+}
+
+.navbar-container {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures the navbar is above other elements */
 }
 
 @media (min-width: 768px) {
