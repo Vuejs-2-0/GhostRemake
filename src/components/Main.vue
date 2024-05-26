@@ -1,11 +1,12 @@
 <template>
-  <div class="profile-container text-center p-4">
+  <div class="profile-container text-center p-4 flex flex-col items-center">
     <img
       class="profile-img mx-auto rounded-[20px] w-[111px] h-[111px]"
       :src="profileImg"
       alt="Profile Image"
     />
-    <h2 class="profile-name text-xl mt-2">{{ profileName }}</h2>
+    <h2 class="profile-name text-2xl mt-2 font-semibold pt-4">{{ profileName }}</h2>
+    <p class="text-lg w-[247px] text-center pt-3">{{ profileDetails }}</p>
     <div class="social-icons flex justify-center space-x-4 mt-4">
       <a href="#" class="text-2xl text-gray-800 w-[38px] h-[38px] bg-white rounded-full flex items-center justify-center">
         <Icon icon="fe:facebook" class="w-[18px] h-[18px]" style="color: #1877f2" :ssr="true" />
@@ -31,7 +32,8 @@ export default {
   data() {
     return {
       profileImg: "/img/profile2.png",
-      profileName: "真的有鬼",
+      profileName: "真的友鬼",
+      profileDetails: "揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》"
     };
   },
 };
