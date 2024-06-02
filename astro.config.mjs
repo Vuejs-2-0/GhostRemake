@@ -6,7 +6,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), tailwind()],
+  integrations: [vue(), tailwind({applyBaseStyles: false})],
   output: "server",
   adapter: cloudflare()
 });

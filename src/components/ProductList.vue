@@ -26,17 +26,20 @@
       </div>
     </div>
 
-    <Details v-if="selectedProduct" :product="selectedProduct" @close="selectedProduct = null" />
+    <Details v-if="selectedProduct" :product="selectedProduct" :show="showDetailsPopup" @close="closeDetails" />
+    <Details2 />
   </div>
 </template>
 
 <script>
 import Details from './Details.vue';
+import Details2 from './Details2.vue';
 
 export default {
   name: 'ProductList',
   components: {
     Details,
+    Details2
   },
   data() {
     return {
@@ -50,11 +53,17 @@ export default {
         { id: 7, name: '手镯', price: 'RM 25.00', img: '/img/profile.png', description: '割堂卸门扫斤' },
       ],
       selectedProduct: null,
+      showDetailsPopup: false,
     };
   },
   methods: {
     showDetails(product) {
       this.selectedProduct = product;
+      this.showDetailsPopup = true;
+    },
+    closeDetails() {
+      this.selectedProduct = null;
+      this.showDetailsPopup = false;
     },
   },
 };

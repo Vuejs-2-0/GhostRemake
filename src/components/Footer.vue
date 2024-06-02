@@ -13,7 +13,14 @@
 <script>
 export default {
   name: 'Footer',
+  props: {
+    show: {
+      count: Number,
+    },
+  },
 };
+
+
 </script>
 
 <style scoped>

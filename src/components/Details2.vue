@@ -1,0 +1,42 @@
+<script setup lang="ts">
+import {ref} from 'vue';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+// Define props part
+const props = defineProps({
+    product: {
+        type: Object,
+        required: true
+    }
+});
+
+
+</script>
+
+<template>
+  <Dialog>
+    <DialogTrigger>
+      Edit Profile
+    </DialogTrigger>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Edit profile</DialogTitle>
+        <DialogDescription>
+          Make changes to your profile here. Click save when you're done.
+        </DialogDescription>
+      </DialogHeader>
+
+      <DialogFooter>
+        Save changes
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+</template>
