@@ -2,22 +2,12 @@
 import TopNavbar from '../components/TopNavbar.vue';
 import ProductList from '../components/ProductList.vue';
 import Main from '../components/Main.vue'
+import MainText from '../components/MainText.astro'
 import Navbar from '../components/Navbar.vue'
 import Bracelet from '../components/Bracelet.vue'
 import About from '../components/About.astro'
 import Footer from '../components/Footer.vue'
 import '../styles/globals.css'
-
-const products = [
-  { id: 1, name: '真的友鬼 1', price: 'RM 25.00', img: '/path/to/image1.png' },
-  { id: 2, name: '真的友鬼 2', price: 'RM 25.00', img: '/path/to/image2.png' },
-  // Add more products here
-];
-
-const profile = {
-  name: '真的友鬼',
-};
-
 ---
 
 <html lang="en">
@@ -29,8 +19,9 @@ const profile = {
 <body>
   <div class="bg-[#F6EAFF]">
     <div class="container">
-      <TopNavbar client:visible profileName={profile.name} />
-      <Main />
+      <TopNavbar client:visible/>
+      <MainText />
+      <Main client:visible />
     </div>
   </div>
   <div class="navbar-container">
@@ -39,7 +30,7 @@ const profile = {
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
-        <ProductList client:visible :products="products"/>
+        <ProductList client:visible />
       </div>
       <div id="braceletSection" class=" border-b border-gray-200 pb-6">
         <Bracelet />
@@ -55,24 +46,3 @@ const profile = {
   </div>
 </body>
 </html>
-
-<style>
-.container {
-  max-width: 375px;
-  margin: 0 auto;
-  position: relative; /* Make container a positioning context */
-}
-
-.navbar-container {
-  position: -webkit-sticky; /* For Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Ensures the navbar is above other elements */
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 600px;
-  }
-}
-</style>

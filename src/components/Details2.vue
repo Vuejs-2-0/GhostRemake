@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import { ref } from 'vue';
 import {
   Dialog,
   DialogContent,
@@ -8,34 +8,68 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from '@/components/ui/dialog';
 
-// Define props part
+// Define props
 const props = defineProps({
-    product: {
-        type: Object,
-        required: true
-    }
+  product: {
+    type: Object,
+    required: true,
+  },
+  show: {
+    type: Boolean,
+    required: true,
+  },
 });
 
+// Define emits
+const emit = defineEmits(['close']);
 
+const quantity = ref(0);
+
+const increaseQuantity = () => {
+  quantity.value++;
+};
+
+const decreaseQuantity = () => {
+  if (quantity.value > 0) quantity.value--;
+};
+
+const addToCart = () => {
+  if (quantity.value === 0) {
+    quantity.value = 1;
+  } else {
+    alert(`${props.product.name}: ${quantity.value} added to cart`);
+  }
+};
+
+const close = () => {
+  emit('close'); // Emit the 'close' event
+};
 </script>
 
 <template>
-  <Dialog>
+  <Dialog v-if="show">
     <DialogTrigger>
       Edit Profile
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>{{ props.product.name }}</DialogTitle>
+        <button @click="close">X</button> <!-- Close button emits 'close' event -->
         <DialogDescription>
-          Make changes to your profile here. Click save when you're done.
+          {{ props.product.description }}
         </DialogDescription>
       </DialogHeader>
 
+      <div>
+        <button @click="decreaseQuantity">-</button>
+        <span>{{ quantity }}</span>
+        <button @click="increaseQuantity">+</button>
+      </div>
+
       <DialogFooter>
-        Save changes
+        <button @click="addToCart">Add to Cart</button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

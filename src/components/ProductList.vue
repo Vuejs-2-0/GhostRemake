@@ -26,8 +26,7 @@
       </div>
     </div>
 
-    <Details v-if="selectedProduct" :product="selectedProduct" :show="showDetailsPopup" @close="closeDetails" />
-    <Details2 />
+    <Details2 v-if="selectedProduct" :product="selectedProduct" :show="showDetailsPopup" @close="closeDetails" />
   </div>
 </template>
 

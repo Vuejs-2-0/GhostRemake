@@ -1,53 +1,31 @@
 <template>
   <div class="bg-[#F6EAFF]">
-    <div class="container pl-2 pb-3">
-      <button class="nav-item text-xl" @click="scrollToSection('mainSection')">友鬼系列</button>
-      <button class="nav-item text-xl" @click="scrollToSection('braceletSection')">五色绳</button>
-      <button class="nav-item text-xl" @click="scrollToSection('aboutSection')">关于</button>
+    <div class="max-w-[375px] mx-auto pl-2 pb-3 md:max-w-[600px]">
+      <NavigationMenu class="flex space-x-4 list-none">
+        <NavigationMenuItem class="list-none">
+          <button class="p-2 text-xl cursor-pointer font-bold text-gray-800 hover:text-white hover:bg-gray-800" @click="scrollToSection('mainSection')">友鬼系列</button>
+        </NavigationMenuItem>
+        <NavigationMenuItem class="list-none">
+          <button class="p-2 text-xl cursor-pointer font-bold text-gray-800 hover:text-white hover:bg-gray-800" @click="scrollToSection('braceletSection')">五色绳</button>
+        </NavigationMenuItem>
+        <NavigationMenuItem class="list-none">
+          <button class="p-2 text-xl cursor-pointer font-bold text-gray-800 hover:text-white hover:bg-gray-800" @click="scrollToSection('aboutSection')">关于</button>
+        </NavigationMenuItem>
+      </NavigationMenu>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  methods: {
-    scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
-    },
-  },
+<script setup>
+import { NavigationMenu, NavigationMenuItem } from '@/components/ui/navigation-menu';
+import { ref } from 'vue';
+
+const isMenuOpen = ref(false);
+
+const scrollToSection = (sectionId) => {
+  const section = document.getElementById(sectionId);
+  if (section){
+    section.scrollIntoView({behavior: 'smooth'});
+  }
 };
 </script>
-
-<style scoped>
-.container {
-  max-width: 375px;
-  margin: 0 auto;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 600px;
-  }
-}
-
-.navigation-menu {
-  background-color: #f5f5f5;
-}
-
-.nav-item {
-  padding: 10px 20px;
-  cursor: pointer;
-  color: #333;
-  font-weight: bold;
-}
-
-.nav-item:hover {
-  color: #fff;
-  background-color: #333;
-}
-</style>

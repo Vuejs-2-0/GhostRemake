@@ -3,6 +3,25 @@
 @tailwind utilities;
  
 
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+  position: relative; /* Make container a positioning context */
+}
+
+.navbar-container {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures the navbar is above other elements */
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
