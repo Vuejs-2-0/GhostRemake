@@ -11,7 +11,9 @@
         <h3 class="text-[24px] font-semibold">真的友鬼 7</h3>
         <p class="text-[16px]">RM 25</p>
       </div>
-      <button class="bg-purple-500 text-white py-2 px-4 rounded mt-4 w-[329px] h-[54px] text-[24px]">添加至购物车</button>
+      <Button class="bg-purple-500 text-white py-2 px-4 rounded mt-4 w-full h-[54px] text-[24px]">
+        <p>添加至购物车</p>
+      </Button>
     </div>
 
     <div v-for="product in products" :key="product.id" class="product-card flex justify-between items-center p-4  bg-white">
@@ -21,24 +23,23 @@
         <p class="text-sm text-gray-500">{{ product.price }}</p>
       </div>
       <div class="actions flex space-x-2">
-        <button @click="showDetails(product)" class="details-btn text-blue-500 underline pr-3">详情</button>
-        <button class="buy-btn bg-purple-500 text-white py-1 px-2 rounded hover:bg-purple-700">+ 购买</button>
+        <Details :product="product" />
+        <Button class=" primary buy-btn bg-purple-500 text-white py-1 px-2 rounded hover:bg-purple-700">
+          <p>+ 购买</p>
+        </Button>
       </div>
     </div>
-
-    <Details2 v-if="selectedProduct" :product="selectedProduct" :show="showDetailsPopup" @close="closeDetails" />
   </div>
 </template>
 
 <script>
 import Details from './Details.vue';
-import Details2 from './Details2.vue';
+import { Button } from '@/components/ui/button'
 
 export default {
   name: 'ProductList',
   components: {
     Details,
-    Details2
   },
   data() {
     return {
@@ -54,16 +55,6 @@ export default {
       selectedProduct: null,
       showDetailsPopup: false,
     };
-  },
-  methods: {
-    showDetails(product) {
-      this.selectedProduct = product;
-      this.showDetailsPopup = true;
-    },
-    closeDetails() {
-      this.selectedProduct = null;
-      this.showDetailsPopup = false;
-    },
   },
 };
 </script>
