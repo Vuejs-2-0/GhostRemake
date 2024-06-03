@@ -1,6 +1,6 @@
 <template>
     <div class="product-card flex justify-center items-center pt-10 p-4 bg-white">
-      <h3 class="font-bold pl-4 text-[36px]">五花绳</h3>
+      <h3 class="font-bold pl-4 text-[36px]">五色绳</h3>
     </div>
     
     <div class="rounded-lg relative flex flex-col items-center">

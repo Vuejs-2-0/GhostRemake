@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="navbar flex justify-between items-center p-4">
-      <button class="menu-icon text-lg text-[#B551F3]" @click="toggleMenu">
+    <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
+      <button class="menu-icon " @click="toggleMenu">
         <p>账户设置</p>
       </button>
       <button class="profile-icon text-lg text-[#B551F3]">
@@ -14,18 +14,6 @@
 <script>
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
-export default {
-  data() {
-    return {
-      isMenuOpen: false
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    }
-  }
-};
 </script>
   
 <style scoped>
