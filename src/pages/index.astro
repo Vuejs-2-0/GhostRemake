@@ -5,7 +5,7 @@ import Main from '../components/Main.vue'
 import MainText from '../components/MainText.astro'
 import Navbar from '../components/Navbar.vue'
 import Bracelet from '../components/Bracelet.vue'
-import About from '../components/About.astro'
+import About from '../components/About.vue'
 import Footer from '../components/Footer.vue'
 import '../styles/globals.css'
 ---
@@ -36,7 +36,7 @@ import '../styles/globals.css'
         <Bracelet />
       </div>
       <div id="aboutSection">
-        <About />
+        <About client:visible />
       </div>
       <div class="pb-[80px] text-center">
         <p>© 真的友鬼 2024</p>
