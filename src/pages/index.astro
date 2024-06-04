@@ -8,6 +8,7 @@ import Bracelet from '../components/Bracelet.vue'
 import About from '../components/About.vue'
 import Footer from '../components/Footer.vue'
 import '../styles/globals.css'
+
 ---
 
 <html lang="en">
@@ -33,7 +34,7 @@ import '../styles/globals.css'
         <ProductList client:visible />
       </div>
       <div id="braceletSection" class=" border-b border-gray-200 pb-6">
-        <Bracelet />
+        <Bracelet client:visible />
       </div>
       <div id="aboutSection">
         <About client:visible />
