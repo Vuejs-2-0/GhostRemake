@@ -51,7 +51,7 @@ const addToCart = () => {
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <img src="img/temporaryimg.png" alt="Product Image" class="w-48 h-60 mb-4 mx-auto object-cover" />
+        <img src="img/temporaryimg.webp" alt="Product Image" class="w-48 h-60 mb-4 mx-auto object-cover" />
         <DialogTitle class="text-[25px] text-center">{{ product.name }}</DialogTitle>
         <DialogDescription class="text-[18px] text-center">
           {{ product.price }}

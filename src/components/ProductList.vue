@@ -6,7 +6,7 @@
 
     <div class="featured-product p-4 m-4 bg-white border border-purple-500 rounded-lg relative flex flex-col items-center">
       <span class="absolute top-2 right-2 text-purple-500 border border-purple-500 rounded-full px-2 py-1 text-sm">全新</span>
-      <img src="/img/temporaryimg.png" alt="Featured Product Image" class="w-[120px] h-[175px] mt-6 object-cover"/>
+      <img src="/img/temporaryimg.webp" alt="Featured Product Image" class="w-[120px] h-[175px] mt-6 object-cover"/>
       <div class="flex justify-between items-center w-full mt-4">
         <h3 class="text-[24px] font-semibold">真的友鬼 7</h3>
         <p class="text-[16px]">RM 25</p>

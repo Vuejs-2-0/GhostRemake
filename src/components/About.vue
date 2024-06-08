@@ -14,18 +14,18 @@ import { ref } from 'vue'
 <template>
   <h1 class="title">关于</h1>
   <div class="section section-large">
-    <img src="img/horizontal.png" alt="Horizontal" class="object-cover cursor-pointer">
+    <img src="img/horizontal.webp" alt="Horizontal" class="object-cover cursor-pointer">
   </div>
   <div class="section-row">
     <div class="section section-small section-col">
-      <img src="img/temporaryimg.png" alt="Temporary" class="object-cover cursor-pointer">
+      <img src="img/temporaryimg.webp" alt="Temporary" class="object-cover cursor-pointer">
     </div>
     <div class="section section-small section-col">
-      <img src="img/temporaryimg.png" alt="Temporary" class="object-cover cursor-pointer">
+      <img src="img/temporaryimg.webp" alt="Temporary" class="object-cover cursor-pointer">
     </div>
   </div>
   <div class="section section-large">
-    <img src="img/horizontal.png" alt="Horizontal" class="object-cover cursor-pointer">
+    <img src="img/horizontal.webp" alt="Horizontal" class="object-cover cursor-pointer">
   </div>
   
   <!-- Vue Easy Lightbox Component -->
