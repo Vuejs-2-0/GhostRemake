@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -79,8 +78,6 @@ const addToCart = () => {
         </Dialog>
       </div>
     </div>
-
-  
 </template>
   
   

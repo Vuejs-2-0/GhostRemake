@@ -8,7 +8,7 @@ import Bracelet from '../components/Bracelet.vue'
 import About from '../components/About.vue'
 import Footer from '../components/Footer.vue'
 import '../styles/globals.css'
-
+import { ref } from 'vue';
 ---
 
 <html lang="en">
@@ -26,24 +26,25 @@ import '../styles/globals.css'
     </div>
   </div>
   <div class="sticky top-0 z-20">
-    <Navbar client:visible />
+    <Navbar client:only />
   </div>
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
-        <ProductList client:visible />
-      </div>
+        <ProductList client:only/>
+      </div> 
       <div id="braceletSection" class=" border-b border-gray-200 pb-6">
-        <Bracelet client:visible />
+        <Bracelet client:only />
       </div>
       <div id="aboutSection">
-        <About client:visible />
+        <About client:visible />  
       </div>
       <div class="pb-[80px] text-center">
         <p>© 真的友鬼 2024</p>
       </div>
-    </div>
-    <Footer client:visible count={2}/>
+    </div> 
+    <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
+    <Footer client:only />
   </div>
 </body>
 </html>

@@ -1,26 +1,20 @@
 <template>
   <div class="footer-container">
     <div class="footer-content container">
-      <span>购物车 (5)</span>
+        <span>购物车 ({{ $cart.totalItem }})</span>
       <div class="footer-actions">
-        <span class="footer-link">查看</span>
-        <button class="footer-button">付款</button>
+        <span class="text-purple-500 cursor-pointer mr-10">查看</span>
+        <button class="bg-purple-100 border-none py-1 px-2 text-purple-700 rounded">付款</button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Footer',
-  props: {
-    show: {
-      count: Number,
-    },
-  },
-};
+<script setup lang="ts">
+import { useStore } from '@nanostores/vue';
+import { cart } from '@/stores/cart';
 
-
+const $cart = useStore(cart);
 </script>
 
 <style scoped>

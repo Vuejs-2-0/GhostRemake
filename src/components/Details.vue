@@ -5,11 +5,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { addQuantity } from '@/stores/cart'
+import {toRefs} from 'vue'
+import { defineProps} from 'vue'
 
 const props = defineProps({
   product: {
@@ -19,15 +21,19 @@ const props = defineProps({
 });
 
 const quantity = ref(0);
+const {product} = toRefs(props);
 
 const increaseQuantity = () => {
   quantity.value++;
+  console.log(product.value.id);
+  addQuantity(product.value.id); // Product id
 };
 
 const decreaseQuantity = () => {
   if (quantity.value > 0) quantity.value--;
 };
 
+// Nanos
 const addToCart = () => {
   if (quantity.value === 0) {
     quantity.value = 1;

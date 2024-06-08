@@ -8,5 +8,12 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   integrations: [vue(), tailwind({applyBaseStyles: false})],
   output: "server",
-  adapter: cloudflare()
+  adapter: cloudflare(),
+  vite: {
+    resolve: {
+      alias: {
+        '@': '/src'
+      }
+    }
+  }
 });
