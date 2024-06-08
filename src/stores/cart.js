@@ -31,3 +31,31 @@ export function addQuantity(productId){
       totalItem: currentCart.totalItem + 1
   });
 }
+
+export function addOneQuantity(productId){
+  const currentCart = cart.get();
+  const items = currentCart.items;
+  console.log('items', items);
+  const index = items.findIndex(item => item.id === productId);
+  items[index].quantity += 1;
+  cart.set({
+      ...currentCart,
+      items,
+      totalItem: currentCart.totalItem + 1
+  });
+}
+
+export function minusQuantity(productId){
+  const currentCart = cart.get();
+  const items = currentCart.items;
+  console.log('items', items);
+  const index = items.findIndex(item => item.id === productId);
+  if(items[index].quantity >= 0){
+    items[index].quantity -= 1;
+  }
+  cart.set({
+      ...currentCart,
+      items,
+      totalItem: currentCart.totalItem - 1
+  });
+}

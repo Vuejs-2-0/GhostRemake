@@ -14,6 +14,12 @@ export default defineConfig({
       alias: {
         '@': '/src'
       }
+    },
+    define: {
+      global: {}
     }
-  }
+  },
+  build: {
+    outDir: 'dist'
+  } 
 });

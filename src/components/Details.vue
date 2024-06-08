@@ -9,9 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { addQuantity } from '@/stores/cart'
+import { cart, addQuantity, minusQuantity } from '@/stores/cart'
 import {toRefs} from 'vue'
 import { defineProps} from 'vue'
+import { useStore } from '@nanostores/vue';
 
 const props = defineProps({
   product: {
@@ -20,17 +21,16 @@ const props = defineProps({
   }
 });
 
-const quantity = ref(0);
+const $cart = useStore(cart);
+
 const {product} = toRefs(props);
 
 const increaseQuantity = () => {
-  quantity.value++;
-  console.log(product.value.id);
   addQuantity(product.value.id); // Product id
 };
 
 const decreaseQuantity = () => {
-  if (quantity.value > 0) quantity.value--;
+  minusQuantity(product.value.id); // Product id
 };
 
 // Nanos

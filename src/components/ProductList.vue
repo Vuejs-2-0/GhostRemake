@@ -36,14 +36,14 @@
 import { ref, computed } from 'vue';
 import Details from './Details.vue';
 import { Button } from '@/components/ui/button';
-import { addQuantity, cart} from '@/stores/cart'
+import { addQuantity, cart, addOneQuantity} from '@/stores/cart'
 import { useStore } from '@nanostores/vue';
 
 const $cart = useStore(cart);
 const products = computed(() => $cart.value.items);
 
 const increaseQuantity = (productid: number) => {
-  addQuantity(productid);
+  addOneQuantity(productid);
 };
 
 const cartQuantity = ref(0);
