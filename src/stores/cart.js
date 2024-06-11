@@ -8,7 +8,8 @@ export const cart = map({
     { id: 4, quantity: 0, name: '真的友鬼 4', price: 'RM 25.00', img: '/img/profile.webp', description: '舅挥捅金' },
     { id: 5, quantity: 0, name: '真的友鬼 5', price: 'RM 25.00', img: '/img/profile.webp', description: '公窗筛质顾' },
     { id: 6, quantity: 0, name: '真的友鬼 6', price: 'RM 25.00', img: '/img/profile.webp', description: '硕揭化维诵划苇未' },
-    { id: 7, quantity: 0, name: '手镯', price: 'RM 25.00', img: '/img/profile.webp', description: '割堂卸门扫斤' },
+    { id: 7, quantity: 0, name: '真的友鬼 7', price: 'RM 25.00', img: '/img/profile.webp', description: '划劈稍情星' },
+    { id: 8, quantity: 0, name: '手镯', price: 'RM 25.00', img: '/img/profile.webp', description: '割堂卸门扫斤' },
   ],
   total: 0,
   totalItem: 0

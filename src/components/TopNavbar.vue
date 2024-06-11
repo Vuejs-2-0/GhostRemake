@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
-      <a href="/history" class="logo">
-
+      <a href="/setting" class="logo">
       <button class="menu-icon " @click="toggleMenu">
         <p>账户设置</p>
       </button>
