@@ -21,6 +21,16 @@ export const cart = map({
   totalItem: 0
 });
 
+export const initCart = async (cart_data) => {
+  if(cart_data){
+    cart.set(cart_data);
+  } else{
+    cart.set({
+      items: [],
+    });
+  }
+}
+
 export function addQuantity(productId){
   const currentCart = cart.get();
   const items = currentCart.items;

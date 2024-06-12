@@ -14,6 +14,8 @@ import { getProducts } from '../lib/tarpit_gql'
 
 const products = await getProducts()
 
+const { cart } = Astro.locals
+
 ---
 
 <html lang="en">
@@ -36,6 +38,7 @@ const products = await getProducts()
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
+        {JSON.stringify(cart)}
         <!-- <ProductList client:only="vue" products={products}/> -->
          <ProductList products={products} />
       </div> 
