@@ -1,6 +1,7 @@
 ---
 import TopNavbar from '../components/TopNavbar.vue';
-import ProductList from '../components/ProductList.vue';
+// import ProductList from '../components/ProductList.vue';
+import ProductList from '@/components/ProductList.astro';
 import Main from '../components/Main.vue'
 import MainText from '../components/MainText.astro'
 import Navbar from '../components/Navbar.vue'
@@ -8,6 +9,11 @@ import Bracelet from '../components/Bracelet.vue'
 import About from '../components/About.vue'
 import Footer from '../components/Footer.vue'
 import '../styles/globals.css'
+
+import { getProducts } from '../lib/tarpit_gql'
+
+const products = await getProducts()
+
 ---
 
 <html lang="en">
@@ -30,7 +36,8 @@ import '../styles/globals.css'
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
-        <ProductList client:only="vue"/>
+        <!-- <ProductList client:only="vue" products={products}/> -->
+         <ProductList products={products} />
       </div> 
       <div id="braceletSection" class=" border-b border-gray-200 pb-6 min-h-10 ">
         <Bracelet client:only="vue" />
@@ -43,7 +50,7 @@ import '../styles/globals.css'
       </div>
     </div> 
     <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
-    <Footer client:only="vue" />
+    <!-- <Footer client:only="vue" /> -->
   </div>
 </body>
 </html>

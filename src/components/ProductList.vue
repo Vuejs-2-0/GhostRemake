@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, toRefs } from 'vue';
 import { Button } from '@/components/ui/button';
 import { addQuantity, cart, addOneQuantity, minusQuantity } from '@/stores/cart'
 import { useStore } from '@nanostores/vue';
@@ -69,7 +69,10 @@ import {
 } from '@/components/ui/dialog'
 
 const $cart = useStore(cart);
-const products = computed(() => $cart.value.items);
+// const products = computed(() => $cart.value.items);
+
+const props = defineProps(["products"]);
+const { products } = toRefs(props);
 
 const decreaseQuantity = (productid: number) => {
   minusQuantity(productid); // Product id
