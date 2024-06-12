@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
-      <a href="/setting" class="logo">
+      <a href="/login_bare" class="logo">
       <button class="menu-icon " @click="toggleMenu">
         <p>账户设置</p>
       </button>
       </a>
+      <SignUp/>
       <a href="/history">
       <button class="profile-icon text-lg text-[#B551F3]">
         <p>购买记录</p>
@@ -15,8 +16,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import SignUp from './SignUp2.vue';
 
 </script>
   
