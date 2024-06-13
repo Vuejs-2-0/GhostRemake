@@ -1,10 +1,41 @@
+---
+import '../styles/globals.css'
+import HistoryList from '../components/HistoryList.vue';
+const props = Astro.props
+---
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost Remake</title>
+  <title>购买记录</title>
 </head>
-<body>
-  <h1>History</h1>
+
+<body class="bg-gray-100">
+  <div class="max-w-screen-md mx-auto bg-white p-4 shadow-md rounded-md">
+    <div class="navbar flex justify-between items-center p-4 text-lg border-b">
+      <div class="flex items-center">
+        <a href="/" class="flex items-center">
+          <button class="menu-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" {...props}>
+              <path fill="currentColor" d="m6.293 13.707l-5-5a.999.999 0 0 1 0-1.414l5-5a.999.999 0 1 1 1.414 1.414L4.414 7H14a1 1 0 0 1 0 2H4.414l3.293 3.293a.997.997 0 0 1 0 1.414a.999.999 0 0 1-1.414 0" />
+            </svg>
+          </button>
+        </a>
+        <p class="ml-4 font-semibold">购买记录</p>
+      </div>
+    </div>
+    <hr>
+    <HistoryList />
+  </div>
+
+
+  
+
+  <div class="bg-[#FFFFFF]">
+      <div class="pb-[80px] text-center font-semibold">
+        <p>© 真的友鬼 2024</p>
+      </div>
+  </div>
 </body>
 </html>
