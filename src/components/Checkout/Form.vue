@@ -9,7 +9,7 @@
 
   <div class="py-4">
 
-    <Tabs default-value="postal">
+    <Tabs v-model="delivery_method">
       <TabsList>
         <TabsTrigger value="postal">
           Postal
@@ -18,15 +18,15 @@
           Self Pickup
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="postal">
+      <TabsContent value="postal" >
         
         
         <div>
-          <Input @input="searchAddress" type="text" placeholder="Enter recipient's address" v-model="addressInput" />
+          <Input @input="searchAddress" type="text" placeholder="Enter your address..." v-model="addressInput" />
 
           <div v-if="showAddressOptions">
 
-            <p>Did you Mean...?</p>
+            <p>Search Result:</p>
 
             <div class="w-full grid grid-cols-12 justify-center items-center py-2" v-for="option in addressOptions">
               <div class="col-span-10 text-left">
@@ -102,6 +102,8 @@ const form = useForm({
   validationSchema: toTypedSchema(schema),
 })
 
+const delivery_method = ref("postal")
+
 const addressInput = ref(undefined)
 const addressOptions = ref([])
 const addressMetadata = ref(undefined)
@@ -109,15 +111,7 @@ const addressMetadata = ref(undefined)
 
 const emits = defineEmits(["submit"]);
 
-const onSubmit = () => {
-  // console.log(form.values)
 
-  let payload = {
-    ...form.values
-  }
-
-  emits("submit", payload);
-};
 
 const searchAddress = useDebounceFn( async () => {
     console.log(addressInput.value)
@@ -158,4 +152,24 @@ const useAddressOption = (option) => {
 
 }
 
+const onSubmit = () => {
+  // console.log(form.values)
+
+  let payload = {
+    ...form.values,
+    delivery_method: delivery_method.value,
+  }
+
+  if (delivery_method.value === "postal") {
+    payload = {
+      ...payload,
+      address: addressInput.value,
+      metadata: {
+        address_metadata: addressMetadata.value
+      }
+    }
+  }
+
+  emits("submit", payload);
+};
 </script>

@@ -308,5 +308,6 @@ export {
   newGuestSession,
   updateCart,
   getFormById,
-  getProductsByIds
+  getProductsByIds,
+  getCart
 }

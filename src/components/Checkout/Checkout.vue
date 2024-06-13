@@ -14,8 +14,8 @@
     import { toRefs, computed } from 'vue'
     import Form from "@/components/Checkout/Form.vue"
 
-    const props = defineProps(["json_schema","field_config","products"])
-    const { json_schema, field_config, products} = toRefs(props)
+    const props = defineProps(["json_schema","field_config","products","cart"])
+    const { json_schema, field_config, products, cart } = toRefs(props)
 
     const item_subtotal = computed( () => {
 
@@ -29,9 +29,25 @@
 
     })
 
-    const computeTx = (ev) => {
+    const computeTx = async (ev) => {
         const formData = ev
-        console.log(formData)
+        // console.log(formData)
+
+        let dry_run_result = await fetch('/api/tx.json', {
+            method: 'POST',
+            body: JSON.stringify({
+                form: formData,
+                cartId: cart.value.id,
+                dry_run: true
+            })
+        })
+
+        dry_run_result = await dry_run_result.json()
+
+        console.log(dry_run_result)
+
+
+
         // alert('Form submitted')
     }
 
