@@ -26,6 +26,10 @@ export const onRequest = async (context, next) => {
 
 	const sessionId = context.cookies.get("auth_session")?.value ?? null;
 
+	console.log(sessionId);
+
+
+	// works for both guest and auth user
 	if(sessionId){
 
 		let { session, user:auth_user, cookie } = await validateSession(sessionId);
@@ -49,7 +53,7 @@ export const onRequest = async (context, next) => {
 			
 
 			context.locals.user = user;
-			context.locals.cart = cart;
+			context.locals.cart = cart[0];
 			context.locals.tx = tx;
 
 		}
@@ -58,16 +62,21 @@ export const onRequest = async (context, next) => {
 
 		// make a guest session
 
-		let { user:auth_user} = await newGuestSession({});
+		let { user:auth_user, cookie, session} = await newGuestSession({});
 		// console.log(result);
 		// create a new cart for the guest
+
+		context.locals.session = session;
+		context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
 		await newCart(auth_user.id);
 
 		let { user, cart, tx} = await getUserData(auth_user.id);
 
 		context.locals.user = user;
-		context.locals.cart = cart;
+		context.locals.cart = cart[0];
 		context.locals.tx = tx;
+
 		
 
 	}

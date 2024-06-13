@@ -201,13 +201,67 @@ const signOut = async (email: string) => {
 
 }
 
+const getCart = async (cartId: string) => {
+  const GetCartQuery = gql`
+    query GetCart($cartId: String!) {
+      getCart(cartId: $cartId) {
+        id
+        owner
+        metadata
+        items
+      }
+    }
+  `;
+
+  let { data } = await client.query(GetCartQuery, {
+    "cartId": cartId
+  }).toPromise();
+  return data.getCart;
+}
+
+const updateCart = async (args:any) => {
+
+  console.log("update cart")
+  // first retrieve the server's cart data
+
+  let _cart = await getCart(args.cartId);
+
+  // then we updates the field provided in args to the _cart object
+
+  if (args.items) _cart.items = args.items;
+  if (args.owner) _cart.owner = args.owner;
+  if (args.metadata) _cart.metadata = args.metadata;
+
+  console.log(_cart);
+
+  _cart.cartId = args.cartId;
+  delete _cart.id;
+
+  // then we send the updated cart object to the server
+
+  const UpdateCartMutation = gql`
+    mutation UpdateCart($cartId: String!, $items: JSON, $owner: String, $metadata: JSON) {
+      updateCart(cartId: $cartId, items: $items, owner: $owner, metadata: $metadata) {
+        id
+        owner
+        metadata
+        items
+      }
+    }
+  `;
+
+  let {data} = await client.mutation(UpdateCartMutation, _cart).toPromise();
+  return data.updateCart;
+}
+
 export {
-    client,
-    getProducts,
-    signUp,
-    signOut,
-    validateSession,
-    getUserData,
-    newCart,
-    newGuestSession
+  client,
+  getProducts,
+  signUp,
+  signOut,
+  validateSession,
+  getUserData,
+  newCart,
+  newGuestSession,
+  updateCart
 }
