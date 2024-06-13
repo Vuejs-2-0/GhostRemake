@@ -93,7 +93,8 @@ const handleSubmit = async (operation: string) => {
     });
 
     if (response.ok) {
-      window.location.reload();
+        console.log('Form submitted successfully');
+        window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);
     }

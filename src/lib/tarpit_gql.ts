@@ -83,6 +83,36 @@ const validateSession = async (sessionId: string) => {
   return data.validateSession;
 }
 
+const login = async (email: string, signature: string) => {
+  const LoginMutation = gql`
+    mutation Login($email: String!, $signature: String!) {
+      login(email: $email, signature: $signature) {
+        user {
+          metadata
+          id
+          email
+        }
+        cookie
+        session {
+          expiresAt
+          fresh
+          id
+          userId
+        }
+      }
+    }
+  `;
+
+  let { data } = await client.mutation(LoginMutation, {
+    "email": email,
+    "signature": signature,
+    "metadata": {}
+  }).toPromise();
+  return data.login;
+}
+
+
+
 const getUserData = async (userId: string) => {
   
   const GetUserQuery = gql`
@@ -156,8 +186,6 @@ const newCart = async (ownerId: string) => {
 }
 
 const newGuestSession = async (metadata:any) => {
-
- 
     const NewGuestSessionMutation = gql`
       mutation GuestSession($metadata: JSON) {
         guestSession(metadata: $metadata) {
@@ -197,8 +225,6 @@ const signOut = async (email: string) => {
       "email": email
     }).toPromise();
     return data.signout;
-
-
 }
 
 const getCart = async (cartId: string) => {
@@ -263,5 +289,6 @@ export {
   getUserData,
   newCart,
   newGuestSession,
-  updateCart
+  updateCart,
+  login,
 }

@@ -2,6 +2,10 @@
   <div>
     <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
       <SignUp/>
+      <form method="post">
+        <input hidden name="operation" value="logout">
+          <button type="submit">Logout</button>
+      </form>
       <a href="/history">
       <button class="profile-icon text-lg text-[#B551F3]">
         <p>购买记录</p>

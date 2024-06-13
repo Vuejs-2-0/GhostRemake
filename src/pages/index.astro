@@ -16,10 +16,11 @@ const products = await getProducts()
 
 const { cart } = Astro.locals
 
-
+let user = null;
+let transactions = null;
 
 // Below is Signup for Astro
-import { signUp, signOut } from '../lib/tarpit_gql'
+import { signUp, signOut, getUserData, login} from '../lib/tarpit_gql'
 
 if (Astro.request.method === "POST") {
   try {
@@ -48,7 +49,7 @@ if (Astro.request.method === "POST") {
       const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
       const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
 
-      let result = await signUp(email,hashHex)
+      let result = await signUp(email,hashHex);
 
       if(result) {
         const { user,session,cookie} = result
@@ -63,13 +64,48 @@ if (Astro.request.method === "POST") {
 
     }
 
+    if(operation == "login") {
+
+      const email = String(data.get("email"))
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest("SHA-256", encoded_data)
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
+      console.log(email, hashHex);
+
+      let result = await login(email,hashHex);
+      
+      if(result) {
+        const { user,session,cookie} = result
+        
+        console.log(user,session,cookie)
+  
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes)
+
+        return Astro.redirect('/')
+
+      } else {
+        console.error("Login failed: No result returned");
+      }
+    }
+
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+      console.error("Error in POST operation:", error.message);
     }
   }
 }
 
+if (Astro.locals.user) {
+  const userData = await getUserData(Astro.locals.user.id);
+  user = userData.user;
+  transactions = userData.tx;
+}
 ---
 
 <html lang="en">
@@ -93,6 +129,7 @@ if (Astro.request.method === "POST") {
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
+        {JSON.stringify(cart)}
         <ProductList products={products} />
       </div> 
       <div id="braceletSection" class=" border-b border-gray-200 pb-6 min-h-10 ">
