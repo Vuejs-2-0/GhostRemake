@@ -4,10 +4,6 @@
 import { validateSession, getUserData, newCart, newGuestSession } from "./lib/tarpit_gql";
 
 export const onRequest = async (context, next) => {
-
-
-
-
     // if context path's has /api, then we just return next()
 
     // if(context.url.pathname.startsWith('/api')) {
