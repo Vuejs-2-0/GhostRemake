@@ -4,88 +4,101 @@
         <div class="flex justify-between items-center p-4 text-lg text-[#B551F3]">
             <button>注册帐号</button>
         </div>
-        
       </DialogTrigger>
-  
+
       <DialogContent class="sm:max-w-[425px] grid grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90vh]">
         <div v-if="isSignupOpen" class="grid gap-4 py-4 overflow-y-auto px-6">
-            <form id="signup_form" method="POST" class="grid gap-4 py-4 overflow-y-auto px-6">
+            <form @submit.prevent="handleSubmit('signup')" class="grid gap-4 py-4 overflow-y-auto px-6">
             <div class="flex justify-center w-full pt-4 pb-4">
                 <DialogTitle class="text-2xl font-bold text-center">注册帐号</DialogTitle>
             </div>
-            <input hidden name="operation" value="signup">
+            <input type="hidden" name="operation" value="signup" />
             <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
                 <Label htmlFor="signup_email" class="text-base">邮箱地址 - Email Address</Label>
-                <Input type="email" id="signup_email" placeholder="Email" class="border rounded p-2"/>
+                <Input type="email" id="signup_email" v-model="email" placeholder="Email" class="border rounded p-2" required />
             </div>
             <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
                 <Label htmlFor="signup_password" class="text-base">密码 - Password</Label>
-                <Input type="password" id="signup_password" placeholder="Password" class="border rounded p-2"/>
+                <Input type="password" id="signup_password" v-model="password" placeholder="Password" class="border rounded p-2" required />
             </div>
             <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
                 <Label htmlFor="cfm_password" class="text-base">确认密码 - Confirm Password</Label>
-                <Input type="password" id="cfm_password" placeholder="Confirm Password" class="border rounded p-2"/>
+                <Input type="password" id="cfm_password" v-model="confirmPassword" placeholder="Confirm Password" class="border rounded p-2" required />
             </div>
             <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">注册帐号</Button>
             </form>
             <div class="flex justify-center w-full">
-                <p class="px-6 pb-4">已有帐号？<a @click="switchToLogin" href="#" class="text-[#B551F3]">立即登录</a></p>
+                <p class="px-6 pb-4">已有帐号？<a @click.prevent="switchToLogin" href="#" class="text-[#B551F3]">立即登录</a></p>
             </div>
         </div>
         <div v-else class="grid gap-4 py-4 overflow-y-auto px-6">
-            <form id="login_form" method="POST" class="grid gap-4 py-4 overflow-y-auto px-6">
+            <form @submit.prevent="handleSubmit('login')" class="grid gap-4 py-4 overflow-y-auto px-6">
             <div class="flex justify-center w-full pt-4 pb-4">
                 <DialogTitle class="text-2xl font-bold text-center">登录帐号</DialogTitle>
             </div>
-            <input hidden name="operation" value="signup">
+            <input type="hidden" name="operation" value="login" />
             <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
                 <Label htmlFor="login_email" class="text-base">邮箱地址 - Email Address</Label>
-                <Input type="email" id="login_email" placeholder="Email" class="border rounded p-2"/>
+                <Input type="email" id="login_email" v-model="email" placeholder="Email" class="border rounded p-2" required />
             </div>
             <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
                 <Label htmlFor="login_password" class="text-base">密码 - Password</Label>
-                <Input type="password" id="login_password" placeholder="Password" class="border rounded p-2"/>
+                <Input type="password" id="login_password" v-model="password" placeholder="Password" class="border rounded p-2" required />
             </div>
             <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">登录帐号</Button>
             </form>
             <div class="flex justify-center w-full">
-                <p class="px-6 pb-4">没有帐号？<a @click="switchToSignup" href="#" class="text-[#B551F3]">立即注册</a></p>
+                <p class="px-6 pb-4">没有帐号？<a @click.prevent="switchToSignup" href="#" class="text-[#B551F3]">立即注册</a></p>
             </div>
         </div>  
       </DialogContent>
     </Dialog>
-  </template>
-  <!-- Try dc github push -->
-  <script setup lang="ts">
-  import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogTrigger
-  } from '@/components/ui/dialog';
-  import { Input } from '@/components/ui/input';
-  import { Label } from '@/components/ui/label';
-  import { Button } from "@/components/ui/button";
+</template>
 
-    import { ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
 
-    const isSignupOpen = ref(true);
-    const isLoginOpen = ref(false);
+const isSignupOpen = ref(true);
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 
-    const switchToLogin = () => {
-        isSignupOpen.value = false;
-        isLoginOpen.value = true;
-    };
+const switchToLogin = () => {
+  isSignupOpen.value = false;
+};
 
-    const switchToSignup = () => {
-        isSignupOpen.value = true;
-        isLoginOpen.value = false;
-    };
-  </script>
+const switchToSignup = () => {
+  isSignupOpen.value = true;
+};
+
+const handleSubmit = async (operation: string) => {
+  const formData = new FormData();
+  formData.append('operation', operation);
+  formData.append('email', email.value);
+  formData.append('password', password.value);
   
-  <style scoped>
-  .featured-product {
-    max-width: 350px;
-    margin: 0 auto;
+  if (operation === 'signup' && password.value !== confirmPassword.value) {
+    alert('Passwords do not match');
+    return;
   }
-  </style>
+
+  try {
+    const response = await fetch(window.location.pathname, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error('Form submission failed:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+  }
+};
+</script>
