@@ -1,11 +1,10 @@
 <template>
-    <div class="container mx-auto p-4">
-        <div class="grid gap-4 py-4 overflow-y-auto px-6">
+    <div class="container mx-auto p-0.5">
+        <div class="grid gap-4 overflow-y-auto">
             <div class="flex flex-col justify-between ">
                 <div v-for="(order, index) in purchaseHistory" :key="index" class="product-card flex justify-between items-center p-4 bg-white">
                     
                     <!-- Display Image -->
-                    <!-- <img :src="product.img" alt="Product Image" class="w-16 h-16 rounded"/>  -->
                     
                     <!-- Display Item name and price, reactive for price -->
                     <div class="product-info flex-grow">
@@ -21,12 +20,18 @@
 
                         <hr>
 
-                        <div class="flex justify-between">
-                            <div class="flex flex-col">
-                                <h3 class="text-lg font-semibold">{{ order.productName }}</h3>
-                                <p class="text-sm text-gray-500">RM {{ order.productPrice.toFixed(2) }}</p>
+                        <div class="flex justify-between items-center space-x-4 my-4">
+                            <!-- Product Image and Details -->
+                            <div class="flex items-center space-x-4">
+                                <img src="/img/profile2.webp" class="w-16 h-16 object-cover rounded-lg" />
+                                <div class="flex flex-col">
+                                    <h3 class=" font-semibold text-green-600">{{ order.orderStatus }}</h3>
+                                    <h3 class="text-lg font-semibold">{{ order.productName }}</h3>
+                                    <p class="text-sm text-gray-500">RM {{ order.productPrice.toFixed(2) }}</p>
+                                </div>
                             </div>
-
+                            
+                            <!-- Tracking and Quantity Details -->
                             <div class="flex flex-col items-end">
                                 <p class="font-semibold">Tracking No.: {{ order.trackingId }}</p>
                                 <p class="font-semibold">x{{ order.productQuantity }}</p>
@@ -69,6 +74,7 @@ const purchaseHistory = ref([
   {
     date: '2024-06-13',
     orderId: 'ORD123456',
+    orderStatus: '已发货',
     trackingId: 'TRK123456',
     productName: 'Product 1',
     productPrice: 100.00,
@@ -80,6 +86,7 @@ const purchaseHistory = ref([
   {
     date: '2024-06-14',
     orderId: 'ORD123457',
+    orderStatus: '已发货',
     trackingId: 'TRK123457',
     productName: 'Product 2',
     productPrice: 150.00,
@@ -94,7 +101,7 @@ const purchaseHistory = ref([
 
 <style scoped>
 .container {
-  max-width: 800px;
+  max-width: 100%;
 }
 
 </style>
