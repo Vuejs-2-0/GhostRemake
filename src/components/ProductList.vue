@@ -57,7 +57,9 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue';
 import { Button } from '@/components/ui/button';
-import { addQuantity, cart, addOneQuantity, minusQuantity } from '@/stores/cart'
+// import { addQuantity, cart, addOneQuantity, minusQuantity } from '@/stores/cart'
+import { cart } from '@/stores/cart'
+
 import { useStore } from '@nanostores/vue';
 import {
   Dialog,
@@ -75,12 +77,12 @@ const props = defineProps(["products"]);
 const { products } = toRefs(props);
 
 const decreaseQuantity = (productid: number) => {
-  minusQuantity(productid); // Product id
+  // minusQuantity(productid); // Product id
 };
 
 // Nanos
 const addToCart = (productid: number) => {
-    addQuantity(productid);
+    // addQuantity(productid);
 };
 
 const buyToCart = (productQuantity: number, productName: String) => {
@@ -88,7 +90,7 @@ const buyToCart = (productQuantity: number, productName: String) => {
 };
 
 const increaseQuantity = (productid: number) => {
-  addOneQuantity(productid);
+  // addOneQuantity(productid);
 };
 </script>
 

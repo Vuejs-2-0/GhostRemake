@@ -31,6 +31,7 @@ const { cart } = Astro.locals
       <TopNavbar client:visible/>
       <MainText />
       <Main client:visible />
+      <!-- Use to inject the initial value of cart -->
       <CartStore client:only="vue" user_cart={cart} />
     </div>
   </div>
@@ -40,8 +41,6 @@ const { cart } = Astro.locals
   <div class="bg-[#FFFFFF]">
     <div class="container">
       <div id="mainSection" class=" border-b border-gray-200">
-        <!-- {JSON.stringify(cart)} -->
-        <!-- <ProductList client:only="vue" products={products}/> -->
          <ProductList products={products} />
       </div> 
       <div id="braceletSection" class=" border-b border-gray-200 pb-6 min-h-10 ">

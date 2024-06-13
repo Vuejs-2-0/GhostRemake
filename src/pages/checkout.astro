@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getFormById, getProductsByIds } from "@/lib/tarpit_gql"
+// fetch the checkout form
+
+
+import CheckoutVue from "@/components/Checkout/Checkout.vue"
+
+let form = await getFormById(1)
+
+let { cart } = Astro.locals 
+
+let item_ids = Object.keys(cart.items).map(key => cart.items[key])
+// make items into an array
+// console.log(item_ids)
+
+let products = await getProductsByIds(item_ids)
+
+products = products.map(product => {
+  return {
+   ...product,
+    quantity: cart.items[product.id]
+  }
+})
+
+// console.log(products)
+---
+
+<Layout title="Checkout">
+  <h1>Checkout</h1>
+
+  {
+      products.map((product: any) => {
+        return <div class="grid grid-cols-4">
+            <img class="w-12 h-12 object-cover" src={`${product.media.image}`}>
+            <h2>{product.name}</h2>
+            <p>RM {product.price}</p>
+            <p>Quantity: {product.quantity}</p>
+          </div>
+      }
+
+      
+        
+  )
+    }
+
+  
+  
+  <div class="p-4">
+
+    <CheckoutVue client:only="vue" products={products} json_schema={form.schema.definitions.zodSchema} field_config={form.metadata.field_config} />
+    
+  </div>
+
+</Layout>

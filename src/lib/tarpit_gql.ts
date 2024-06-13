@@ -254,6 +254,49 @@ const updateCart = async (args:any) => {
   return data.updateCart;
 }
 
+const getFormById = async (formId: number) => {
+  const GetFormByIdQuery = gql`
+    query GetFormById($formId: Int!) {
+      getFormById(formId: $formId) {
+        id
+        name
+        description
+        createdAt
+        schema
+        metadata
+      }
+    }
+  `;
+  let { data } = await client.query(GetFormByIdQuery, {
+    "formId": formId
+  }).toPromise();
+  return data.getFormById;
+}
+
+const getProductsByIds = async (productIds: number[]) => {
+  const GetProductsByIdsQuery = gql`
+    query ProductsByIds($productIds: [Int!]!) {
+      productsByIds(productIds: $productIds) {
+        id
+        name
+        media
+        price
+        status
+        metadata {
+          id
+          key
+          type
+          value
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetProductsByIdsQuery, {
+    "productIds": productIds
+  }).toPromise();
+  return data.productsByIds;
+}
+
 export {
   client,
   getProducts,
@@ -263,5 +306,7 @@ export {
   getUserData,
   newCart,
   newGuestSession,
-  updateCart
+  updateCart,
+  getFormById,
+  getProductsByIds
 }

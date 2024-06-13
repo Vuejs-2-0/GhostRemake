@@ -57,7 +57,7 @@
         let _item = $cart.value.items[ String(product.value.id)]
 
         if (_item) {
-            return _item.quantity;
+            return _item;
         } 
         // console.log(_item);
         return 0

@@ -9,25 +9,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { cart, addQuantity, minusQuantity } from '@/stores/cart'
+// import { cart, addQuantity, minusQuantity } from '@/stores/cart'
+import { cart } from '@/stores/cart'
+
 import { computed } from 'vue'
 import { useStore } from '@nanostores/vue';
 
 const $cart = useStore(cart);
-const products = computed(() => $cart.value.items);
+// const products = computed(() => $cart.value.items);
+const products = computed(() => {});
+
 
 const quantity = ref(0);
 
 const filteredProducts = computed(() => {
-  return $cart.value.items.filter(product => product.quantity > 0);
+  // return $cart.value.items.filter(product => product.quantity > 0);
 });
 
 const increaseQuantity = (productId: number) => {
-  addQuantity(productId);
+  // addQuantity(productId);
 };
 
 const decreaseQuantity = (productId: number) => {
-  minusQuantity(productId);
+  // minusQuantity(productId);
 };
 </script>
 
