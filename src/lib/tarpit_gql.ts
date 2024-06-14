@@ -280,6 +280,218 @@ const updateCart = async (args:any) => {
   return data.updateCart;
 }
 
+const getFormById = async (formId: number) => {
+  const GetFormByIdQuery = gql`
+    query GetFormById($formId: Int!) {
+      getFormById(formId: $formId) {
+        id
+        name
+        description
+        createdAt
+        schema
+        metadata
+      }
+    }
+  `;
+  let { data } = await client.query(GetFormByIdQuery, {
+    "formId": formId
+  }).toPromise();
+  return data.getFormById;
+}
+
+const getProductsByIds = async (productIds: number[]) => {
+  const GetProductsByIdsQuery = gql`
+    query ProductsByIds($productIds: [Int!]!) {
+      productsByIds(productIds: $productIds) {
+        id
+        name
+        media
+        price
+        status
+        metadata {
+          id
+          key
+          type
+          value
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetProductsByIdsQuery, {
+    "productIds": productIds
+  }).toPromise();
+  return data.productsByIds;
+}
+
+const createTx = async (args: any) => {
+  const CreateTxMutation = gql`
+    mutation CreateTx(
+      $entries: [EntryInput],
+      $form: JSON,
+      $metadata: [MetadataInput],
+      $paymentType: String,
+      $paymentMetadata: JSON,
+      $status: String,
+      $ownerId: String
+    ) {
+      createTx(
+        entries: $entries,
+        form: $form,
+        metadata: $metadata,
+        payment_type: $paymentType,
+        payment_metadata: $paymentMetadata,
+        status: $status,
+        owner_id: $ownerId
+      ) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+
+  let payload = {...args};
+
+  payload.entries = args.entries.map((entry: any) => {
+    return {
+      ...entry,
+      entry_id: String(entry.entry_id),
+    }
+  })
+
+  let _metadata = []
+
+  for(let key of Object.keys(args.metadata)){
+    _metadata.push({
+      type: 'attribute',
+      key: key,
+      value: args.metadata[key]
+    })
+  }
+
+  payload.metadata = _metadata;
+  // payload.paymentMetadata = args.paymentMetadata ? args.paymentMetadata : undefined
+
+  // console.log(JSON.stringify(payload));
+
+  let result = await client.mutation(CreateTxMutation, payload).toPromise();
+  console.log(result);
+  return result.data.createTx;
+};
+
+const updateTx = async (uuid: string, status: string, paymentType: string, paymentMetadata: any) => {
+  const UpdateTxMutation = gql`
+    mutation UpdateTx($uuid: String!, $status: String, $paymentType: String, $paymentMetadata: JSON) {
+      updateTx(uuid: $uuid, status: $status, payment_type: $paymentType, payment_metadata: $paymentMetadata) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+  let result = await client.mutation(UpdateTxMutation, {
+    "uuid": uuid,
+    "status": status,
+    "paymentType": paymentType,
+    "paymentMetadata": paymentMetadata
+  }).toPromise();
+
+  console.log(result);
+
+  return result.data.updateTx;
+};
+
+
+const getTxByUUID = async (uuid: string) => {
+  const GetTxByUUIDQuery = gql`
+    query GetTxByUUID($uuid: String!) {
+      getTxByUUID(uuid: $uuid) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetTxByUUIDQuery, {
+    "uuid": uuid
+  }).toPromise();
+  return data.getTxByUUID;
+};
+
+const uploadPaymentProof = async (base64Data: string, extension: string) => {
+  const UploadPaymentProofMutation = gql`
+    mutation UploadPaymentProof($base64Data: String!, $extension: String!) {
+      uploadPaymentProof(base64_data: $base64Data, extension: $extension) {
+        url
+        message
+      }
+    }
+  `;
+  let { data } = await client.mutation(UploadPaymentProofMutation, {
+    "base64Data": base64Data,
+    "extension": extension
+  }).toPromise();
+
+  return data.uploadPaymentProof;
+};
+
 export {
   client,
   getProducts,
@@ -291,4 +503,11 @@ export {
   newGuestSession,
   updateCart,
   login,
+  getFormById,
+  getProductsByIds,
+  getCart,
+  createTx,
+  updateTx,
+  getTxByUUID,
+  uploadPaymentProof
 }

@@ -9,35 +9,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { cart, addQuantity, minusQuantity } from '@/stores/cart'
+// import { cart, addQuantity, minusQuantity } from '@/stores/cart'
+import { cart } from '@/stores/cart'
+
 import { computed } from 'vue'
 import { useStore } from '@nanostores/vue';
 
 const $cart = useStore(cart);
-const products = computed(() => $cart.value.items);
+// const products = computed(() => $cart.value.items);
+const products = computed(() => {});
+
 
 const quantity = ref(0);
 
-const shipping = ref(5); // Example shipping cost
-
-const subtotal = computed(() => {
-      return products.value.reduce((sum, product) => sum + product.price, 0);
-    });
-
-    const total = computed(() => {
-      return subtotal.value + shipping.value;
-    });
-  
 const filteredProducts = computed(() => {
-  return $cart.value.items.filter(product => product.quantity > 0);
+  // return $cart.value.items.filter(product => product.quantity > 0);
 });
 
 const increaseQuantity = (productId: number) => {
-  addQuantity(productId);
+  // addQuantity(productId);
 };
 
 const decreaseQuantity = (productId: number) => {
-  minusQuantity(productId);
+  // minusQuantity(productId);
 };
 </script>
 
@@ -74,27 +68,11 @@ const decreaseQuantity = (productId: number) => {
             </div>
         </div>
 
-        <div v-if="quantity!=0">
-          <hr>
-          <div class="container flex justify-between">
-            <div class="flex flex-col">
-              <p class="my-2">小计</p>
-              <p class="my-2">运费</p>
-              <p class="my-2 font-semibold">总计</p>
-            </div>
-
-            <div class="flex flex-col items-end">
-              <p class="my-2">RM {{ subtotal.toFixed(2) }}</p>
-              <p class="my-2">RM {{ shipping.toFixed(2) }}</p>
-              <p class="my-2 font-semibold">RM {{ total.toFixed(2) }}</p>
-            </div>
-          </div>
-        </div>
-      <hr>
+      
       <DialogFooter class="p-6 pt-0">
         <!-- Display total price -->
         <!-- Button to buy or display options at below -->
-        <Button type="submit" class="px-36 rounded-full">Save changes</Button>
+        <Button type="submit">Save changes</Button>
       </DialogFooter>
        
     </DialogContent>

@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getTxByUUID } from "@/lib/tarpit_gql.ts";
+
+const tx_id = Astro.url.searchParams.get('tx') || '';
+
+// fetch the tx
+
+let tx = await getTxByUUID(tx_id);
+
+
+
+---
+
+<Layout title="complete">
+
+    <p>complete</p>
+
+    {JSON.stringify(tx)}
+
+
+    
+
+</Layout>

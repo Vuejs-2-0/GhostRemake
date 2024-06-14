@@ -37,9 +37,9 @@ export const updateProductInCart = async (id, quantity) => {
   // console.log('currentCart', currentCart);
 
   if (item) {
-    currentCart.items[id].quantity = quantity;
+    currentCart.items[id] = quantity;
   } else {
-    currentCart.items[id] = { id, quantity };
+    currentCart.items[id] = quantity;
   }
 
   cart.set({

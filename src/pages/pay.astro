@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getTxByUUID } from "@/lib/tarpit_gql.ts";
+
+import PaymentForm from "@/components/Pay/PaymentForm.vue";
+
+const tx_id = Astro.url.searchParams.get('tx') || '';
+
+// fetch the tx
+
+let tx = await getTxByUUID(tx_id);
+
+
+
+---
+
+<Layout title="Pay">
+
+    <p>pay</p>
+
+    <!-- {JSON.stringify(tx)} -->
+
+
+    <PaymentForm client:only="vue" uuid={tx_id}/>
+
+</Layout>
