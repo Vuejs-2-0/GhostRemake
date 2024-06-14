@@ -372,6 +372,47 @@ const createTx = async (args: any) => {
   return result.data.createTx;
 };
 
+const updateTx = async (uuid: string, status: string, paymentType: string, paymentMetadata: any) => {
+  const UpdateTxMutation = gql`
+    mutation UpdateTx($uuid: String!, $status: String, $paymentType: String, $paymentMetadata: JSON) {
+      updateTx(uuid: $uuid, status: $status, payment_type: $paymentType, payment_metadata: $paymentMetadata) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+  let result = await client.mutation(UpdateTxMutation, {
+    "uuid": uuid,
+    "status": status,
+    "paymentType": paymentType,
+    "paymentMetadata": paymentMetadata
+  }).toPromise();
+
+  console.log(result);
+
+  return result.data.updateTx;
+};
+
 const getTxByUUID = async (uuid: string) => {
   const GetTxByUUIDQuery = gql`
     query GetTxByUUID($uuid: String!) {
@@ -407,6 +448,23 @@ const getTxByUUID = async (uuid: string) => {
   return data.getTxByUUID;
 };
 
+const uploadPaymentProof = async (base64Data: string, extension: string) => {
+  const UploadPaymentProofMutation = gql`
+    mutation UploadPaymentProof($base64Data: String!, $extension: String!) {
+      uploadPaymentProof(base64_data: $base64Data, extension: $extension) {
+        url
+        message
+      }
+    }
+  `;
+  let { data } = await client.mutation(UploadPaymentProofMutation, {
+    "base64Data": base64Data,
+    "extension": extension
+  }).toPromise();
+
+  return data.uploadPaymentProof;
+};
+
 export {
   client,
   getProducts,
@@ -421,5 +479,7 @@ export {
   getProductsByIds,
   getCart,
   createTx,
-  getTxByUUID
+  updateTx,
+  getTxByUUID,
+  uploadPaymentProof
 };

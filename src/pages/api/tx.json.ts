@@ -1,4 +1,4 @@
-import { getCart, getProductsByIds, createTx } from '../../lib/tarpit_gql'
+import { getCart, getProductsByIds, createTx, updateTx } from '../../lib/tarpit_gql'
 import type { APIRoute } from 'astro';
 
 interface Entry {
@@ -170,4 +170,31 @@ export const POST:APIRoute = async ({request, redirect }) => {
         status: 404,
         statusText: 'Not found'
       });
-  }
+}
+
+export const PUT:APIRoute = async ({request, redirect }) => {
+
+  // uuid: string, status: string, paymentType: string, paymentMetadata: any
+  // 
+  let { uuid, status, paymentType, paymentMetadata } = await request.json();
+
+  let result = await updateTx(
+    uuid,
+    status,
+    paymentType,
+    paymentMetadata
+  );
+
+  return redirect(`/complete?tx=${uuid}`)
+
+  // return new Response(JSON.stringify(result), {
+  //   status: 200,
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // });
+
+
+  
+
+}
