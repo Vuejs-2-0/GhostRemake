@@ -1,14 +1,14 @@
-import { getCart, getProductsByIds } from '../../lib/tarpit_gql'
+import { getCart, getProductsByIds, createTx } from '../../lib/tarpit_gql'
 import type { APIRoute } from 'astro';
 
 interface Entry {
-  entryId: string;
+  entry_id: string;
   metadata: Object;
   type: string;
   value: Number;
 }
 
-export const POST:APIRoute = async ({request }) => {
+export const POST:APIRoute = async ({request, redirect }) => {
     
     const { cartId, form, dry_run } = await request.json();
 
@@ -34,7 +34,7 @@ export const POST:APIRoute = async ({request }) => {
     for (let product of products) {
 
       entries.push({
-        entryId: product.id,
+        entry_id: product.id,
         metadata: {
           label: `${product.quantity} x ${product.name}`,
           product: product,
@@ -110,7 +110,7 @@ export const POST:APIRoute = async ({request }) => {
       let total_postage_cost = Math.ceil(products.length / 3) * Number(atomic_shipping_type?.value)
 
       entries.push({
-        entryId: 'postage',
+        entry_id: 'postage',
         metadata: {
           label: `Postage cost (${atomic_shipping_type?.label})`,
           atomic_shipping_type: atomic_shipping_type,
@@ -129,10 +129,10 @@ export const POST:APIRoute = async ({request }) => {
         entries: entries,
         form: form,
         metadata: {
-          cartId: cartId,
+          cart_id: cartId,
           created_at: new Date().toISOString()
         },
-        payment_type: "",
+        paymentType: "",
         status: "pending",
         ownerId: cart.owner,
         value: entries.reduce((acc, entry) => acc + entry.value, 0)
@@ -144,6 +144,24 @@ export const POST:APIRoute = async ({request }) => {
           'Content-Type': 'application/json'
         }
       });
+
+    } else {
+
+      let tx = await createTx({
+        entries: entries,
+        form: form,
+        metadata: {
+          cart_id: cartId,
+          created_at: new Date().toISOString()
+        },
+        paymentType: null,
+        paymentMetadata: null,
+        status: "pending",
+        ownerId: cart.owner,
+      })
+
+      return redirect(`/pay?tx=${tx.uuid}`)
+
 
     }
 

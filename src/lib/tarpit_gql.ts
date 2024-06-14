@@ -297,6 +297,116 @@ const getProductsByIds = async (productIds: number[]) => {
   return data.productsByIds;
 }
 
+const createTx = async (args: any) => {
+  const CreateTxMutation = gql`
+    mutation CreateTx(
+      $entries: [EntryInput],
+      $form: JSON,
+      $metadata: [MetadataInput],
+      $paymentType: String,
+      $paymentMetadata: JSON,
+      $status: String,
+      $ownerId: String
+    ) {
+      createTx(
+        entries: $entries,
+        form: $form,
+        metadata: $metadata,
+        payment_type: $paymentType,
+        payment_metadata: $paymentMetadata,
+        status: $status,
+        owner_id: $ownerId
+      ) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+
+  let payload = {...args};
+
+  payload.entries = args.entries.map((entry: any) => {
+    return {
+      ...entry,
+      entry_id: String(entry.entry_id),
+    }
+  })
+
+  let _metadata = []
+
+  for(let key of Object.keys(args.metadata)){
+    _metadata.push({
+      type: 'attribute',
+      key: key,
+      value: args.metadata[key]
+    })
+  }
+
+  payload.metadata = _metadata;
+  // payload.paymentMetadata = args.paymentMetadata ? args.paymentMetadata : undefined
+
+  // console.log(JSON.stringify(payload));
+
+  let result = await client.mutation(CreateTxMutation, payload).toPromise();
+  console.log(result);
+  return result.data.createTx;
+};
+
+const getTxByUUID = async (uuid: string) => {
+  const GetTxByUUIDQuery = gql`
+    query GetTxByUUID($uuid: String!) {
+      getTxByUUID(uuid: $uuid) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetTxByUUIDQuery, {
+    "uuid": uuid
+  }).toPromise();
+  return data.getTxByUUID;
+};
+
 export {
   client,
   getProducts,
@@ -309,5 +419,7 @@ export {
   updateCart,
   getFormById,
   getProductsByIds,
-  getCart
-}
+  getCart,
+  createTx,
+  getTxByUUID
+};
