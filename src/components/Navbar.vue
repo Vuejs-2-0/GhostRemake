@@ -1,5 +1,4 @@
 <template>
-  <div class="bg-[#F6EAFF]">
     <div class="max-w-[375px] mx-auto pl-2 pb-3 md:max-w-[600px]">
       <NavigationMenu class="flex space-x-4 list-none">
         <NavigationMenuItem class="list-none">
@@ -13,7 +12,6 @@
         </NavigationMenuItem>
       </NavigationMenu>
     </div>
-  </div>
 </template>
 
 <script setup>

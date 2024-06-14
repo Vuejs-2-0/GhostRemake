@@ -10,6 +10,7 @@ import Footer from "../components/Footer.vue";
 import CartStore from "@/components/Product/CartStore.vue";
 import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
+import { ref } from "vue";
 
 import { getProducts } from "../lib/tarpit_gql";
 
@@ -21,6 +22,13 @@ const { session } = Astro.locals as { session: any };
 // Below is Signup for Astro
 import { signUp, signOut, getUserData, login } from "../lib/tarpit_gql";
 import { UserCheck } from "lucide-vue-next";
+
+const userExist = ref(false);
+if (session && session.user_id && session.user_id.startsWith("guest")) {
+  userExist.value = false;
+} else if (session && session.user_id) {
+  userExist.value = true;
+}
 
 if (Astro.request.method === "POST") {
   try {
@@ -114,20 +122,22 @@ if (Astro.request.method === "POST") {
   <body>
     <div class="bg-[#F6EAFF]">
       <div class="container">
-        <TopNavbar client:load user={session.user_id} />
+        <div class="min-h-[92px]">
+          <TopNavbar client:only="vue" userExist={userExist.value} />
+        </div>
         <MainText />
         <Main client:visible />
         <CartStore client:only="vue" user_cart={cart} />
       </div>
     </div>
-    <div class="sticky top-0 z-20">
+    <div class="sticky top-0 z-20 min-h-[56px] bg-[#F6EAFF]">
       <Navbar client:only="vue" />
     </div>
     <div class="bg-[#FFFFFF]">
       <div class="container">
         <div id="mainSection" class="border-b border-gray-200">
-          <!-- {JSON.stringify(session.user_id)}
-          {JSON.stringify(cart)} -->
+          {JSON.stringify(userExist)}
+          {JSON.stringify(cart)}
 
           <ProductList products={products} />
         </div>
@@ -145,7 +155,7 @@ if (Astro.request.method === "POST") {
         </div>
       </div>
       <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
-      <Footer client:only="vue" />
+      <!-- <Footer client:only="vue" /> -->
     </div>
   </body>
 </html>
