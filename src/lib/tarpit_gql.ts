@@ -1,8 +1,9 @@
 import { Client, fetchExchange } from '@urql/core';
 import { gql } from '@urql/core';
+import { gql_url } from '@/constants';
 
 const client = new Client({
-  url: 'https://gql.tipr.at',
+  url: gql_url,
   exchanges: [fetchExchange],
   fetchOptions: () => {
     return {
@@ -465,6 +466,21 @@ const uploadPaymentProof = async (base64Data: string, extension: string) => {
   return data.uploadPaymentProof;
 };
 
+const getStripePI = async (amount: number, currency: string, prodMode: boolean, metadata: any) => {
+  const GetStripePIMutation = gql`
+    mutation GetStripePI($amount: Int!, $currency: String!, $prodMode: Boolean!, $metadata: JSON) {
+      getStripePI(amount: $amount, currency: $currency, prod_mode: $prodMode, metadata: $metadata)
+    }
+  `;
+  let { data } = await client.mutation(GetStripePIMutation, {
+    "amount": amount,
+    "currency": currency,
+    "prodMode": prodMode,
+    "metadata": metadata
+  }).toPromise();
+  return data.getStripePI;
+};
+
 export {
   client,
   getProducts,
@@ -481,5 +497,6 @@ export {
   createTx,
   updateTx,
   getTxByUUID,
-  uploadPaymentProof
+  uploadPaymentProof,
+  getStripePI
 };

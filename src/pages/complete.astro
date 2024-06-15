@@ -1,12 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { getTxByUUID } from "@/lib/tarpit_gql.ts";
+// import { getTxByUUID } from "@/lib/tarpit_gql.ts";
 
 const tx_id = Astro.url.searchParams.get('tx') || '';
 
+import Status from "@/components/Complete/Status.vue";
+
 // fetch the tx
 
-let tx = await getTxByUUID(tx_id);
+// let tx = await getTxByUUID(tx_id);
 
 
 
@@ -15,9 +17,9 @@ let tx = await getTxByUUID(tx_id);
 <Layout title="complete">
 
     <p>complete</p>
-
-    {JSON.stringify(tx)}
-
+    <br>
+    <!-- {JSON.stringify(tx.status)} -->
+    <Status client:only="vue" tx={tx_id} />
 
     
 
