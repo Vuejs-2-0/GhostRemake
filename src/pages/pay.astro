@@ -21,6 +21,6 @@ let tx = await getTxByUUID(tx_id);
     <!-- {JSON.stringify(tx)} -->
 
 
-    <PaymentForm client:only="vue" uuid={tx_id}/>
+    <PaymentForm client:only="vue" uuid={tx_id} tx={tx}/>
 
 </Layout>

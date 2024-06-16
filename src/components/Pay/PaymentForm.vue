@@ -12,6 +12,7 @@
     </TabsList>
     <TabsContent value="stripe">
       stripe
+      <Stripe :tx="tx"></Stripe>
     </TabsContent>
     <TabsContent value="upload_proof">
         upload_proof
@@ -29,9 +30,10 @@
 
     import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
     import Uploader from './Uploader.vue';
+    import Stripe from './Stripe.vue';
 
-    const props = defineProps(['uuid'])
-    const { uuid } = toRefs(props)
+    const props = defineProps(['uuid','tx'])
+    const { uuid,tx } = toRefs(props)
 
     const updateTx = async (ev) => {
 

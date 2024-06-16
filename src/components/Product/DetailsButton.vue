@@ -2,7 +2,7 @@
     <div>
         <Dialog>
           <DialogTrigger>
-            <Button>详情</Button>
+            <Button class="bg-white hover:bg-white details-btn text-blue-500 underline pr-3">详情</Button>
           </DialogTrigger>
           <DialogContent class="sm:max-w-[425px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
             <div class="grid gap-4 py-4 overflow-y-auto px-6">
