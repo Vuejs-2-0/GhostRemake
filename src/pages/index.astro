@@ -6,7 +6,7 @@ import MainText from "../components/MainText.astro";
 import Navbar from "../components/Navbar.vue";
 import Bracelet from "../components/Bracelet.vue";
 import About from "../components/About.vue";
-import Footer from "../components/Footer.vue";
+import Footer from "../components/Footer.astro";
 import CartStore from "@/components/Product/CartStore.vue";
 import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
@@ -18,6 +18,15 @@ const products = await getProducts();
 
 const { cart, user } = Astro.locals as { cart: any, user: any };
 const { session } = Astro.locals as unknown as { session: any };
+
+let totalItem = 0;
+const items = cart.items;
+
+for (let itemId in items) {
+  if (items.hasOwnProperty(itemId)) {
+    totalItem += items[itemId];
+  }
+}
 
 // Below is Signup for Astro
 import { signUp, signOut, getUserData, login } from "../lib/tarpit_gql";
@@ -136,8 +145,9 @@ if (Astro.request.method === "POST") {
     <div class="bg-[#FFFFFF]">
       <div class="container">
         <div id="mainSection" class="border-b border-gray-200">
-          {JSON.stringify(userExist)}
-          {JSON.stringify(cart)}
+          <!-- {JSON.stringify(userExist)} -->
+          <!-- {JSON.stringify(cart)} -->
+          {JSON.stringify(totalItem)}
 
           <ProductList products={products} />
         </div>
@@ -155,7 +165,7 @@ if (Astro.request.method === "POST") {
         </div>
       </div>
       <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
-      <!-- <Footer client:only="vue" /> -->
+      <Footer userID={user.id} />
     </div>
   </body>
 </html>
