@@ -26,6 +26,7 @@ export const cart = map({});
 export const initCart = async (cart_data) => {
   cart.set(cart_data);
   // console.log('cart', cart.get());
+
 }
 
 export const updateProductInCart = async (id, quantity) => {

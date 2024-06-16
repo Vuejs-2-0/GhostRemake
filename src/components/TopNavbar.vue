@@ -1,25 +1,61 @@
 <template>
-  <div>
-    <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
-      <a href="/setting" class="logo">
-      <button class="menu-icon " @click="toggleMenu">
-        <p>账户设置</p>
-      </button>
-      </a>
-      <a href="/history">
-      <button class="profile-icon text-lg text-[#B551F3]">
-        <p>购买记录</p>
-      </button>
-    </a>
+  <div class="navbar p-4 text-lg text-[#B551F3]">
+    <SignUp v-if="!userExist"/>
+    <div v-else>
+      <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <button class="btn btn-outline">账户管理</button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent class="w-56">
+            <DropdownMenuGroup>
+              <a href="/setting">
+                <DropdownMenuItem>
+                    <span>个人资料</span>
+                </DropdownMenuItem>
+              </a>
+              <form method="post">
+                <input hidden name="operation" value="logout">
+                <button type="submit">
+                  <DropdownMenuItem>
+                    <snap>Logout</snap>
+                  </DropdownMenuItem>
+                </button>
+              </form>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <a href="/history">
+          <button class="profile-icon text-lg text-[#B551F3]">
+            <p>购买记录</p>
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, defineProps } from 'vue';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import SignUp from './SignUp2.vue';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
+const props = defineProps({
+  userExist: {
+    type: Boolean,
+    required: true
+  }
+});
 </script>
-  
+
 <style scoped>
 .container {
   max-width: 375px;
@@ -31,5 +67,4 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     max-width: 600px;
   }
 }
-
 </style>
