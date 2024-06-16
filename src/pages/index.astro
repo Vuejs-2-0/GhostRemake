@@ -16,8 +16,8 @@ import { getProducts } from "../lib/tarpit_gql";
 
 const products = await getProducts();
 
-const { cart } = Astro.locals as { cart: any };
-const { session } = Astro.locals as { session: any };
+const { cart, user } = Astro.locals as { cart: any, user: any };
+const { session } = Astro.locals as unknown as { session: any };
 
 // Below is Signup for Astro
 import { signUp, signOut, getUserData, login } from "../lib/tarpit_gql";
@@ -37,7 +37,7 @@ if (Astro.request.method === "POST") {
     const operation = String(data.get("operation"));
 
     if (operation == "logout") {
-      await signOut(Astro.locals?.user?.email);
+      await signOut(user?.email);
 
       Astro.cookies.delete("auth_session");
       return Astro.redirect("/");
