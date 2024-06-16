@@ -84,10 +84,41 @@ const validateSession = async (sessionId: string) => {
   return data.validateSession;
 }
 
+
+const login = async (email: string, signature: string) => {
+  const LoginMutation = gql`
+    mutation Login($email: String!, $signature: String!) {
+      login(email: $email, signature: $signature) {
+        user {
+          metadata
+          id
+          email
+        }
+        cookie
+        session {
+          expiresAt
+          fresh
+          id
+          userId
+        }
+      }
+    }
+  `;
+
+  let { data } = await client.mutation(LoginMutation, {
+    "email": email,
+    "signature": signature,
+    "metadata": {}
+  }).toPromise();
+  return data.login;
+}
+
+
+
 const getUserData = async (userId: string) => {
   
   const GetUserQuery = gql`
-    query GetUserByID($userId: String!, $status: String) {
+    query GetUserByID($userId: String!) {
       getUserByID(userID: $userId) {
         user {
           id
@@ -95,6 +126,7 @@ const getUserData = async (userId: string) => {
           metadata
         }
       }
+      
       getCartByOwner(ownerId: $userId, status: $status) {
         id
         owner
@@ -158,8 +190,6 @@ const newCart = async (ownerId: string) => {
 }
 
 const newGuestSession = async (metadata:any) => {
-
- 
     const NewGuestSessionMutation = gql`
       mutation GuestSession($metadata: JSON) {
         guestSession(metadata: $metadata) {
@@ -199,8 +229,6 @@ const signOut = async (email: string) => {
       "email": email
     }).toPromise();
     return data.signout;
-
-
 }
 
 const getCart = async (cartId: string) => {
@@ -255,6 +283,7 @@ const updateCart = async (args:any) => {
   let {data} = await client.mutation(UpdateCartMutation, _cart).toPromise();
   return data.updateCart;
 }
+
 
 const updateCartStatus = async (cartId: string, status: string) => {
   const UpdateCartMutation = gql`
@@ -433,6 +462,7 @@ const updateTx = async (uuid: string, status: string, paymentType: string, payme
   return result.data.updateTx;
 };
 
+
 const getTxByUUID = async (uuid: string) => {
   const GetTxByUUIDQuery = gql`
     query GetTxByUUID($uuid: String!) {
@@ -511,6 +541,7 @@ export {
   newGuestSession,
   updateCart,
   updateCartStatus,
+  login,
   getFormById,
   getProductsByIds,
   getCart,
@@ -520,3 +551,4 @@ export {
   uploadPaymentProof,
   getStripePI
 };
+

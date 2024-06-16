@@ -4,10 +4,6 @@
 import { validateSession, getUserData, newCart, newGuestSession } from "./lib/tarpit_gql";
 
 export const onRequest = async (context, next) => {
-
-
-
-
     // if context path's has /api, then we just return next()
 
     // if(context.url.pathname.startsWith('/api')) {
@@ -26,7 +22,8 @@ export const onRequest = async (context, next) => {
 
 	const sessionId = context.cookies.get("auth_session")?.value ?? null;
 
-	// console.log(sessionId);
+// console.log(sessionId);
+
 
 
 	// works for both guest and auth user
@@ -42,6 +39,7 @@ export const onRequest = async (context, next) => {
 		if(auth_user.id){
 
 			let { user, cart, tx} = await getUserData(auth_user.id);
+
 
 			// console.log(cart)
 

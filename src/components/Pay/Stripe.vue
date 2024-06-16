@@ -91,6 +91,7 @@ onMounted(async () => {
 
 const submitStripe = async () => {
 
+
     stripeBusy.value = true;
 
     const result = await stripe.value.confirmPayment({
@@ -105,6 +106,7 @@ const submitStripe = async () => {
     stripeBusy.value = false;
 
     console.log(result)
+
 }
 
 </script>

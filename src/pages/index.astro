@@ -1,61 +1,161 @@
 ---
-import TopNavbar from '../components/TopNavbar.vue';
-// import ProductList from '../components/ProductList.vue';
-import ProductList from '@/components/ProductList.astro';
-import Main from '../components/Main.vue'
-import MainText from '../components/MainText.astro'
-import Navbar from '../components/Navbar.vue'
-import Bracelet from '../components/Bracelet.vue'
-import About from '../components/About.vue'
-import Footer from '../components/Footer.vue'
-import '../styles/globals.css'
+import TopNavbar from "../components/TopNavbar.vue";
+import ProductList from "@/components/ProductList.astro";
+import Main from "../components/Main.vue";
+import MainText from "../components/MainText.astro";
+import Navbar from "../components/Navbar.vue";
+import Bracelet from "../components/Bracelet.vue";
+import About from "../components/About.vue";
+import Footer from "../components/Footer.vue";
+import CartStore from "@/components/Product/CartStore.vue";
+import SignUp from "@/components/SignUp2.vue";
+import "../styles/globals.css";
+import { ref } from "vue";
 
-import { getProducts } from '../lib/tarpit_gql'
-import CartStore from '@/components/Product/CartStore.vue';
+import { getProducts } from "../lib/tarpit_gql";
 
-const products = await getProducts()
+const products = await getProducts();
 
-const { cart, user } = Astro.locals
+const { cart, user } = Astro.locals as { cart: any, user:any };
+const { session } = Astro.locals as { session: any };
 
+// Below is Signup for Astro
+import { signUp, signOut, getUserData, login } from "../lib/tarpit_gql";
+import { UserCheck } from "lucide-vue-next";
+
+const userExist = ref(false);
+if (session && session.user_id && session.user_id.startsWith("guest")) {
+  userExist.value = false;
+} else if (session && session.user_id) {
+  userExist.value = true;
+}
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+
+    const operation = String(data.get("operation"));
+
+    if (operation == "logout") {
+      await signOut(Astro.locals?.user?.email);
+
+      Astro.cookies.delete("auth_session");
+      return Astro.redirect("/");
+    }
+
+    if (operation === "signup") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+
+      let result = await signUp(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      }
+    }
+
+    if (operation == "login") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+      console.log(email, hashHex);
+
+      let result = await login(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      } else {
+        console.error("Login failed: No result returned");
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error in POST operation:", error.message);
+    }
+  }
+}
 ---
 
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost Remake</title>
-</head>
-<body>
-  <div class="bg-[#F6EAFF]">
-    <div class="container">
-      <TopNavbar client:visible/>
-      <MainText />
-      <Main client:visible />
-      {JSON.stringify(user)}
-      <!-- Use to inject the initial value of cart -->
-      <CartStore client:only="vue" user_cart={cart} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghost Remake</title>
+  </head>
+  <body>
+    <div class="bg-[#F6EAFF]">
+      <div class="container">
+        <div class="min-h-[92px]">
+          <TopNavbar client:only="vue" userExist={userExist.value} />
+        </div>
+        <MainText />
+        <Main client:visible />
+        <CartStore client:only="vue" user_cart={cart} />
+      </div>
     </div>
-  </div>
-  <div class="sticky top-0 z-20">
-    <Navbar client:only="vue" />
-  </div>
-  <div class="bg-[#FFFFFF]">
-    <div class="container">
-      <div id="mainSection" class=" border-b border-gray-200">
-         <ProductList products={products} />
-      </div> 
-      <div id="braceletSection" class=" border-b border-gray-200 pb-6 min-h-10 ">
-        <Bracelet client:only="vue" />
+    <div class="sticky top-0 z-20 min-h-[56px] bg-[#F6EAFF]">
+      <Navbar client:only="vue" />
+    </div>
+    <div class="bg-[#FFFFFF]">
+      <div class="container">
+        <div id="mainSection" class="border-b border-gray-200">
+          {JSON.stringify(userExist)}
+          {JSON.stringify(cart)}
+
+          <ProductList products={products} />
+        </div>
+        <div
+          id="braceletSection"
+          class="border-b border-gray-200 pb-6 min-h-10"
+        >
+          <Bracelet client:only="vue" />
+        </div>
+        <div id="aboutSection">
+          <About client:visible />
+        </div>
+        <div class="pb-[80px] text-center">
+          <p>© 真的友鬼 2024</p>
+        </div>
       </div>
-      <div id="aboutSection">
-        <About client:visible />  
-      </div>
-      <div class="pb-[80px] text-center">
-        <p>© 真的友鬼 2024</p>
-      </div>
-    </div> 
-    <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
-    <!-- <Footer client:only="vue" /> -->
-  </div>
-</body>
+      <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
+      <!-- <Footer client:only="vue" /> -->
+    </div>
+  </body>
 </html>
