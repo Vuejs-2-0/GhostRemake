@@ -54,7 +54,7 @@
     const quantity = computed( () => {
 
         // console.log($cart.value.items)
-        let _item = $cart.value.items[ String(product.value.id)]
+        let _item = $cart.value.items[ String(product.value?.id)]
 
         if (_item) {
             return _item;
@@ -81,7 +81,7 @@
             title: '添加成功！',
             description: '购物车已更新～',
         });
-    }, 1000)
+    }, 100)
 
     // const increaseQuantity = (productid) => {
     //     // addOneQuantity(productid);

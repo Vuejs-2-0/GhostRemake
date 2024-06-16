@@ -15,7 +15,7 @@ import CartStore from '@/components/Product/CartStore.vue';
 
 const products = await getProducts()
 
-const { cart } = Astro.locals
+const { cart, user } = Astro.locals
 
 ---
 
@@ -31,6 +31,7 @@ const { cart } = Astro.locals
       <TopNavbar client:visible/>
       <MainText />
       <Main client:visible />
+      {JSON.stringify(user)}
       <!-- Use to inject the initial value of cart -->
       <CartStore client:only="vue" user_cart={cart} />
     </div>

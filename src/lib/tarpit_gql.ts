@@ -87,7 +87,7 @@ const validateSession = async (sessionId: string) => {
 const getUserData = async (userId: string) => {
   
   const GetUserQuery = gql`
-    query GetUserByID($userId: String!) {
+    query GetUserByID($userId: String!, $status: String) {
       getUserByID(userID: $userId) {
         user {
           id
@@ -95,7 +95,7 @@ const getUserData = async (userId: string) => {
           metadata
         }
       }
-      getCartByOwner(ownerId: $userId) {
+      getCartByOwner(ownerId: $userId, status: $status) {
         id
         owner
         metadata
@@ -128,7 +128,8 @@ const getUserData = async (userId: string) => {
     }
   `;
   let { data } = await client.query(GetUserQuery, {
-    "userId": userId
+    "userId": userId,
+    "status": "active"
   }).toPromise();
   return {
     user: data.getUserByID.user,
@@ -252,6 +253,24 @@ const updateCart = async (args:any) => {
   `;
 
   let {data} = await client.mutation(UpdateCartMutation, _cart).toPromise();
+  return data.updateCart;
+}
+
+const updateCartStatus = async (cartId: string, status: string) => {
+  const UpdateCartMutation = gql`
+    mutation UpdateCart($cartId: String!, $status: String) {
+      updateCart(cartId: $cartId, status: $status) {
+        id
+        owner
+        metadata
+        items
+      }
+    }
+  `;
+  let { data } = await client.mutation(UpdateCartMutation, {
+    "cartId": cartId,
+    "status": status
+  }).toPromise();
   return data.updateCart;
 }
 
@@ -491,6 +510,7 @@ export {
   newCart,
   newGuestSession,
   updateCart,
+  updateCartStatus,
   getFormById,
   getProductsByIds,
   getCart,

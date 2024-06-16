@@ -91,20 +91,20 @@ onMounted(async () => {
 
 const submitStripe = async () => {
 
-stripeBusy.value = true;
+    stripeBusy.value = true;
 
-const result = await stripe.value.confirmPayment({
-  elements:elements.value,
-  confirmParams: {
-    // Make sure to change this to your payment completion page
-  //   return_url: "http://localhost:4242/checkout.html",
-  return_url: `${window.location.origin}/complete?tx=${tx.value.uuid}`
-  },
-});
+    const result = await stripe.value.confirmPayment({
+    elements:elements.value,
+    confirmParams: {
+        // Make sure to change this to your payment completion page
+    //   return_url: "http://localhost:4242/checkout.html",
+    return_url: `${window.location.origin}/complete?tx=${tx.value.uuid}`
+    },
+    });
 
-stripeBusy.value = false;
+    stripeBusy.value = false;
 
-console.log(result)
+    console.log(result)
 }
 
 </script>

@@ -1,4 +1,4 @@
-import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID } from '../../lib/tarpit_gql'
+import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartStatus } from '../../lib/tarpit_gql'
 import type { APIRoute } from 'astro';
 
 interface Entry {
@@ -40,7 +40,7 @@ export const POST:APIRoute = async ({request, redirect }) => {
 
     let cart = await getCart(cartId);
 
-    let item_ids = Object.keys(cart.items).map(key => cart.items[key])
+    let item_ids = Object.keys(cart.items).map(key => parseInt(key))
 
     let products = await getProductsByIds(item_ids) as any;
 
@@ -184,8 +184,11 @@ export const POST:APIRoute = async ({request, redirect }) => {
         ownerId: cart.owner,
       })
 
-      return redirect(`/pay?tx=${tx.uuid}`)
+      // then we also change the cart status to "checked_out"
 
+      await updateCartStatus(cartId, 'checked_out')
+
+      return redirect(`/pay?tx=${tx.uuid}`)
 
     }
 
