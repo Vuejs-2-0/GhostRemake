@@ -15,5 +15,10 @@ export default defineConfig({
         '@': '/src'
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      external: ['@internationalized/date']
+    }
   }
 });
