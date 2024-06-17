@@ -9,18 +9,38 @@ import Status from "@/components/Complete/Status.vue";
 // fetch the tx
 
 // let tx = await getTxByUUID(tx_id);
+// http://localhost:4321/complete?payment_intent=pi_3PScYPGVCma29jjI0hjXrtce&payment_intent_client_secret=pi_3PScYPGVCma29jjI0hjXrtce_secret_dbzMfmTGB7ykoNZWHHZc9PRPW&redirect_status=failed&source_type=fpx&tx=7ecK56UIm2nNg7-fJM_RcFD7Gl2abNN8
 
+const redirect_status = Astro.url.searchParams.get('redirect_status') || '';
 
 
 ---
 
 <Layout title="complete">
 
-    <p>complete</p>
+    <p>tx_id: {tx_id}</p>
 
-    <br>
-    <!-- {JSON.stringify(tx.status)} -->
+    {
+
+redirect_status === 'failed' ? 
+    (
+    <p>failed</p>
+    )
+
+    :
+
+(
+<p>complete</p>
+<br>
     <Status client:only="vue" tx={tx_id} />
+    )
+    
+
+    }
+
+    
+
+    
 
 
     
