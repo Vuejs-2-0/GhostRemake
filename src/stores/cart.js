@@ -25,22 +25,33 @@ export const cart = map({});
 
 export const initCart = async (cart_data) => {
   cart.set(cart_data);
+  // console.log('cart', cart.get());
 
-  console.log('cart', cart.get());
 }
 
 export const updateProductInCart = async (id, quantity) => {
 
   const currentCart = cart.get();
-  const item = currentCart.items[String(id)];
+  // const item = currentCart.items[String(id)];
 
   // console.log('currentCart', currentCart);
 
-  if (item) {
-    currentCart.items[id] = quantity;
-  } else {
-    currentCart.items[id] = quantity;
+  currentCart.items[id] = quantity;
+
+  // if (item) {
+    
+  // } else {
+  //   currentCart.items[id] = quantity;
+  // }
+
+  for(let key of Object.keys(currentCart.items)){
+    if(currentCart.items[key] === 0){
+      delete currentCart.items[key];
+    }
   }
+
+  // console.log('currentCart', currentCart);
+  
 
   cart.set({
     ...currentCart

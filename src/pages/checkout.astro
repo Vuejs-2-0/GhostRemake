@@ -10,9 +10,11 @@ let form = await getFormById(1)
 
 let { cart } = Astro.locals as any
 
-let item_ids = Object.keys(cart.items).map(key => cart.items[key])
+
+let item_ids = Object.keys(cart.items).map(id => parseInt(id))
 // make items into an array
-// console.log(item_ids)
+console.log(item_ids)
+
 
 let products = await getProductsByIds(item_ids)
 
@@ -28,6 +30,10 @@ products = products.map((product: { id: string | number }) => {
 
 <Layout title="Checkout">
   <h1>Checkout</h1>
+
+
+  {cart.id}
+
 
   {
       products.map((product: any) => {
