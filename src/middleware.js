@@ -22,7 +22,8 @@ export const onRequest = async (context, next) => {
 
 	const sessionId = context.cookies.get("auth_session")?.value ?? null;
 
-	console.log(sessionId);
+// console.log(sessionId);
+
 
 
 	// works for both guest and auth user
@@ -39,7 +40,8 @@ export const onRequest = async (context, next) => {
 
 			let { user, cart, tx} = await getUserData(auth_user.id);
 
-			console.log(cart)
+
+			// console.log(cart)
 
 			if (cart?.length <= 0) {
 				await newCart(auth_user.id);
