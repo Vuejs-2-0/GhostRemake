@@ -1,4 +1,16 @@
-<!-- ---
+globalThis.process ??= {}; globalThis.process.env ??= {};
+import { c as createComponent, r as renderTemplate, e as createAstro } from '../../renderers.mjs';
+import '../kleur_BcFxsYqz.mjs';
+
+var __freeze = Object.freeze;
+var __defProp = Object.defineProperty;
+var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
+var _a;
+const $$Astro = createAstro();
+const $$LoginBare = createComponent(async ($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$LoginBare;
+  return renderTemplate(_a || (_a = __template([`<!-- ---
 // Didn't use alr
 import { signUp, signOut } from '../lib/tarpit_gql'
 
@@ -161,7 +173,13 @@ if (Astro.request.method === "POST") {
 
 
 
-    </script>
+    <\/script>
 
 </body>
-</html> -->
+</html> -->`])));
+}, "C:/Users/Goh JiaLe/Desktop/OSProject/GhostRemake/GhostRemake/src/pages/login_bare.astro", void 0);
+
+const $$file = "C:/Users/Goh JiaLe/Desktop/OSProject/GhostRemake/GhostRemake/src/pages/login_bare.astro";
+const $$url = "/login_bare";
+
+export { $$LoginBare as default, $$file as file, $$url as url };

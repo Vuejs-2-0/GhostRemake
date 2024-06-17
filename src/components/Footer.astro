@@ -1,20 +1,15 @@
 ---
 import { getUserData } from "../lib/tarpit_gql";
-const { userID } = Astro.props;
+const { userID } = Astro.props as { userID: string };
+const { cart } = await getUserData(userID);
 
 let totalItem = 0;
+const items = cart.items;
 
-if (userID) {
-  const { cart } = await getUserData(userID);
-
-  const items = cart.items;
-  for (let itemId in items) {
-    if (items.hasOwnProperty(itemId)) {
-      totalItem += items[itemId];
-    }
+for (let itemId in items) {
+  if (items.hasOwnProperty(itemId)) {
+    totalItem += items[itemId];
   }
-} else {
-  console.error("userID is not provided");
 }
 ---
 
