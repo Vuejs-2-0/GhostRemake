@@ -68,7 +68,10 @@
   </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
+
+const props = defineProps(['tx']);
+const { tx } = toRefs(props);
 
 const purchaseHistory = ref([
   {

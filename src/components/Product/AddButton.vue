@@ -53,16 +53,22 @@
 
     const quantity = computed( () => {
 
-        // console.log($cart.value.items)
-        let _item = $cart.value.items[ String(product.value?.id)]
+        if($cart.value?.items) {
 
-        if (_item) {
-            return _item;
-        } 
-        // console.log(_item);
-        return 0
+            // console.log($cart.value.items)
+            let _item = $cart.value?.items[ String(product.value?.id)]
         
-        // return _item ? _item.quantity : 0;
+            if (_item) {
+                return _item;
+            } 
+            // console.log(_item);
+            return 0
+            
+            // return _item ? _item.quantity : 0;
+        }
+
+        return 0;
+
     })
 
     const _updateCart = async (_quantity) => {
