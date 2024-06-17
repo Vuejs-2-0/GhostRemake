@@ -1,5 +1,3 @@
-
-import { gql } from '@urql/core';
 import { updateCart } from '../../lib/tarpit_gql';
 
 export async function PUT({request}) {
