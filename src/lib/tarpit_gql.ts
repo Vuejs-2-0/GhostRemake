@@ -186,7 +186,7 @@ const newCart = async (ownerId: string) => {
     "metadata": null,
     "owner": ownerId
   }).toPromise();
-  console.log(data);
+  // console.log(data);
   return data.createCart;
 }
 
@@ -268,7 +268,7 @@ const updateCart = async (args:any) => {
   _cart.cartId = args.cartId;
   delete _cart.id;
 
-  console.log('after',_cart);
+  // console.log('after',_cart);
 
   // then we send the updated cart object to the server
 
