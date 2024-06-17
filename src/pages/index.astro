@@ -9,7 +9,7 @@ import About from "../components/About.vue";
 // import Footer from "../components/Footer.astro";
 import Footer from "@/components/Footer.vue";
 import CartStore from "@/components/Product/CartStore.vue";
-import SignUp from "@/components/SignUp2.vue";
+// import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
 import { ref } from "vue";
 
@@ -31,8 +31,8 @@ const { session } = Astro.locals as unknown as { session: any };
 // }
 
 // Below is Signup for Astro
-import { signUp, signOut, getUserData, login } from "../lib/tarpit_gql";
-import { UserCheck } from "lucide-vue-next";
+import { signUp, signOut, login } from "../lib/tarpit_gql";
+// import { UserCheck } from "lucide-vue-next";
 
 const userExist = ref(false);
 if (session && session.user_id && session.user_id.startsWith("guest")) {

@@ -1,5 +1,5 @@
 import { map } from 'nanostores';
-import { updateCart as updateCartGql } from '@/lib/tarpit_gql';
+// import { updateCart as updateCartGql } from '@/lib/tarpit_gql';
 // export const cart = map({
 //   items: [
 //     { id: 1, quantity: 0, name: '真的友鬼 1', price: 'RM 25.00', img: '/img/profile.webp', description: '弟弟消脱臭靠谁邢湘揽' },

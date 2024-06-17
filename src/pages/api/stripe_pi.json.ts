@@ -1,7 +1,7 @@
 import { getStripePI } from '../../lib/tarpit_gql'
 import type { APIRoute } from 'astro';
 
-export const POST:APIRoute = async ({request, redirect }) => {
+export const POST:APIRoute = async ({request }) => {
     
     // const { cartId, form, dry_run } = await request.json();
 
