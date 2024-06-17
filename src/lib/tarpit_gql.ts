@@ -263,10 +263,12 @@ const updateCart = async (args:any) => {
   if (args.owner) _cart.owner = args.owner;
   if (args.metadata) _cart.metadata = args.metadata;
 
-  console.log(_cart);
+  
 
   _cart.cartId = args.cartId;
   delete _cart.id;
+
+  console.log('after',_cart);
 
   // then we send the updated cart object to the server
 

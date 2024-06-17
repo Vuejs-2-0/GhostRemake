@@ -50,7 +50,7 @@ export const updateProductInCart = async (id, quantity) => {
     }
   }
 
-  // console.log('currentCart', currentCart);
+  console.log('currentCart', currentCart);
   
 
   cart.set({
