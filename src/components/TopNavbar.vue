@@ -16,9 +16,9 @@
               </a>
               <form method="post">
                 <input hidden name="operation" value="logout">
-                <button type="submit">
+                <button class="w-full" type="submit">
                   <DropdownMenuItem>
-                    <snap>Logout</snap>
+                    <span>Logout</span>
                   </DropdownMenuItem>
                 </button>
               </form>

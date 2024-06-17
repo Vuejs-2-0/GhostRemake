@@ -118,7 +118,7 @@ const login = async (email: string, signature: string) => {
 const getUserData = async (userId: string) => {
   
   const GetUserQuery = gql`
-    query GetUserByID($userId: String!) {
+    query GetUserByID($userId: String!, $status: String!) {
       getUserByID(userID: $userId) {
         user {
           id
@@ -163,6 +163,7 @@ const getUserData = async (userId: string) => {
     "userId": userId,
     "status": "active"
   }).toPromise();
+
   return {
     user: data.getUserByID.user,
     cart: data.getCartByOwner,
