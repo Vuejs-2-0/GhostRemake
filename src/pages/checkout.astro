@@ -8,7 +8,7 @@ import CheckoutVue from "@/components/Checkout/Checkout.vue"
 
 let form = await getFormById(1)
 
-let { cart } = Astro.locals 
+let { cart } = Astro.locals as any
 
 
 let item_ids = Object.keys(cart.items).map(id => parseInt(id))
@@ -18,7 +18,7 @@ console.log(item_ids)
 
 let products = await getProductsByIds(item_ids)
 
-products = products.map(product => {
+products = products.map((product: { id: string | number }) => {
   return {
    ...product,
     quantity: cart.items[product.id]
