@@ -1,97 +1,34 @@
----
-import { getUserData } from "../lib/tarpit_gql";
-const { userID } = Astro.props;
+<template>
 
-let totalItem = 0;
+  <div class="w-full fixed bottom-0 bg-white p-4 flex justify-center items-center border-t">
 
-if (userID) {
-  const { cart } = await getUserData(userID);
+    <!-- {{  $cart }} -->
+    <p>Total Items: {{ totalItems }}</p>   
+    
 
-  const items = cart.items;
-  for (let itemId in items) {
-    if (items.hasOwnProperty(itemId)) {
-      totalItem += items[itemId];
-    }
-  }
-} else {
-  console.error("userID is not provided");
-}
----
+  </div>
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer</title>
-  </head>
-  <body>
-    <div class="footer-container">
-      <div class="footer-content container">
-        <span>购物车 ({{ totalItem }})</span>
-        <div class="footer-actions">
-          <span class="text-purple-500 cursor-pointer mr-10">查看</span>
-          <!-- If you want to include the Cart component, uncomment and import it -->
-          <!-- <Cart client:only="vue" /> -->
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+</template>
 
-<style scoped>
-.footer-container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
 
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+<script setup>
 
-.footer-actions {
-  display: flex;
-  align-items: center;
-}
+  import { computed } from 'vue';
+  import { cart } from '@/stores/cart'
+  import { useStore } from '@nanostores/vue';
 
-.footer-link {
-  color: #9b59b6;
-  cursor: pointer;
-  margin-right: 40px; /* Adjust this value as needed */
-}
+  const $cart = useStore(cart);
 
-.footer-button {
-  background-color: #f3e5f5;
-  border: none;
-  padding: 5px 10px;
-  color: #9b59b6;
-  border-radius: 5px;
-}
+  const totalItems = computed(() => {
 
-.container {
-  max-width: 375px;
-  margin: 0 auto;
-  position: relative; /* Make container a positioning context */
-}
+    if (!$cart.value.items) return 0;
 
-.navbar-container {
-  position: -webkit-sticky; /* For Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Ensures the navbar is above other elements */
-}
+    let items = Object.entries($cart.value.items);
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 600px;
-  }
-}
-</style>
+    return items.reduce((acc, [item_id, quantity]) => {
+      return acc + quantity;
+    }, 0);
+
+  });
+
+</script>
