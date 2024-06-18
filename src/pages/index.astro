@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar.vue";
 import Bracelet from "../components/Bracelet.vue";
 import About from "../components/About.vue";
 // import Footer from "../components/Footer.astro";
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/Footer.astro";
 import CartStore from "@/components/Product/CartStore.vue";
 // import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
@@ -168,7 +168,7 @@ if (Astro.request.method === "POST") {
       </div>
       <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
       <!-- <Footer userID={user.id} /> -->
-       <Footer client:only="vue" />
+       <Footer client:load />
     </div>
   </body>
 </html>
