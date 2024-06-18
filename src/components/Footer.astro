@@ -10,8 +10,7 @@ const { cart } = Astro.locals as { cart: any };
 <div class="footer-container fixed bottom-0 w-full bg-white border-t border-gray-300 shadow">
   <div class="footer-content container max-w-7xl mx-auto px-5 py-3 flex justify-between items-center">
     <IteminCart client:only="vue"/>
-    <div class="footer-actions flex items-center">
-      <span class="text-purple-500 cursor-pointer mr-10">查看</span>
+    <div class="pr-5">
       <!-- If you want to include the Cart component, uncomment and import it -->
       <Cart client:only="vue" product={products}/>
     </div>
