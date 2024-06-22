@@ -1,6 +1,6 @@
 ---
 // import TopNavbar from "../components/TopNavbar.vue";
-// import ProductList from "@/components/ProductList.astro";
+import ProductList from "@/components/ProductList.astro";
 // import Main from "../components/Main.vue";
 // import MainText from "../components/MainText.astro";
 // import Navbar from "../components/Navbar.vue";
@@ -8,19 +8,21 @@
 // import About from "../components/About.vue";
 // // import Footer from "../components/Footer.astro";
 // import Footer from "@/components/Footer.astro";
-// import CartStore from "@/components/Product/CartStore.vue";
+import CartStore from "@/components/Product/CartStore.vue";
 // // import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
 import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 
+import { getProducts } from "../lib/tarpit_gql";
+
+const products = await getProducts();
+
 import { getFormById, getProductsByIds } from "@/lib/tarpit_gql"
 let form = await getFormById(1)
 
-
-let products = [1,1,1,1,1,1]
 let info = [1,1,1]
-
+const { cart, user } = Astro.locals as { cart: any, user: any };
 ---
 
 <html lang="en">
@@ -50,6 +52,7 @@ let info = [1,1,1]
     </script>
 
     <CartFooterVue client:only="vue" form={form}/>
+    <CartStore client:only="vue" user_cart={cart} />
 
     <section class="w-full mb-12">
       <div class="w-full h-36 overflow-hidden flex justify-center items-center">
@@ -104,8 +107,9 @@ let info = [1,1,1]
                 </div>
               </div>
             </article>
-      
-            {
+             {JSON.stringify(cart)} 
+            <ProductList products={products} />
+            <!-- {
               products.map( () => 
                 <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
 
@@ -128,7 +132,7 @@ let info = [1,1,1]
       
             </div>
               )
-            }
+            } -->
 
         </div>
 

@@ -4,20 +4,21 @@
 
         <!-- {{ $cart.items['1'] }} -->
         
-        <Button v-if="quantity == 0" @click="_updateCart(1)" class="bg-purple-500 text-white py-2 px-4 rounded w-full">
-            <p>添加至购物车</p>
+        <Button v-if="quantity == 0" @click="_updateCart(1)" class="w-full p-2 px-5 bg-salmon-100 rounded-xl min-h-0 h-auto text-salmon-500 space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
+            <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
+            <span>选购</span>
         </Button>
 
         <div v-else class="grid grid-cols-3 justify-center items-center">
 
-            <Button @click="_updateCart(-1)"  class="bg-purple-100 text-purple-500 w-8 h-8 rounded">
+            <Button @click="_updateCart(-1)"  class="bg-salmon-100 text-salmon-500 w-8 h-8 rounded">
                 -
             </Button>
 
             <div class="w-8 h-8 flex justify-center items-center">{{ quantity }}</div>
 
 
-            <Button @click="_updateCart(1)" class="bg-purple-100 text-purple-500 w-8 h-8 rounded">
+            <Button @click="_updateCart(1)" class="bg-salmon-100 text-salmon-500 w-8 h-8 rounded">
                 +
             </Button>
 
