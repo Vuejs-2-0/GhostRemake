@@ -90,7 +90,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
     <section class="w-full flex flex-col justify-center items-center">
 
         <div class="max-w-sm w-full ">
-            <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+            <!-- <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
               <div class="w-full h-48 rounded-xl bg-gray-100/50"></div>
       
               <div class="w-full flex justify-between items-center mt-4">
@@ -106,8 +106,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
                   </Button>
                 </div>
               </div>
-            </article>
-             {JSON.stringify(cart)} 
+            </article> -->
             <ProductList products={products} />
             <!-- {
               products.map( () => 
