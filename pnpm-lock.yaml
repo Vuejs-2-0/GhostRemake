@@ -26,6 +26,9 @@ importers:
       '@iconify/vue':
         specifier: ^4.1.2
         version: 4.1.2(vue@3.4.27(typescript@5.4.5))
+      '@internationalized/date':
+        specifier: ^3.5.4
+        version: 3.5.4
       '@jaxtheprime/vue3-dropzone':
         specifier: ^3.3.0
         version: 3.3.0(vue@3.4.27(typescript@5.4.5))
@@ -68,6 +71,9 @@ importers:
       nanostores:
         specifier: ^0.10.3
         version: 0.10.3
+      overlayscrollbars:
+        specifier: ^2.8.3
+        version: 2.8.3
       radix-vue:
         specifier: ^1.8.2
         version: 1.8.3(vue@3.4.27(typescript@5.4.5))
@@ -2579,6 +2585,9 @@ packages:
   ora@8.0.1:
     resolution: {integrity: sha512-ANIvzobt1rls2BDny5fWZ3ZVKyD6nscLvfFRpQgfWsythlcsVUC9kL0zq6j2Z5z9wwp1kd7wpsD/T9qNPVLCaQ==}
     engines: {node: '>=18'}
+
+  overlayscrollbars@2.8.3:
+    resolution: {integrity: sha512-7JHA1oWm3Gru3RF5wwaeBdgk4keGtc56HMWEQRQi/RdLdY3pZTUDlSfUk1jyv1yQN12otr828n52rT6VNzYO4w==}
 
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
@@ -6079,6 +6088,8 @@ snapshots:
       stdin-discarder: 0.2.2
       string-width: 7.1.0
       strip-ansi: 7.1.0
+
+  overlayscrollbars@2.8.3: {}
 
   p-limit@2.3.0:
     dependencies:
