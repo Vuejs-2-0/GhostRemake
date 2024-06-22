@@ -3,7 +3,7 @@
     <DialogTrigger class="w-full outline-none">
       <slot></slot>
     </DialogTrigger>
-    <DialogContent class="p-1 w-full max-w-sm max-h-[85vh] overflow-y-scroll rounded-xl">
+    <DialogContent class="p-1 w-full max-w-sm max-h-[85vh] overflow-y-auto rounded-xl">
       <div class="w-full h-full bg-white rounded-xl p-2 flex justify-center flex-col items-center">
         <template v-if="page == 'list'">
           <div class="py-12">
@@ -50,7 +50,7 @@
         <div class="w-full">
 
             <div class="py-12">
-                <h1 class="text-2xl font-semibold">请填写个人资料</h1>
+                <h1 class="text-2xl font-semibold text-center">请填写个人资料</h1>
             </div>
 
             <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
