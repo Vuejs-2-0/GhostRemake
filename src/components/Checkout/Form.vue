@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <AutoForm class="w-2/3 space-y-6" :form="form" :schema="schema" :field-config="field_config" @submit="onSubmit">
+  <div class="w-full">
+    <AutoForm class="w-full space-y-6" :form="form" :schema="schema" :field-config="field_config" @submit="onSubmit">
       <!-- <Button type="submit">
       Next
     </Button> -->
     </AutoForm>
 
-    <div class="py-4">
+<!--    <div class="py-4">
       <Tabs v-model="delivery_method">
         <TabsList>
           <TabsTrigger value="postal">Postal</TabsTrigger>
@@ -53,7 +53,7 @@
           </div>
         </TabsContent>
       </Tabs>
-    </div>
+    </div>-->
 
     <Button @click="onSubmit">Next</Button>
   </div>

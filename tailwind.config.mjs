@@ -53,6 +53,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        'salmon': {
+          DEFAULT: '#FF4D00',
+          50: '#FFEFE5',
+          100: '#FFDFCC',
+          200: '#FFBD99',
+          300: '#FF9966',
+          400: '#FF7433',
+          500: '#FF4D00',
+          600: '#DB3E00',
+          700: '#B83100',
+          800: '#942500',
+          900: '#701A00',
+          950: '#5E1500'
+        }
       },
       borderRadius: {
       	xl: "calc(var(--radius) + 4px)",

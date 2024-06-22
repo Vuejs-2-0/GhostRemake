@@ -4,6 +4,7 @@
 
         <p>Submission complete.</p>
         <p>tx: {{ tx_data?.uuid }}</p>
+        <p>type: {{ tx_data?.payment_type }}</p>
 
         <br>
         <br>

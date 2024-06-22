@@ -1,174 +1,192 @@
 ---
-import TopNavbar from "../components/TopNavbar.vue";
-import ProductList from "@/components/ProductList.astro";
-import Main from "../components/Main.vue";
-import MainText from "../components/MainText.astro";
-import Navbar from "../components/Navbar.vue";
-import Bracelet from "../components/Bracelet.vue";
-import About from "../components/About.vue";
-// import Footer from "../components/Footer.astro";
-import Footer from "@/components/Footer.astro";
-import CartStore from "@/components/Product/CartStore.vue";
-// import SignUp from "@/components/SignUp2.vue";
+// import TopNavbar from "../components/TopNavbar.vue";
+// import ProductList from "@/components/ProductList.astro";
+// import Main from "../components/Main.vue";
+// import MainText from "../components/MainText.astro";
+// import Navbar from "../components/Navbar.vue";
+// import Bracelet from "../components/Bracelet.vue";
+// import About from "../components/About.vue";
+// // import Footer from "../components/Footer.astro";
+// import Footer from "@/components/Footer.astro";
+// import CartStore from "@/components/Product/CartStore.vue";
+// // import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
-import { ref } from "vue";
+import { Button } from "@/components/ui/button";
+import CartFooterVue from "@/components/CartFooter.vue"
 
-import { getProducts } from "../lib/tarpit_gql";
+import { getFormById, getProductsByIds } from "@/lib/tarpit_gql"
+let form = await getFormById(1)
 
-const products = await getProducts();
 
+let products = [1,1,1,1,1,1]
+let info = [1,1,1]
 
-const { cart, user } = Astro.locals as { cart: any, user: any };
-const { session } = Astro.locals as unknown as { session: any };
-
-// let totalItem = 0;
-// const items = cart.items;
-
-// for (let itemId in items) {
-//   if (items.hasOwnProperty(itemId)) {
-//     totalItem += items[itemId];
-//   }
-// }
-
-// Below is Signup for Astro
-import { signUp, signOut, login } from "../lib/tarpit_gql";
-// import { UserCheck } from "lucide-vue-next";
-
-const userExist = ref(false);
-if (session && session.user_id && session.user_id.startsWith("guest")) {
-  userExist.value = false;
-} else if (session && session.user_id) {
-  userExist.value = true;
-}
-
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-
-    const operation = String(data.get("operation"));
-
-    if (operation == "logout") {
-      await signOut(user?.email);
-
-      Astro.cookies.delete("auth_session");
-      return Astro.redirect("/");
-    }
-
-    if (operation === "signup") {
-      const email = String(data.get("email"));
-      const password = String(data.get("password"));
-
-      // Do something with the data
-      const encoder = new TextEncoder();
-      const encoded_data = encoder.encode(String(password));
-
-      let password_signature = await crypto.subtle.digest(
-        "SHA-256",
-        encoded_data
-      );
-      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
-      const hashHex = hashArray
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join(""); // convert bytes to hex string
-
-      let result = await signUp(email, hashHex);
-
-      if (result) {
-        const { user, session, cookie } = result;
-
-        console.log(user, session, cookie);
-
-        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
-
-        return Astro.redirect("/");
-      }
-    }
-
-    if (operation == "login") {
-      const email = String(data.get("email"));
-      const password = String(data.get("password"));
-
-      // Do something with the data
-      const encoder = new TextEncoder();
-      const encoded_data = encoder.encode(String(password));
-
-      let password_signature = await crypto.subtle.digest(
-        "SHA-256",
-        encoded_data
-      );
-      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
-      const hashHex = hashArray
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join(""); // convert bytes to hex string
-      console.log(email, hashHex);
-
-      let result = await login(email, hashHex);
-
-      if (result) {
-        const { user, session, cookie } = result;
-
-        console.log(user, session, cookie);
-
-        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
-
-        return Astro.redirect("/");
-      } else {
-        console.error("Login failed: No result returned");
-      }
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error in POST operation:", error.message);
-    }
-  }
-}
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghost Remake</title>
+    <title>真的友鬼</title>
   </head>
-  <body>
-    <div class="bg-[#F6EAFF]">
-      <div class="container">
-        <div class="min-h-[92px]">
-          <TopNavbar client:only="vue" userExist={userExist.value} />
-        </div>
-        <MainText />
-        <Main client:visible />
-        <CartStore client:only="vue" user_cart={cart} />
-      </div>
-    </div>
-    <div class="sticky top-0 z-20 min-h-[56px] bg-[#F6EAFF]">
-      <Navbar client:only="vue" />
-    </div>
-    <div class="bg-[#FFFFFF]">
-      <div class="container">
-        <div id="mainSection" class="border-b border-gray-200">
-          <!-- {JSON.stringify(userExist)} -->
-          {JSON.stringify(cart)}
-          <!-- {JSON.stringify(totalItem)} -->
+  <body class="bg-salmon-50">
+    <script>
+      import "iconify-icon";
 
-          <ProductList products={products} />
-        </div>
-        <div
-          id="braceletSection"
-          class="border-b border-gray-200 pb-6 min-h-10"
-        >
-          <Bracelet client:only="vue" />
-        </div>
-        <div id="aboutSection">
-          <About client:visible />
-        </div>
-        <div class="pb-[80px] text-center">
-          <p>© 真的友鬼 2024</p>
+      import 'overlayscrollbars/overlayscrollbars.css';
+      import { 
+        OverlayScrollbars, 
+        ScrollbarsHidingPlugin, 
+        SizeObserverPlugin, 
+        ClickScrollPlugin 
+      } from 'overlayscrollbars';
+
+      if(document?.querySelector('body') != null){
+        let _body = document.querySelector('body') as any;
+        const osInstance = OverlayScrollbars( _body, {});
+      }
+
+
+    </script>
+
+    <CartFooterVue client:only="vue" form={form}/>
+
+    <section class="w-full mb-12">
+      <div class="w-full h-36 overflow-hidden flex justify-center items-center">
+        <img class="w-full h-full object-cover blur-md scale-150 brightness-75 z-10" src="/img/book6.png" alt="" />
+      </div>
+
+      <div class="w-full flex justify-center items-center -mt-16">
+        <div class="w-36 h-36 bg-white rounded-2xl z-20 shadow-xl overflow-hidden">
+          <img src="/img/book6.png" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="" />
         </div>
       </div>
       <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
       <!-- <Footer userID={user.id} /> -->
-       <Footer client:load />
+       <!-- <Footer client:load /> -->
     </div>
+
+      <div class="w-full flex flex-col justify-center items-center pt-8">
+        <h1 class="text-salmon text-4xl font-semibold mb-4">真的友鬼</h1>
+        <p class="w-[60%] sm:w-full text-lg text-salmon-300 text-center">揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》</p>
+      </div>
+
+      <div class="w-full flex justify-center items-center mt-4 space-x-4">
+        <Button class="p-2 px-4 bg-salmon-100 min-h-0 h-auto rounded-full text-salmon-500 space-x-2 pl-3 hover:bg-salmon-500 hover:text-white scale-100 active:scale-95">
+          <iconify-icon class="text-lg" icon="ic:baseline-facebook"></iconify-icon>
+          <span>专页</span>
+        </Button>
+
+        <Button class="p-2 px-4 bg-salmon-100 min-h-0 h-auto rounded-full text-salmon-500 space-x-2 pl-3 hover:bg-salmon-500 hover:text-white scale-100 active:scale-95">
+          <iconify-icon class="text-lg" icon="ri:messenger-fill"></iconify-icon>
+          <span>私讯</span>
+        </Button>
+      </div>
+    </section>
+
+    <section class="w-full flex flex-col justify-center items-center">
+
+        <div class="max-w-sm w-full ">
+            <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+              <div class="w-full h-48 rounded-xl bg-gray-100/50"></div>
+      
+              <div class="w-full flex justify-between items-center mt-4">
+                <div class="col-span-3">
+                  <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
+                  <p>RM 25.00</p>
+                </div>
+      
+                <div class="flex justify-center items-center">
+                  <Button class="w-full p-2 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
+                    <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
+                    <span>选购</span>
+                  </Button>
+                </div>
+              </div>
+            </article>
+      
+            {
+              products.map( () => 
+                <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
+
+                <div class="w-full col-span-2 aspect-square bg-white rounded-xl">
+
+                </div>
+
+                <div class="col-span-5">
+                  <p class="text-lg font-semibold">真的友鬼 1</p>
+                  <p>RM 25.00</p>
+                </div>
+
+                <div class="col-span-3">
+                  <Button class="w-full p-2 px-5 bg-salmon-100 rounded-xl min-h-0 h-auto text-salmon-500 space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
+                    <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
+                    <span>选购</span>
+                  </Button>
+                </div>
+
+      
+            </div>
+              )
+            }
+
+        </div>
+
+
+    </section>
+
+    <hr class="my-8 border-salmon/10">
+
+    <section class="w-full flex flex-col justify-center items-center">
+
+      <div class="w-full max-w-sm">
+
+        <h2 class="text-2xl font-semibold text-center mb-4">五色绳</h2>
+
+        <div class="w-full bg-white rounded-xl p-4">
+          
+          <div class="w-full bg-gray-100/50 aspect-video rounded-md mb-2">
+
+          </div>
+
+          <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
+
+          <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
+            <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
+            <span>订制五色绳</span>
+          </Button>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+    <hr class="my-8 border-salmon/10">
+
+
+    <section class="w-full flex justify-center items-center ">
+
+      <div class="w-full max-w-sm flex justify-center items-center flex-col space-y-8">
+
+        {
+          info.map( () => 
+          <div class="px-8 w-full">
+          <div class="w-full aspect-square bg-white shadow-md rounded-xl">
+          </div>
+        </div>
+        )
+        }
+
+      </div>
+
+    </section>
+
+
+    <section class="w-full flex justify-center items-center pt-12 pb-[10vh]" >
+      <p>© 真的友鬼 2024</p>
+    </section>
+
   </body>
 </html>
