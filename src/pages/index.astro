@@ -51,7 +51,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
 
     </script>
 
-    <CartFooterVue client:only="vue" form={form}/>
+    <CartFooterVue client:only="vue" form={form} products={products} />
     <CartStore client:only="vue" user_cart={cart} />
 
     <section class="w-full mb-12">
@@ -88,54 +88,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
     </section>
 
     <section class="w-full flex flex-col justify-center items-center">
-
-        <div class="max-w-sm w-full ">
-            <!-- <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
-              <div class="w-full h-48 rounded-xl bg-gray-100/50"></div>
-      
-              <div class="w-full flex justify-between items-center mt-4">
-                <div class="col-span-3">
-                  <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
-                  <p>RM 25.00</p>
-                </div>
-      
-                <div class="flex justify-center items-center">
-                  <Button class="w-full p-2 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
-                    <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
-                    <span>选购</span>
-                  </Button>
-                </div>
-              </div>
-            </article> -->
-            <ProductList products={products} />
-            <!-- {
-              products.map( () => 
-                <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
-
-                <div class="w-full col-span-2 aspect-square bg-white rounded-xl">
-
-                </div>
-
-                <div class="col-span-5">
-                  <p class="text-lg font-semibold">真的友鬼 1</p>
-                  <p>RM 25.00</p>
-                </div>
-
-                <div class="col-span-3">
-                  <Button class="w-full p-2 px-5 bg-salmon-100 rounded-xl min-h-0 h-auto text-salmon-500 space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
-                    <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
-                    <span>选购</span>
-                  </Button>
-                </div>
-
-      
-            </div>
-              )
-            } -->
-
-        </div>
-
-
+      <ProductList products={products} />
     </section>
 
     <hr class="my-8 border-salmon/10">

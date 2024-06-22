@@ -11,17 +11,15 @@
           </div>
 
           <div class="w-full">
-            <div v-for="i in 10" class="w-full grid grid-cols-11 gap-2 mt-4 justify-center items-center">
-              <div class="w-full col-span-2 aspect-square bg-white rounded-xl border"></div>
-
+            <div v-for="product in productList" :key="product.id" class="w-full grid grid-cols-11 gap-2 mt-4 justify-center items-center">
+              <img :src="product.media.image" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border" />
               <div class="col-span-5">
                 <div class="flex justify-start items-center">
                   <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
-                  <p class="text-lg font-semibold">真的友鬼 1</p>
+                  <p class="text-lg font-semibold">{{ product.name }}</p>
                 </div>
-                <p>RM 25.00</p>
+                <p>RM {{ product.price }}.00</p>
               </div>
-
               <div class="col-span-4 grid grid-cols-3 justify-center items-center">
                 <div class="w-full flex justify-center items-center">
                   <Button class="w-8 h-8 rounded-full bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg flex justify-center items-center">
@@ -67,11 +65,24 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from "@/components/ui/button";
 import { ref, toRefs } from "vue";
 import Form from "@/components/Checkout/Form.vue";
+import { computed } from 'vue';
+import { cart } from '@/stores/cart';
+import { useStore } from '@nanostores/vue';
 
+const $cart = useStore(cart);
+const props = defineProps({
+  form: Object,
+  products: Object // or Array, depending on the type you're passing
+});
 
-const props = defineProps(["form"]);
-const { form } = toRefs(props);
-const page = ref("form");
+const productList = computed(() => {
+  if (!$cart.value.items) return [];
+  return products.value.filter(p => $cart.value.items[p.id])
+                      .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));
+});
+
+const { form, products } = toRefs(props);
+const page = ref("list");
 
 const computeTx = async (ev) => {
     console.log(ev);
