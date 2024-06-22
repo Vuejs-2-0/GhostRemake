@@ -6,7 +6,7 @@
     </Button> -->
     </AutoForm>
 
-<!--    <div class="py-4">
+   <div class="py-4">
       <Tabs v-model="delivery_method">
         <TabsList>
           <TabsTrigger value="postal">Postal</TabsTrigger>
@@ -53,7 +53,7 @@
           </div>
         </TabsContent>
       </Tabs>
-    </div>-->
+    </div>
 
     <Button @click="onSubmit">Next</Button>
   </div>
