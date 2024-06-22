@@ -17,38 +17,19 @@
   </template>
   
   <script setup>
-  import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
   import { Button } from "@/components/ui/button";
-  import { ref, toRefs } from "vue";
-  import Form from "@/components/Checkout/Form.vue";
-  import { computed } from 'vue';
+  import { computed, defineProps, toRefs } from 'vue';
   import { cart, updateProductInCart } from '@/stores/cart';
   import { useStore } from '@nanostores/vue';
   
   const $cart = useStore(cart);
-  const props = defineProps({
-    form: Object,
-    products: Object // or Array, depending on the type you're passing
-  });
-  
-  const productList = computed(() => {
-    if (!$cart.value.items) return [];
-    return props.products.filter(p => $cart.value.items[p.id])
-                        .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));
-  });
-  
-  const { form, products } = toRefs(props);
-  const page = ref("list");
-  
-  const computeTx = async (ev) => {
-      console.log(ev);
-      // page.value = "list";
-  };
+  const props = defineProps(["product"]);
+  const { product } = toRefs(props);
   
   const quantity = computed( () => {
   
   if($cart.value?.items) {
-      let _item = $cart.value?.items[ String(products.value?.id)]
+      let _item = $cart.value?.items[ String(product.value?.id)]
   
       if (_item) {
           return _item;
@@ -61,11 +42,11 @@
   
   })
   
-  const _updateCart = async (product, _quantity) => {
+  const _updateCart = async (_quantity) => {
           
           let _new_qty = _quantity + quantity.value;
   
-          await updateProductInCart(product, _new_qty);
+          await updateProductInCart(_new_qty);
   
       }
   

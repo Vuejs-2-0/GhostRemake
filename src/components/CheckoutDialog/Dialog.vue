@@ -20,21 +20,7 @@
                 </div>
                 <p>RM {{ product.price }}.00</p>
               </div>
-              <div class="col-span-4 grid grid-cols-3 justify-center items-center">
-                <div class="w-full flex justify-center items-center">
-                  <Button class="w-8 h-8 rounded-full bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg flex justify-center items-center">
-                    <iconify-icon class="text-lg" icon="ic:round-minus"></iconify-icon>
-                  </Button>
-                </div>
-
-                <div class="text-center w-full">1</div>
-
-                <div class="w-full flex justify-center items-center">
-                  <Button class="w-8 h-8 rounded-full bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg flex justify-center items-center">
-                    <iconify-icon class="text-lg" icon="ic:round-plus"></iconify-icon>
-                  </Button>
-                </div>
-              </div>
+              <AddButton :product="product" />
             </div>
           </div>
 
@@ -68,6 +54,7 @@ import Form from "@/components/Checkout/Form.vue";
 import { computed } from 'vue';
 import { cart } from '@/stores/cart';
 import { useStore } from '@nanostores/vue';
+import AddButton from "./AddButton.vue";
 
 const $cart = useStore(cart);
 const props = defineProps({
