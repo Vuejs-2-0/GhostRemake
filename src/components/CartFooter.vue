@@ -5,7 +5,7 @@
         <iconify-icon class="text-2xl" icon="iconamoon:menu-burger-horizontal-duotone"></iconify-icon>
       </Button>
 
-      <Dialog :form="form">
+      <Dialog :form="props.form" :products="props.products">
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
               <div class="flex justify-start items-center text-xl">
                 <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
@@ -26,12 +26,18 @@
 </template>
 
 <script setup>
-  
-  import { toRefs } from "vue";
   import { Button } from "@/components/ui/button";
   import Dialog from "@/components/CheckoutDialog/Dialog.vue";
 
-  const props = defineProps(["form"])
-  const { form } = toRefs(props)
+  const props = defineProps({
+  products: {
+    type: Object,
+    required: true
+  },
+  form: {
+    type: Object,
+    required: true
+  }
+  });
 
 </script>
