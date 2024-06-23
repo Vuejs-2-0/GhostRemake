@@ -22,6 +22,8 @@
   import { toTypedSchema } from "@vee-validate/zod";
   
   import { jsonSchemaToZod } from "json-schema-to-zod";
+
+  import CustomCheckboxGroup from './CustomCheckboxGroup.vue';
   
   const props = defineProps(["json_schema", "field_config"]);
   
