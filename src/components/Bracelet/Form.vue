@@ -1,7 +1,7 @@
 <template>
     <div class="w-full">
       <template v-if="page == 1">
-        <AutoForm class="w-full space-y-6 mb-8" :form="form" :schema="schema" :field-config="field_config" @submit="submitPage1"></AutoForm>
+        <AutoForm class="w-full space-y-6 mb-8" :CustomCheckboxGroup="CustomCheckboxGroup"  :form="form" :schema="schema" :field-config="field_config" @submit="submitPage1"></AutoForm>
         <Button @click="submitPage1()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
           <span class="text-xl text-white">加入购物车</span>
         </Button>

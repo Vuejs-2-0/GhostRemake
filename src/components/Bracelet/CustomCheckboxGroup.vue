@@ -1,31 +1,44 @@
 <template>
   <div>
-    <label v-for="option in options" :key="option.value">
-      <input type="checkbox" :value="option.value" v-model="selectedOptions">
-      {{ option.label }}
-    </label>
+    <label>{{ label }}</label>
+    <div v-for="option in options" :key="option.value">
+      <input 
+        type="checkbox" 
+        :value="option.value" 
+        :checked="selectedValues.includes(option.value)" 
+        @change="toggleSelection(option.value)" 
+      />
+      <span>{{ option.label }}</span>
+    </div>
   </div>
 </template>
 
-<script setup>
-import { ref, watch, toRefs, defineProps } from 'vue';
-
-const props = defineProps({
-  options: {
-    type: Array,
-    required: true
+<script>
+export default {
+  props: {
+    label: String,
+    options: Array,
+    value: Array
   },
-  modelValue: {
-    type: Array,
-    default: () => []
+  computed: {
+    selectedValues: {
+      get() {
+        return this.value || [];
+      },
+      set(newValue) {
+        this.$emit('input', newValue);
+      }
+    }
+  },
+  methods: {
+    toggleSelection(value) {
+      const index = this.selectedValues.indexOf(value);
+      if (index === -1) {
+        this.selectedValues.push(value);
+      } else {
+        this.selectedValues.splice(index, 1);
+      }
+    }
   }
-});
-
-const { options, modelValue } = toRefs(props);
-
-const selectedOptions = ref([...modelValue.value]);
-
-watch(selectedOptions, (newValue) => {
-  emit('update:modelValue', newValue);
-});
+};
 </script>
