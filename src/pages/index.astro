@@ -89,6 +89,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
     </section>
 
     <section class="w-full flex flex-col justify-center items-center">
+      {JSON.stringify(cart)}
       <ProductList products={products} />
     </section>
 
