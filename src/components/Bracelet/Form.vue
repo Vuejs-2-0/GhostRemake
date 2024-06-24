@@ -8,11 +8,12 @@
         :field-config="field_config"
         @submit="_updateCart"
       ></AutoForm>
+      <p>{{ user_cart.metadata }}</p>
       <Button
         @click="_updateCart"
         class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3"
       >
-        <span class="text-xl text-white">{{ quantity }} 加入购物车</span>
+        <span class="text-xl text-white">{{ quantity }} 加入购物车 </span>
       </Button>
     </template>
   </div>
@@ -30,9 +31,9 @@ import { cart, updateProductBraceletInCart } from "@/stores/cart";
 import { useStore } from "@nanostores/vue";
 
 const $cart = useStore(cart);
-const props = defineProps(["json_schema", "field_config"]);
+const props = defineProps(["user_cart", "json_schema", "field_config"]);
 const emits = defineEmits(["submit"]);
-const { json_schema, field_config } = toRefs(props);
+const { user_cart, json_schema, field_config } = toRefs(props);
 
 const schema = eval(jsonSchemaToZod(json_schema.value));
 
@@ -63,21 +64,26 @@ const _updateCart = async () => {
   let _new_qty = 1 + quantity.value;
 
   let newBracelet = {
-    bracelet_effect: values.效果,
+    effect: values.效果,
     size: values.size,
     comment: values.comments,
   };
 
-  // Check if there are already bracelets in the cart for this product
-  let existingBracelets = $cart.value?.items[productId]?.metadata?.bracelets || [];
+  // Access and update the cart's metadata
+  let cartMetadata = { ...$cart.value.metadata };
+  console.log(cartMetadata);
+  
+  // Clone the existing bracelets array to avoid modifying the original reference
+  let existingBracelets = [...(user_cart.value.metadata?.bracelets || [])];
+  console.log(existingBracelets);
 
-  // Add the new bracelet to the existing array
+  // Add the new bracelet to the cloned array
   existingBracelets.push(newBracelet);
+  console.log("Latest: ", existingBracelets);
 
-  let braceletEffect = {
-      bracelets: existingBracelets,
-  };
+  cartMetadata.bracelets = existingBracelets;
+  console.log()
 
-  await updateProductBraceletInCart(productId, _new_qty, braceletEffect);
+  await updateProductBraceletInCart(productId, _new_qty, cartMetadata);
 };
 </script>
