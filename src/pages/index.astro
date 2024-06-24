@@ -109,7 +109,8 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
 
           <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
           
-          <Bracelet client:only="vue" json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
+          <!-- Pass cart as props to Bracelet -->
+          <Bracelet client:only="vue" cart={cart} json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
             <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
               <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
               <span>订制五色绳</span>
