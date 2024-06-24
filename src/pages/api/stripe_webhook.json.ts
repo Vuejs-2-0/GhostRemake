@@ -8,12 +8,15 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     let metadata = body.data.object.metadata;
+    let status = body.data.status;
+
+    let tx_status = status === "paid" ? "paid" : "rejected";
 
     // update the tx status to paid
 
     // let { uuid, status, paymentType, paymentMetadata } = await request.json();
 
-    let result = await updateTx(metadata.tx_uuid, "paid", "stripe", body);
+    let result = await updateTx(metadata.tx_uuid, tx_status, "stripe", body);
 
     // let response = await uploadPaymentProof(base64_data, extension);
 
