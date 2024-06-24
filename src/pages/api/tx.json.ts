@@ -29,6 +29,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   try {
     let cart = await getCart(cartId);
+    
     // Check metadata got bracelet or not
 
     let item_ids = Object.keys(cart.items).map((key) => parseInt(key));
@@ -45,20 +46,46 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     // create entries
 
     let entries = [];
+    let i = 0;
 
-    // Put the bracelet metadata into the bracelet item metadata
+    // Check if item with ID "9" exists and handle metadata
     for (let product of products) {
-      entries.push({
-        entry_id: product.id,
-        metadata: {
+
+      // If the product ID is 9 and there are bracelets in the metadata
+      if (product.id === 9 && cart.metadata && cart.metadata.bracelets) {
+        // Loop through all quantity for the product
+        for (let j = 0; j < product.quantity; j++) {
+          let metadata = {
+            label: `1 x ${product.name}`,
+            product: product,
+            quantity: 1,
+            price: "RM28",
+            bracelets: cart.metadata.bracelets[i],
+          };
+    
+          entries.push({
+            entry_id: product.id + j,
+            metadata: metadata,
+            type: "product",
+            value: product.price,
+          });
+          i++;
+        }
+      } else {
+        let metadata = {
           label: `${product.quantity} x ${product.name}`,
           product: product,
           quantity: product.quantity,
-          price: product.price,
-        },
-        type: "product",
-        value: product.price * product.quantity,
-      });
+          price: product.price
+        };
+  
+        entries.push({
+          entry_id: product.id,
+          metadata: metadata,
+          type: "product",
+          value: product.price * product.quantity,
+        });
+      }
     }
 
     // then we need to check if the the user opted postage
