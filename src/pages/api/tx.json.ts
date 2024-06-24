@@ -29,6 +29,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   try {
     let cart = await getCart(cartId);
+    // Check metadata got bracelet or not
 
     let item_ids = Object.keys(cart.items).map((key) => parseInt(key));
 
@@ -45,6 +46,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     let entries = [];
 
+    // Put the bracelet metadata into the bracelet item metadata
     for (let product of products) {
       entries.push({
         entry_id: product.id,
