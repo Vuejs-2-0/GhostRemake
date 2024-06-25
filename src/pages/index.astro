@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 
 import { getProducts } from "../lib/tarpit_gql";
+import { ref } from "vue";
 
 const products = await getProducts();
 
@@ -24,6 +25,100 @@ let form2 = await getFormById(3)
 
 let info = [1,1,1]
 const { cart, user } = Astro.locals as { cart: any, user: any };
+const { session } = Astro.locals as unknown as { session: any };
+
+// Below is Signup for Astro
+import { signUp, signOut, login } from "../lib/tarpit_gql";
+// import { UserCheck } from "lucide-vue-next";
+
+const userExist = ref(false);
+if (session && session.user_id && session.user_id.startsWith("guest")) {
+  userExist.value = false;
+} else if (session && session.user_id) {
+  userExist.value = true;
+}
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+
+    const operation = String(data.get("operation"));
+
+    if (operation == "logout") {
+      await signOut(user?.email);
+
+      Astro.cookies.delete("auth_session");
+      return Astro.redirect("/");
+    }
+
+    if (operation === "signup") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+
+      let result = await signUp(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      }
+    }
+
+    if (operation == "login") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+      console.log(email, hashHex);
+
+      let result = await login(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      } else {
+        console.error("Login failed: No result returned");
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error in POST operation:", error.message);
+    }
+  }
+}
 ---
 
 <html lang="en">
@@ -52,7 +147,7 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
 
     </script>
 
-    <CartFooterVue client:only="vue" form={form} products={products} />
+    <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} />
     <CartStore client:only="vue" user_cart={cart} />
 
     <section class="w-full mb-12">
