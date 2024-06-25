@@ -79,7 +79,7 @@
           <div class="w-full">
             <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
               <!-- <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> -->
-              <p class="text-left pl-1 col-span-2">{{ entry?.metadata?.label }} {{ entry?.metadata?.bracelets.effect }} {{ entry?.metadata?.bracelets.size }} {{ entry?.metadata?.bracelets.comment }}</p>
+              <p class="text-left pl-1 col-span-2">{{ entry?.metadata?.label }} {{ entry?.metadata?.bracelets }}</p>
               <!-- <p class="col-span-1 text-sm">{{ entry?.quantity }}</p> -->
               <p class="col-span-1 text-sm">RM {{ entry?.metadata?.product?.price }}</p>
               <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
@@ -182,7 +182,6 @@ const confirmItems = () => {
 };
 
 const dry_run_result = ref(false)
-
 
 const computeTx = async (ev) => {
     console.log(ev);

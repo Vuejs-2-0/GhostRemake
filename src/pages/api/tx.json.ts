@@ -55,12 +55,24 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       if (product.id === 9 && cart.metadata && cart.metadata.bracelets) {
         // Loop through all quantity for the product
         for (let j = 0; j < product.quantity; j++) {
+
+          let details = "";
+          if (cart.metadata.bracelets[i].effect && typeof cart.metadata.bracelets[i].effect === 'object') {
+            details += `（效果:${Object.keys(cart.metadata.bracelets[i].effect).filter(key => cart.metadata.bracelets[i].effect[key]).join(', ')}`;
+          }
+          if (cart.metadata.bracelets[i].size) {
+            details += `, 大小:${cart.metadata.bracelets[i].size}`;
+          }
+          if (cart.metadata.bracelets[i].comment) {
+            details += `, 备注:${cart.metadata.bracelets[i].comment}）`;
+          }
+
           let metadata = {
             label: `1 x ${product.name}`,
             product: product,
             quantity: 1,
             price: "RM28",
-            bracelets: cart.metadata.bracelets[i],
+            bracelets: details
           };
     
           entries.push({
