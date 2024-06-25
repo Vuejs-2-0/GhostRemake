@@ -30,6 +30,11 @@
                   <p class="text-lg font-semibold">{{ product.name }}</p>
                 </div>
                 <p>RM {{ product.price }}.00</p>
+                <template v-if="product.type === 'bracelet'">
+                  <p>{{ product.effect }}</p>
+                  <p>{{ product.size }}</p>
+                  <p>{{ product.comment }}</p>
+                </template>
               </div>
               <AddButton :product="product" />
             </div>
@@ -44,8 +49,6 @@
 
         <template v-if="page =='form'">
           <div class="w-full">
-  
-              
   
               <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
   
