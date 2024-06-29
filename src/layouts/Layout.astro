@@ -1,13 +1,14 @@
 ---
-interface Props {
-  title: string;
-}
+// interface Props {
+//   title: string;
+// }
 
 // const { title } = Astro.props;
 
 import CartStore from "@/components/Product/CartStore.vue";
 import "../styles/globals.css";
 const { cart } = Astro.locals as any;
+import "@jaxtheprime/vue3-dropzone/dist/style.css";
 ---
 
 <!doctype html>
@@ -15,10 +16,51 @@ const { cart } = Astro.locals as any;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghost Remake</title>
+    <title>真的友鬼</title>
   </head>
-  <body>
+  <body class="bg-salmon-50" data-barba="wrapper">
+
+    <script>
+      import "iconify-icon";
+
+      import 'overlayscrollbars/overlayscrollbars.css';
+      import { 
+        OverlayScrollbars, 
+        ScrollbarsHidingPlugin, 
+        SizeObserverPlugin, 
+        ClickScrollPlugin 
+      } from 'overlayscrollbars';
+
+      if(document?.querySelector('body') != null){
+        let _body = document.querySelector('body') as any;
+        const osInstance = OverlayScrollbars( _body, {});
+      }
+      
+    </script>
+
     <CartStore client:only="vue" user_cart={cart} />
+
+    <section class="w-full">
+      <div class="w-full h-36 overflow-hidden flex justify-center items-center">
+        <img class="w-full h-full object-cover blur-md scale-150 brightness-75 z-10" src="/img/book6.png" alt="" />
+      </div>
+
+      <div class="w-full flex justify-center items-center -mt-16">
+        <div class="w-36 h-36 bg-white rounded-2xl z-20 shadow-xl overflow-hidden">
+          <img src="/img/book6.png" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="" />
+        </div>
+      </div>
+      <!-- Accept quantity from ProductList.vue and pass as count to Footer -->
+      <!-- <Footer userID={user.id} /> -->
+       <!-- <Footer client:load /> -->
+    </div>
+
+      <div class="w-full flex flex-col justify-center items-center pt-8">
+        <h1 class="text-salmon text-4xl font-semibold mb-4">真的友鬼</h1>
+      </div>
+      
+    </section>
+
     <slot />
   </body>
 </html>

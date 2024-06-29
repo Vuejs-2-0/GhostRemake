@@ -33,6 +33,34 @@ const getProducts = async () => {
       
 }
 
+const getBookProducts = async () => {
+
+  const RunProductQuery = gql`
+  mutation RunProductQuery($subject: String!, $method: String!, $query: JSON!) {
+      runProductQuery(subject: $subject, method: $method, query: $query) {
+          result
+      }
+  }
+  `;
+
+  let { data } = await client.mutation(RunProductQuery, {
+    "subject": "product",
+    "method": "findMany",
+    "query": {
+      "where": {
+        "product_metadata_link": {
+          "some": {
+            "metadata_id": 7
+          }
+        }
+      }
+    }
+  }).toPromise()
+
+  return data.runProductQuery.result.result
+    
+}
+
 const signUp = async (email: string, signature: string) => {
 
     const RunSignupQuery = gql`
@@ -536,6 +564,7 @@ const getStripePI = async (amount: number, currency: string, prodMode: boolean, 
 export {
   client,
   getProducts,
+  getBookProducts,
   signUp,
   signOut,
   validateSession,

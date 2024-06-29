@@ -30,7 +30,7 @@ import DetailsButton from '@/components/Product/DetailsButton.vue';
   {
     products.filter((product: any) => product.id != 9).map((product: any) => (
       <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
-        <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl" />
+        <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
         <div class="col-span-5">
           <h3 class="text-lg font-semibold">{product.name}</h3>
 

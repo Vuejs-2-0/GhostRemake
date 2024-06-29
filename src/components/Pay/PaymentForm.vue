@@ -1,25 +1,25 @@
 <template>
 
 
-<Tabs default-value="upload_proof" class="w-full">
-    <TabsList>
-    <TabsTrigger value="upload_proof">
-          Upload
+<div class="w-full">
+  <Tabs default-value="upload_proof" class="w-full">
+    <TabsList class="w-full px-1 bg-salmon-100/50">
+    <TabsTrigger class="w-full" value="upload_proof">
+          上传汇款收据
         </TabsTrigger>
-      <TabsTrigger value="stripe">
-        Stripe
+      <TabsTrigger class="w-full" value="stripe">
+        信用卡 / 电子钱包
       </TabsTrigger>
     </TabsList>
     <TabsContent value="stripe">
-      stripe
+      <!-- stripe -->
       <Stripe :tx="tx"></Stripe>
     </TabsContent>
-    <TabsContent value="upload_proof">
-        upload_proof
-
+    <TabsContent class="w-full" value="upload_proof">
         <Uploader @submit="updateTx"></Uploader>
     </TabsContent>
   </Tabs>
+</div>
 
 </template>
 

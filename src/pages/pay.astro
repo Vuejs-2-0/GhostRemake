@@ -3,6 +3,8 @@ import Layout from "@/layouts/Layout.astro";
 import { getTxByUUID } from "@/lib/tarpit_gql.ts";
 
 import PaymentForm from "@/components/Pay/PaymentForm.vue";
+import ItemList from "@/components/Pay/ItemList.vue";
+import CancelButton from "@/components/Pay/CancelButton.vue";
 
 const tx_id = Astro.url.searchParams.get('tx') || '';
 
@@ -12,15 +14,36 @@ let tx = await getTxByUUID(tx_id);
 
 
 
+
 ---
 
 <Layout title="Pay">
 
-    <p>pay</p>
+    <main class="w-full h-full overflow-y-auto relative">
 
-    <!-- {JSON.stringify(tx)} -->
+        <section class="w-full flex flex-col justify-center items-center">
+            <div class="w-full max-w-sm py-4 flex justify-between items-center">
+            
+                <div class="text-left">
+                    <h1 class="text-xl text-salmon">结账</h1>
+                    <p class="text-salmon-400">请选择付款方式</p>
+                </div>
+    
+                <CancelButton client:only="vue" uuid={tx_id}/>
+    
+            </div>
+            <div class="w-full max-w-sm">
+                <ItemList client:only="vue" tx={tx}/>
+            </div>
+        </section>
 
 
-    <PaymentForm client:only="vue" uuid={tx_id} tx={tx}/>
+        <div class="w-full px-4 pt-2 flex flex-col justify-center items-center pb-12">
+            <div class="w-full max-w-sm">
+                <PaymentForm client:only="vue" uuid={tx_id} tx={tx}/>
+            </div>
+        </div>
+
+    </main>
 
 </Layout>

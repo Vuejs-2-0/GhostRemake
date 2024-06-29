@@ -21,6 +21,7 @@
     "@jaxtheprime/vue3-dropzone": "^3.3.0",
     "@nanostores/vue": "^0.10.0",
     "@stripe/stripe-js": "^3.5.0",
+    "@swup/astro": "^1.4.1",
     "@urql/core": "^5.0.4",
     "@vee-validate/zod": "^4.13.1",
     "@vueuse/core": "^10.11.0",

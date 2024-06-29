@@ -1,30 +1,48 @@
 <template>
 
-    <div>stripe</div>
+    <!-- <div>stripe</div> -->
 
-    <div v-if="busy">loading...</div>
+    <div :class="[busy?'max-h-[300px]':'max-h-0','duration-500 overflow-hidden']">
 
-    <!--<div>
-        <div id="payment-element"></div>
-    </div>-->
+        <div class="flex justify-center items-center flex-col py-12">
+            <iconify-icon class="text-5xl text-salmon-500 mb-2 animate-bounce" icon="ion:card"></iconify-icon>
+            <p class="text-salmon-500 text-lg">Stripe 正在初始化，请稍后</p>
+        </div>
+    </div>
 
-    <form @submit.prevent="submitStripe()" id="payment-form">
+    <div :class="[!busy?'max-h-[600px] p-2':'max-h-0','duration-300 delay-200 overflow-hidden']">
+        <form @submit.prevent="submitStripe()" id="payment-form">
                                 <div  id="payment-element"></div>
                               
 
-                                <div class="w-full flex justify-end items-center pt-8">
-                                  <Button :disabled="stripeBusy" type="submit" class=" w-full flex justify-center items-center sm:w-auto disabled:opacity-50 rounded-md bg-indigo-600 px-3.5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                <div class="w-full flex justify-end items-center py-8">
+                                  <!--<Button :disabled="stripeBusy" type="submit" class=" w-full flex justify-center items-center sm:w-auto disabled:opacity-50 rounded-xl bg-salmon-500 px-6 py-4 text-xl font-semibold text-white shadow hover:bg-salmon-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salmon-600">
                                     <iconify-icon   v-if="stripeBusy" class="text-indigo-200 text-2xl mr-2" icon="svg-spinners:180-ring"></iconify-icon>
-                                    <!-- <Icon v-if="stripeBusy" class="text-indigo-200 text-2xl mr-2" name="svg-spinners:180-ring"></Icon> -->
-                                    <span  v-if="!stripeBusy">完成订单</span>
+                                    <!~~ <Icon v-if="stripeBusy" class="text-indigo-200 text-2xl mr-2" name="svg-spinners:180-ring"></Icon> ~~>
+                                    <span  v-if="!stripeBusy">付款</span>
                                     <span  v-if="stripeBusy">Please Wait...</span>
 
-                                    </Button>
+                                    </Button>-->
+
+                                    <Button  type="submit" :disabled="stripeBusy" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3 w-full mt-4">
+        <span v-if="!stripeBusy" class="text-xl text-white">付款</span>
+        <div class="flex justify-center items-center space-x-2" v-if="stripeBusy">
+            <iconify-icon  class="text-3xl text-white" icon="eos-icons:three-dots-loading"></iconify-icon>
+            <div>请稍候...</div>
+        </div>
+      </Button>
                                 </div>
 
 
                                 <div id="payment-message" class="hidden"></div>
                             </form>
+    </div>
+
+    <!--<div>
+        <div id="payment-element"></div>
+    </div>-->
+
+    
 
 </template>
 
@@ -85,6 +103,8 @@ onMounted(async () => {
 
     const paymentElement = elements.value.create("payment");
     paymentElement.mount("#payment-element");
+
+    busy.value = false;
 
     // elements.value = stripe.value.elements();
 })
