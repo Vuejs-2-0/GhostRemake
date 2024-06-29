@@ -33,7 +33,24 @@
                 <AddButton :product="product" />
               </div>
             </div>
+          </div>
 
+          <div class="pt-8 w-full sticky bottom-4">
+            <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+              <span class="text-xl text-white">确认</span>
+            </Button>
+          </div>
+        </template>
+
+        <template v-if="page =='form'">
+          <div class="w-full">
+  
+              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
+  
+          </div>
+        </template>
+
+        <template v-if="page =='loading'">
             <div class="pt-8 w-full sticky bottom-4">
               <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
                 <span class="text-xl text-white">确认</span>
@@ -77,9 +94,11 @@
                 <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
               </div>
 
+
               <div v-for="entry in postageEntry" :key="entry?.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
                 <!~~ <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> ~~>
                 <p class="col-span-3 text-left pl-1">{{ entry?.metadata?.label }}</p>
+
 
                 <!~~ <p class="col-span-1 text-sm"></p> ~~>
                 <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
@@ -174,7 +193,21 @@ const props = defineProps({
 
 const productList = computed(() => {
   if (!$cart.value.items) return [];
-  return products.value.filter((p) => $cart.value.items[p.id]).map((p) => ({ ...p, quantity: $cart.value.items[p.id] }));
+
+  // initiate an array to store the filter
+  const filtered = products.value.filter(p => $cart.value.items[p.id])
+                                 .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));;
+  //If there is a product with id "9", separate it out
+  const product9 = filtered.find(p => p.id === 9);
+  //If there is a product with id "9", make each of them as single product, and each of them will have quantity of 1
+  if (product9) {
+    filtered.splice(filtered.indexOf(product9), 1);
+    for (let i = 0; i < product9.quantity; i++) {
+      filtered.push({ ...product9, quantity: 1 });
+    }
+  }
+  return filtered;
+
 });
 
 const { form, products } = toRefs(props);
@@ -183,6 +216,7 @@ const page = ref("list");
 const confirmItems = () => {
   page.value = "form";
 };
+
 
 const dry_run_result = ref(false);
 

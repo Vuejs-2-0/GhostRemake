@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 
 import { getBookProducts } from "../lib/tarpit_gql";
+import { getProducts } from "../lib/tarpit_gql";
+import { ref } from "vue";
 
 const products = await getBookProducts();
 
@@ -24,6 +26,124 @@ let form2 = await getFormById(3)
 
 let info = [1,1,1]
 const { cart, user } = Astro.locals as { cart: any, user: any };
+const { session } = Astro.locals as unknown as { session: any };
+
+// Below is Signup for Astro
+import { signUp, signOut, login } from "../lib/tarpit_gql";
+// import { UserCheck } from "lucide-vue-next";
+
+const userExist = ref(false);
+if (session && session.user_id && session.user_id.startsWith("guest")) {
+  userExist.value = false;
+} else if (session && session.user_id) {
+  userExist.value = true;
+}
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+
+    const operation = String(data.get("operation"));
+
+    if (operation == "logout") {
+      await signOut(user?.email);
+
+      Astro.cookies.delete("auth_session");
+      return Astro.redirect("/");
+    }
+
+    if (operation === "signup") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+
+      let result = await signUp(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      }
+    }
+
+    if (operation == "login") {
+      const email = String(data.get("email"));
+      const password = String(data.get("password"));
+
+      // Do something with the data
+      const encoder = new TextEncoder();
+      const encoded_data = encoder.encode(String(password));
+
+      let password_signature = await crypto.subtle.digest(
+        "SHA-256",
+        encoded_data
+      );
+      const hashArray = Array.from(new Uint8Array(password_signature)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+      console.log(email, hashHex);
+
+      let result = await login(email, hashHex);
+
+      if (result) {
+        const { user, session, cookie } = result;
+
+        console.log(user, session, cookie);
+
+        Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+        return Astro.redirect("/");
+      } else {
+        console.error("Login failed: No result returned");
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error in POST operation:", error.message);
+    }
+  }
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>真的友鬼</title>
+  </head>
+  <body class="bg-salmon-50">
+    <script>
+      import "iconify-icon";
+
+      import 'overlayscrollbars/overlayscrollbars.css';
+      import { 
+        OverlayScrollbars, 
+        ScrollbarsHidingPlugin, 
+        SizeObserverPlugin, 
+        ClickScrollPlugin 
+      } from 'overlayscrollbars';
+
+      if(document?.querySelector('body') != null){
+        let _body = document.querySelector('body') as any;
+        const osInstance = OverlayScrollbars( _body, {});
+      }
 
 import Layout from "@/layouts/Layout.astro";
 ---
@@ -32,8 +152,8 @@ import Layout from "@/layouts/Layout.astro";
 
   <main class="w-full" transition:animate="slide">
     
-    <CartFooterVue client:only="vue" form={form} products={products} />
-      <!-- <CartStore client:only="vue" user_cart={cart} /> -->
+    <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} />
+    <CartStore client:only="vue" user_cart={cart} />
 
       <section class="mb-12 w-full">
 
@@ -52,7 +172,7 @@ import Layout from "@/layouts/Layout.astro";
             <span>私讯</span>
           </Button>
         </div>
-
+        
       </section>
   
   
@@ -75,17 +195,14 @@ import Layout from "@/layouts/Layout.astro";
             </div>
   
             <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
-            
-            <Bracelet client:only="vue" json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
-              <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
-                <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
-                <span>订制五色绳</span>
-              </Button>
-            </Bracelet>
-            <!-- <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
+          
+          <!-- Pass cart as props to Bracelet -->
+          <Bracelet client:only="vue" cart={cart} json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
+            <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
               <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
               <span>订制五色绳</span>
-            </Button> -->
+            </Button>
+           </Bracelet>
   
           </div>
   

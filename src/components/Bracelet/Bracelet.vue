@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/dialog'
 import Form from "./Form.vue"
 
-const props = defineProps(["json_schema","field_config"])
-const { json_schema, field_config } = toRefs(props)
+const props = defineProps(["cart","json_schema","field_config"])
+const { cart, json_schema, field_config } = toRefs(props)
 </script>
 <template> 
     <!-- <div class="rounded-lg relative flex flex-col items-center">
@@ -27,9 +27,8 @@ const { json_schema, field_config } = toRefs(props)
             <div class="grid gap-4 py-4 overflow-y-auto px-6">
               <DialogTitle class="text-[25px] text-center">五色绳</DialogTitle>
               <DialogDescription></DialogDescription>
-              <Form :json_schema="json_schema" :field_config="field_config" />
-            <Button v-if="quantity > 0" @click="addToCart" class="bg-purple-600 text-white py-2 px-4 rounded mt-4 w-full text-[20px] h-full font-medium">购买</Button>
-          </div>  
+              <Form :user_cart="cart" :json_schema="json_schema" :field_config="field_config" />
+            </div>  
           </DialogContent>
         </Dialog>
       <!-- </div>
