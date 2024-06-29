@@ -33,24 +33,21 @@
                 <AddButton :product="product" />
               </div>
             </div>
-          </div>
 
-          <div class="pt-8 w-full sticky bottom-4">
-            <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
-              <span class="text-xl text-white">确认</span>
-            </Button>
-          </div>
-        </template>
+            <div class="pt-8 w-full sticky bottom-4">
+              <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+                <span class="text-xl text-white">确认</span>
+              </Button>
+            </div>
+          </template>
 
-        <template v-if="page =='form'">
-          <div class="w-full">
-  
+          <template v-if="page =='form'">
+            <div class="w-full">
               <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
-  
-          </div>
-        </template>
+            </div>
+          </template>
 
-        <template v-if="page =='loading'">
+          <template v-if="page =='loading'">
             <div class="pt-8 w-full sticky bottom-4">
               <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
                 <span class="text-xl text-white">确认</span>

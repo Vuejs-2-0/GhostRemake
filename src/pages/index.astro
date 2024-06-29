@@ -17,6 +17,7 @@ import CartFooterVue from "@/components/CartFooter.vue"
 import { getBookProducts } from "../lib/tarpit_gql";
 import { getProducts } from "../lib/tarpit_gql";
 import { ref } from "vue";
+import Layout from "@/layouts/Layout.astro";
 
 const products = await getBookProducts();
 
@@ -145,8 +146,8 @@ if (Astro.request.method === "POST") {
         const osInstance = OverlayScrollbars( _body, {});
       }
 
-import Layout from "@/layouts/Layout.astro";
----
+      
+      </script>
 
 <Layout>
 
@@ -240,6 +241,9 @@ import Layout from "@/layouts/Layout.astro";
 
 
 </Layout>
+  
+    </body>
+</html>
 
 <!-- <html lang="en">
   <head>
