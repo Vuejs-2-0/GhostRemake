@@ -8,12 +8,11 @@
         :field-config="field_config"
         @submit="_updateCart"
       ></AutoForm>
-      <p>{{ user_cart.metadata }}</p>
       <Button
         @click="_updateCart"
         class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3"
       >
-        <span class="text-xl text-white">{{ quantity }} 加入购物车 </span>
+        <span class="text-xl text-white">加入购物车 </span>
       </Button>
     </template>
   </div>

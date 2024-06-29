@@ -30,11 +30,6 @@
                   <p class="text-lg font-semibold">{{ product.name }}</p>
                 </div>
                 <p>RM {{ product.price }}.00</p>
-                <template v-if="product.type === 'bracelet'">
-                  <p>{{ product.effect }}</p>
-                  <p>{{ product.size }}</p>
-                  <p>{{ product.comment }}</p>
-                </template>
               </div>
               <AddButton :product="product" />
             </div>
@@ -173,8 +168,19 @@ const props = defineProps({
 
 const productList = computed(() => {
   if (!$cart.value.items) return [];
-  return products.value.filter(p => $cart.value.items[p.id])
-                      .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));
+  // initiate an array to store the filter
+  const filtered = products.value.filter(p => $cart.value.items[p.id])
+                                 .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));;
+  //If there is a product with id "9", separate it out
+  const product9 = filtered.find(p => p.id === 9);
+  //If there is a product with id "9", make each of them as single product, and each of them will have quantity of 1
+  if (product9) {
+    filtered.splice(filtered.indexOf(product9), 1);
+    for (let i = 0; i < product9.quantity; i++) {
+      filtered.push({ ...product9, quantity: 1 });
+    }
+  }
+  return filtered;
 });
 
 const { form, products } = toRefs(props);
