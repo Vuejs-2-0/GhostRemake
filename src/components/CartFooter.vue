@@ -19,14 +19,7 @@
                 </a>
               </MenubarItem>
               <MenubarSeparator />
-              <MenubarItem>
-                <form>
-                  <input hidden name="operation" value="logout">
-                  <button class="w-full" type="submit">
-                      <span>登出</span>
-                  </button>
-                </form>
-              </MenubarItem>
+              <MenubarItem @click="handleLogout">登出</MenubarItem>
             </div>
           </MenubarContent>
         </MenubarMenu>
@@ -79,7 +72,34 @@
   userExist: {
     type: Boolean,
     required: true
+  },
+  email: {
+    type: String,
+    required: true
   }
   });
+
+  const handleLogout = async () => {
+    const formData = new FormData();
+    const operation = 'logout';
+    formData.append('operation', operation);
+    formData.append('email', props.email);
+    
+    try {
+      const response = await fetch(window.location.pathname, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+          console.log('Form submitted successfully');
+          window.location.reload();
+      } else {
+        console.error('Form submission failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
 
 </script>
