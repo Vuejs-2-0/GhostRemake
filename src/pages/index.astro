@@ -147,7 +147,7 @@ if (Astro.request.method === "POST") {
 
     </script>
 
-    <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} />
+    <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} />
     <CartStore client:only="vue" user_cart={cart} />
 
     <section class="w-full mb-12">
