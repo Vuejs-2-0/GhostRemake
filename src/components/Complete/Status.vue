@@ -4,6 +4,7 @@
 
         <p>Submission complete.</p>
         <p>tx: {{ tx_data?.uuid }}</p>
+        <p>type: {{ tx_data?.payment_type }}</p>
 
         <br>
         <br>
@@ -21,7 +22,7 @@
         <br>
         <br>
 
-        <template v-if="tx_data?.payment_method == 'stripe' ">
+        <template v-if="tx_data?.payment_type == 'stripe' ">
 
             <template v-if="tx_data?.status !='paid'">
                 
@@ -85,7 +86,7 @@
 
         await fetchStatus()
 
-        if(tx_data.value?.payment_method == 'stripe' && tx_data.value?.status !== 'paid'){
+        if(tx_data.value?.payment_type == 'stripe' && tx_data.value?.status !== 'paid'){
             startTimer();
             
             counter.value = 30;

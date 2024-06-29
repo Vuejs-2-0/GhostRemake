@@ -2,43 +2,44 @@
 const { products } = Astro.props;
 
 import AddButton from '@/components/Product/AddButton.vue';
+import { Button } from "@/components/ui/button";
 import DetailsButton from '@/components/Product/DetailsButton.vue';
 
 // console.log(products);
 ---
 
-<div>
-  <div class="product-card flex justify-center items-center p-4 bg-white">
-    <h3 class="font-bold pl-4 text-[36px]">友鬼系列</h3>
-  </div>
+<div class="max-w-sm w-full ">
+  <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    <div class="w-full h-48 rounded-xl bg-gray-100/50"></div>
 
-  <div class="featured-product p-4 m-4 bg-white border border-purple-500 rounded-lg relative flex flex-col items-center">
-    <span class="absolute top-2 right-2 text-purple-500 border border-purple-500 rounded-full px-2 py-1 text-sm">全新</span>
-    <img src="/img/temporaryimg.webp" alt="Featured Product Image" class="w-[120px] h-[175px] mt-6 object-cover" />
-    <div class="flex justify-between items-center w-full mt-4">
-      <h3 class="text-[24px] font-semibold">真的友鬼 7</h3>
-      <p class="text-[16px]">RM 25</p>
+    <div class="w-full flex justify-between items-center mt-4">
+      <div class="col-span-3">
+        <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
+        <p>RM 25.00</p>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <Button class="w-full p-2 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
+          <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
+          <span>选购</span>
+        </Button>
+      </div>
     </div>
-    <!-- <Button @click="increaseQuantity(products[6].id)" class="bg-purple-500 text-white py-2 px-4 rounded mt-4 w-full h-[54px] text-[24px]">
-        <p>添加至购物车</p>
-      </Button> -->
-  </div>
+  </article>
 
   {
-    products.map((product: any) => (
-      <div class="product-card flex justify-between items-center p-4 bg-white">
-        <img src={product.media.image} alt="Product Image" class="w-16 h-16 rounded object-cover" />
-        <div class="product-info flex-grow ml-4">
+    products.filter((product: any) => product.id != 9).map((product: any) => (
+      <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
+        <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl" />
+        <div class="col-span-5">
           <h3 class="text-lg font-semibold">{product.name}</h3>
 
-          <p class="text-sm text-gray-500">RM{product.price}</p>
+          <p>RM {product.price}.00</p>
 
         </div>
-        <div class="actions flex justify-end items-center">
-
-            <DetailsButton client:only="vue" product={product} />
-            <AddButton client:only="vue" product={product} />
-
+        <div class="col-span-3">
+          {/* <DetailsButton client:only="vue" product={product} /> */}
+          <AddButton client:only="vue" product={product} />
         </div>
       </div>
     ))

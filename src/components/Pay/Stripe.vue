@@ -91,16 +91,28 @@ onMounted(async () => {
 
 const submitStripe = async () => {
 
+    // PUT because we are actually updating the transaction
+    
 
     stripeBusy.value = true;
 
+    let _result = await fetch('/api/tx.json', {
+        method: 'PUT',
+        body: JSON.stringify({
+            uuid: tx.value.uuid,
+            paymentType: 'stripe'
+        })
+    })
+
+    console.log(_result)
+
     const result = await stripe.value.confirmPayment({
-    elements:elements.value,
-    confirmParams: {
-        // Make sure to change this to your payment completion page
-    //   return_url: "http://localhost:4242/checkout.html",
-    return_url: `${window.location.origin}/complete?tx=${tx.value.uuid}`
-    },
+        elements:elements.value,
+        confirmParams: {
+            // Make sure to change this to your payment completion page
+        //   return_url: "http://localhost:4242/checkout.html",
+        return_url: `${window.location.origin}/complete?tx=${tx.value.uuid}`
+        },
     });
 
     stripeBusy.value = false;

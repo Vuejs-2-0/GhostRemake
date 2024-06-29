@@ -3,7 +3,7 @@ import '../styles/globals.css'
 import HistoryList from '../components/HistoryList.vue';
 const props = Astro.props
 
-const { tx } = Astro.locals
+const { tx } = Astro.locals as any;
 
 ---
 

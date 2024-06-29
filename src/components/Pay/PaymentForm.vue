@@ -44,7 +44,8 @@
             let payload = {
                 ...ev,
                 uuid: uuid.value,
-                status: 'to_verify'
+                status: 'to_verify',
+                paymentType: 'upload_proof'
             }
 
             // PUT because we are actually updating the transaction

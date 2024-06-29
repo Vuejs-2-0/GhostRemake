@@ -13,7 +13,6 @@ let { cart } = Astro.locals as any
 
 let item_ids = Object.keys(cart.items).map(id => parseInt(id))
 // make items into an array
-console.log(item_ids)
 
 
 let products = await getProductsByIds(item_ids)

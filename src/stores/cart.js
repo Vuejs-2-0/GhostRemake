@@ -1,5 +1,5 @@
 import { map } from 'nanostores';
-import { updateCart as updateCartGql } from '@/lib/tarpit_gql';
+// import { updateCart as updateCartGql } from '@/lib/tarpit_gql';
 // export const cart = map({
 //   items: [
 //     { id: 1, quantity: 0, name: '真的友鬼 1', price: 'RM 25.00', img: '/img/profile.webp', description: '弟弟消脱臭靠谁邢湘揽' },
@@ -65,6 +65,41 @@ export const updateProductInCart = async (id, quantity) => {
     body: JSON.stringify({
         cartId: currentCart.id,
         items: currentCart.items
+      })
+  });
+
+  let data = await response.json();
+
+  return data
+}
+
+export const updateProductBraceletInCart = async (id, quantity, metadata) => {
+
+  const currentCart = cart.get();
+
+  currentCart.metadata = metadata;
+
+  currentCart.items[id] = quantity;
+
+  for(let key of Object.keys(currentCart.items)){
+    if(currentCart.items[key] === 0){
+      delete currentCart.items[key];
+    }
+  }
+
+  cart.set({
+    ...currentCart
+  });
+
+  let response = await fetch('/api/cart.json', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        cartId: currentCart.id,
+        items: currentCart.items,
+        metadata: currentCart.metadata
       })
   });
 
