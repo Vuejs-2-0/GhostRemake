@@ -1,23 +1,28 @@
 <template>
   <div class="fixed bottom-3 w-full flex justify-center items-center z-50">
     <div class="w-full max-w-sm flex justify-start items-center space-x-2">
-      <Menubar>
-        <MenubarMenu>
-          <MenubarTrigger>
-            <Button class="p-3 bg-white rounded-2xl min-h-0 h-auto text-salmon flex justify-center items-center text-xl shadow-xl border border-gray-200 hover:bg-salmon-100 hover:text-salmon-500 hover:border-salmon duration-300 transition-all scale-100 active:scale-95">
-              <iconify-icon class="text-2xl" icon="iconamoon:menu-burger-horizontal-duotone"></iconify-icon>
-            </Button>
+      <Menubar >
+        <MenubarMenu >
+          <MenubarTrigger >
+            <div class=" bg-white rounded-2xl min-h-0 h-auto text-salmon flex justify-center items-center text-xl  hover:text-salmon-500  duration-300 transition-all scale-100 active:scale-95">
+              <iconify-icon class="text-2xl " icon="iconamoon:menu-burger-horizontal-duotone"></iconify-icon>
+            </div>
           </MenubarTrigger>
           <MenubarContent>
             <MenubarItem v-if="!userExist">
               <Button variant="ghost" class="w-full justify-start" @click="openDialog">注册帐号</Button>
             </MenubarItem>
             <div v-else>
-              <MenubarItem>
-                <a href="/setting">
-                  <span>个人资料</span>
-                </a>
-              </MenubarItem>
+              <a href="/setting">
+                <MenubarItem >
+                    <span>个人资料</span>
+                </MenubarItem>
+              </a>
+              <a href="/history">
+                <MenubarItem >
+                    <span>购买记录</span>
+                </MenubarItem>
+              </a>
               <MenubarSeparator />
               <MenubarItem @click="handleLogout">登出</MenubarItem>
             </div>
@@ -33,7 +38,7 @@
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
               <div class="flex justify-start items-center text-xl">
                 <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
-                <p>已选 5 件</p>
+                <p>已选 <IteminCart client:only="vue"/> 件</p>
               </div>
   
               <div class="flex justify-end items-center space-x-2">
@@ -42,9 +47,6 @@
               </div>
             </Button>
       </Dialog2>
-
-
-      
     </div>
   </div>
 </template>
@@ -64,6 +66,7 @@
   } from '@/components/ui/menubar'
   import SignUp from './SignUp2.vue';
   import { defineProps, ref } from 'vue';
+  import IteminCart from '@/components/Footer/ItemInCart.vue';
 
   const props = defineProps({
   products: {
