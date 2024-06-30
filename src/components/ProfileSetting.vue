@@ -18,10 +18,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import ChangePassword from "../components/ChangePassword.vue";
 </script>
 
 <template>
-  <Card class="w-[60%] mx-auto ">
+  <Card class="w-[60%] mx-auto border-black">
     <CardHeader>
       <CardTitle>个人资料</CardTitle>
       <CardDescription>请填写真实信息</CardDescription>
@@ -30,12 +31,18 @@ import { Textarea } from '@/components/ui/textarea'
       <form>
         <div class="grid items-center w-full gap-4">
           <div class="flex flex-col space-y-2">
-            <Label for="CName">中文姓名</Label>
+            <Label for="CName">
+              <span>中文姓名</span>
+              <span class="text-red-500 ml-1">*</span>
+            </Label>
             <Input id="CName" placeholder="请输入中文姓名" />
           </div>
           <div class="flex flex-col space-y-1.5">
-            <Label for="EName">英文姓名</Label>
-            <Input id="EName" placeholder="请输入英文姓名" />
+            <Label for="EName">
+              <span>英文姓名</span>
+              <span class="text-red-500 ml-1">*</span>
+            </Label>
+            <Input id="EName" placeholder="请输入英文姓名"/>
           </div>
           <hr>
         </div>
@@ -50,11 +57,17 @@ import { Textarea } from '@/components/ui/textarea'
       <form>
         <div class="grid items-center w-full gap-4">
           <div class="flex flex-col space-y-1.5">
-            <Label for="phone">电话号码</Label>
+            <Label for="phone">
+              <span>电话号码</span>
+              <span class="text-red-500 ml-1">*</span>
+            </Label>
             <Input id="phone" placeholder="请输入电话号码" />
           </div>
           <div class="flex flex-col space-y-1.5">
-            <Label for="address">收件人地址</Label>
+            <Label for="address">
+              <span>收件人地址</span>
+              <span class="text-red-500 ml-1">*</span>
+            </Label>
             <Textarea id="address" placeholder="请输入正确的地址格式" />
           </div>
           <hr>
@@ -66,23 +79,23 @@ import { Textarea } from '@/components/ui/textarea'
       <CardDescription>请填写真实信息</CardDescription>
     </CardHeader>
     <CardContent>
-      <form>
-        <div class="grid items-center w-full gap-4">
-          <div class="flex flex-col space-y-1.5">
-            <Label for="email">电子邮件</Label>
-            <Input disabled id="email" placeholder="example@gmail.com" />
-          </div>
-          <div class="flex flex-col space-y-1.5">
-            <Button>更改密码</Button>
-          </div>
-          <hr>
+      <div class="grid items-center w-full gap-4">
+        <form>
+            <div class="flex flex-col space-y-1.5">
+              <Label for="email">电子邮件</Label>
+              <Input disabled id="email" placeholder="example@gmail.com" />
+            </div>
+        </form>
+        <div class="flex flex-col space-y-1.5 items-start">
+          <ChangePassword />
         </div>
-      </form>
+        <hr>
+      </div> 
     </CardContent>
-    <CardFooter class="flex justify-between px-6 pb-6">
-      <Button variant="outline">
-        取消
-      </Button>
+    <CardFooter class="flex justify-end gap-2">
+      <a href="/">
+        <Button variant="outline">取消</Button>
+      </a>
       <Button>更改</Button>
     </CardFooter>
   </Card>
