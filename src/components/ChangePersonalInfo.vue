@@ -12,6 +12,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+import { ref, toRefs } from 'vue';
+
+const profile = ref([
+  {
+    CName: '杨例子',
+    EName: 'Yong Example',
+  },
+  // Add more dummy data as needed
+]);
 </script>
 
 <template>
@@ -32,14 +41,14 @@ import { Label } from '@/components/ui/label'
             <span>中文姓名</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Input id="CName" class="col-span-3"  placeholder="杨例子"  />
+          <Input id="CName" class="col-span-3"  :placeholder="profile[0].CName"  />
         </div>
         <div class="grid grid-cols-4 items-center gap-4">
           <Label for="EName" class="text-right">
             <span>英文姓名</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Input id="EName" class="col-span-3"  placeholder="Yong Example" />
+          <Input id="EName" class="col-span-3"  :placeholder="profile[0].EName" />
         </div>
       </div>
       <DialogFooter>

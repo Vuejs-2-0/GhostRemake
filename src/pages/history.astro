@@ -3,8 +3,6 @@ import '../styles/globals.css'
 import HistoryList from '../components/HistoryList.vue';
 const props = Astro.props
 
-const { tx } = Astro.locals as any;
-
 ---
 
 <html lang="en">
@@ -14,26 +12,23 @@ const { tx } = Astro.locals as any;
   <title>购买记录</title>
 </head>
 
-<body class="bg-gray-100">
-  <div class="max-w-screen-md mx-auto bg-white p-4 shadow-md rounded-md">
-    <div class="navbar flex justify-between items-center p-4 text-lg border-b">
-      <div class="sticky top-0 z-20">
-        <div class="flex items-center">
-          <a href="/" class="flex items-center">
-            <button class="menu-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" {...props}>
-                <path fill="currentColor" d="m6.293 13.707l-5-5a.999.999 0 0 1 0-1.414l5-5a.999.999 0 1 1 1.414 1.414L4.414 7H14a1 1 0 0 1 0 2H4.414l3.293 3.293a.997.997 0 0 1 0 1.414a.999.999 0 0 1-1.414 0" />
-              </svg>
-            </button>
-          </a>
-          <p class="ml-4 font-semibold">购买记录</p>
-        </div>
-      </div>
+<body>
+  <div class="items-center flex-col mb-16">
+
+    <div class="flex justify-start p-4 text-lg border-b mb-8">
+      
+        <a href="/" class="flex items-center">
+          <button class="menu-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" {...props}>
+              <path fill="currentColor" d="m6.293 13.707l-5-5a.999.999 0 0 1 0-1.414l5-5a.999.999 0 1 1 1.414 1.414L4.414 7H14a1 1 0 0 1 0 2H4.414l3.293 3.293a.997.997 0 0 1 0 1.414a.999.999 0 0 1-1.414 0" />
+            </svg>
+          </button>
+        </a>
+
+        <p class="ml-4 font-semibold">购买记录</p>
     </div>
-
-
-    <hr>
-    <HistoryList tx={tx} />
+    
+    <HistoryList client:only="vue" />
   </div>
 </body>
 </html>
