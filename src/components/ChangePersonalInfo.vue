@@ -17,26 +17,29 @@ import { Label } from '@/components/ui/label'
 <template>
   <Dialog>
     <DialogTrigger>
-        <Button  class="font-bold text-sm rounded-md bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改密码</Button>
+        <Button  class="font-bold text-sm rounded-md bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改个人资料</Button>
     </DialogTrigger>
     <DialogContent class="w-[90%]:text-xs sm:w-[60%]:text-sm lg:w-[40%]:text-lg 2xl:w-[30%]">
       <DialogHeader>
-        <DialogTitle>更改密码</DialogTitle>
+        <DialogTitle>更改个人资料</DialogTitle>
+        <DialogDescription>
+            请填写真实信息
+        </DialogDescription>
       </DialogHeader>
       <div class="grid gap-4 py-4">
         <div class="grid grid-cols-4 items-center gap-4">
-          <Label for="NewPassword" class="text-right">
-            <span>新密码</span>
+          <Label for="CName" class="text-right">
+            <span>中文姓名</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Input id="NewPassword" class="col-span-3" />
+          <Input id="CName" class="col-span-3"  placeholder="杨例子"  />
         </div>
         <div class="grid grid-cols-4 items-center gap-4">
-          <Label for="ConfirmNewPassword" class="text-right">
-            <span>确认新密码</span>
+          <Label for="EName" class="text-right">
+            <span>英文姓名</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Input id="ConfirmNewPassword" class="col-span-3" />
+          <Input id="EName" class="col-span-3"  placeholder="Yong Example" />
         </div>
       </div>
       <DialogFooter>
