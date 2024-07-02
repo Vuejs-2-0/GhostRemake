@@ -21,6 +21,19 @@ import { Textarea } from '@/components/ui/textarea'
 import ChangePassword from "../components/ChangePassword.vue";
 import ChangePersonalInfo from "../components/ChangePersonalInfo.vue";
 import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
+
+import { ref, toRefs } from 'vue';
+
+const profile = ref([
+  {
+    CName: '杨例子',
+    EName: 'Yong Example',
+    phone: '01234567899',
+    address: '11, JALAN EXAMPLE 5/7, TAMAN EXAMPLE, 81110 JOHOR BAHRU, JOHOR.',
+    email: 'example@gmail.com',
+  },
+  // Add more dummy data as needed
+]);
 </script>
 
 <template>
@@ -38,13 +51,13 @@ import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
             <Label for="CName">
               <span>中文姓名</span>
             </Label>
-            <Input disabled id="CName" placeholder="杨例子" class="placeholder-black"/>
+            <Input disabled id="CName" :placeholder="profile[0].CName"/>
           </div>
           <div class="flex flex-col space-y-1.5">
             <Label for="EName">
               <span>英文姓名</span>
             </Label>
-            <Input class="disabled:text-green-900 " disabled id="EName" placeholder="Yong Example"/>
+            <Input disabled id="EName" :placeholder="profile[0].EName"/>
           </div>
           <hr>
         </div>
@@ -64,13 +77,13 @@ import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
             <Label for="phone">
               <span>电话号码</span>
             </Label>
-            <Input disabled id="phone" placeholder="01234567899" />
+            <Input disabled id="phone" :placeholder="profile[0].phone" />
           </div>
           <div class="flex flex-col space-y-1.5">
             <Label for="address">
               <span>收件人地址</span>
             </Label>
-            <Textarea disabled id="address" placeholder="11, JALAN EXAMPLE 5/7, TAMAN EXAMPLE, 81110 JOHOR BAHRU, JOHOR." />
+            <Textarea disabled id="address" :placeholder="profile[0].address" />
           </div>
           <hr>
         </div>
@@ -85,7 +98,7 @@ import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
         <form>
             <div class="flex flex-col space-y-1.5">
               <Label for="email">电子邮件</Label>
-              <Input disabled id="email" placeholder="example@gmail.com" />
+              <Input disabled id="email" :placeholder="profile[0].email" />
             </div>
         </form>
         <div class="flex flex-col space-y-1.5 items-start">
@@ -98,7 +111,7 @@ import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
       <a href="/">
         <Button variant="outline">取消</Button>
       </a>
-      <Button class=" bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改</Button>
+      <Button class="bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改</Button>
     </CardFooter>
   </Card>
 </template>
