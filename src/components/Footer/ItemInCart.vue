@@ -1,5 +1,5 @@
 <template>
-  <span>购物车 ({{ totalItems }})</span>
+  <span>{{ totalItems }}</span>
 </template>
 
 <script setup>

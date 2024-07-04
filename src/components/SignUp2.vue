@@ -1,11 +1,4 @@
 <template>
-    <Dialog>
-      <DialogTrigger>
-        <div class="flex justify-between items-center p-4 text-lg text-[#B551F3]">
-            <button>注册帐号</button>
-        </div>
-      </DialogTrigger>
-
       <DialogContent class="sm:max-w-[425px] grid grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90vh]">
         <DialogDescription></DialogDescription>
         <div v-if="isSignupOpen" class="grid gap-4 py-4 overflow-y-auto px-6">
@@ -53,7 +46,6 @@
             </div>
         </div>  
       </DialogContent>
-    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -74,6 +66,10 @@ const switchToLogin = () => {
 
 const switchToSignup = () => {
   isSignupOpen.value = true;
+};
+
+const runConsole = () => {
+  console.log('Hello, world!');
 };
 
 const handleSubmit = async (operation: string) => {
