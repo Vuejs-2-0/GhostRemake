@@ -17,7 +17,6 @@ import { getProducts } from "../lib/tarpit_gql";
 
 const products = await getProducts();
 
-
 const { cart, user } = Astro.locals as { cart: any, user: any };
 const { session } = Astro.locals as unknown as { session: any };
 
