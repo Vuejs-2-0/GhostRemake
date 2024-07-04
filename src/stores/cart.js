@@ -73,6 +73,41 @@ export const updateProductInCart = async (id, quantity) => {
   return data
 }
 
+export const updateProductBraceletInCart = async (id, quantity, metadata) => {
+
+  const currentCart = cart.get();
+
+  currentCart.metadata = metadata;
+
+  currentCart.items[id] = quantity;
+
+  for(let key of Object.keys(currentCart.items)){
+    if(currentCart.items[key] === 0){
+      delete currentCart.items[key];
+    }
+  }
+
+  cart.set({
+    ...currentCart
+  });
+
+  let response = await fetch('/api/cart.json', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        cartId: currentCart.id,
+        items: currentCart.items,
+        metadata: currentCart.metadata
+      })
+  });
+
+  let data = await response.json();
+
+  return data
+}
+
 // export function addQuantity(productId){
 //   const currentCart = cart.get();
 //   const items = currentCart.items;
