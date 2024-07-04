@@ -10,7 +10,9 @@ import {
   DialogTrigger,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { cart, addQuantity, minusQuantity } from '@/stores/cart';
+// import { cart, addQuantity, minusQuantity } from '@/stores/cart';
+import { cart } from '@/stores/cart';
+
 import { computed } from 'vue';
 import { useStore } from '@nanostores/vue';
 import { getProducts } from "../../lib/tarpit_gql";
@@ -20,15 +22,15 @@ const products = await getProducts();
 const $cart = useStore(cart);
 
 const filteredProducts = computed(() => {
-  return products.filter(product => $cart.value.items[product.id] > 0);
+  // return products.filter(product => $cart.value.items[product.id] > 0);
 });
 
 const increaseQuantity = (productId: number) => {
-  addQuantity(productId);
+  // addQuantity(productId);
 };
 
 const decreaseQuantity = (productId: number) => {
-  minusQuantity(productId);
+  // minusQuantity(productId);
 };
 </script>
 

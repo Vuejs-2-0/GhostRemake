@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import ChangePassword from "../components/ChangePassword.vue";
+
 import ChangePersonalInfo from "../components/ChangePersonalInfo.vue";
 import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
 
@@ -38,6 +39,7 @@ const profile = ref([
 
 <template>
   <Card class="w-[90%] sm:w-[60%] lg:w-[40%] 2xl:w-[30%] mx-auto border-black">
+
     <CardHeader>
       <div class="flex justify-between">
         <CardTitle>个人资料</CardTitle>
@@ -50,14 +52,18 @@ const profile = ref([
           <div class="flex flex-col space-y-2">
             <Label for="CName">
               <span>中文姓名</span>
+
             </Label>
             <Input disabled id="CName" :placeholder="profile[0].CName"/>
+
           </div>
           <div class="flex flex-col space-y-1.5">
             <Label for="EName">
               <span>英文姓名</span>
+
             </Label>
             <Input disabled id="EName" :placeholder="profile[0].EName"/>
+
           </div>
           <hr>
         </div>

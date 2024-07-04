@@ -30,6 +30,7 @@
         </MenubarMenu>
       </Menubar>
 
+
       <Dialog v-model:open="isDialogOpen">
       <SignUp />
     </Dialog>
@@ -87,6 +88,7 @@
   }
   });
 
+
   const isDialogOpen = ref(false);
 
   const openDialog = () => {
@@ -115,5 +117,6 @@
       console.error('Error submitting form:', error);
     }
   };
+
 
 </script>

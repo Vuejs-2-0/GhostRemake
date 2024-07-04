@@ -1,21 +1,41 @@
 <template>
-  <div>
-    <div class="">
-      <Vue3Dropzone width="300px" height="300px" v-model="files" />
+  <div class="w-full max-w-sm pt-4">
+    <div class="w-full">
+      <Vue3Dropzone ref="dropzone" height="300px" v-model="files" />
 
       <p v-if="uploadBusy">Loading...</p>
 
-      <Button @click="submitProof()" :disabled="!publicURL || uploadBusy">Submit</Button>
+      <!-- <Button @click="submitProof()" :disabled="!publicURL || uploadBusy">上传收据</Button> -->
+
+      <Button @click="submitProof()" :disabled="!publicURL || uploadBusy" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3 w-full mt-4">
+        <span class="text-xl text-white">上传收据</span>
+      </Button>
 
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Vue3Dropzone from "@jaxtheprime/vue3-dropzone";
-import "@jaxtheprime/vue3-dropzone/dist/style.css";
+
 import { Button } from "@/components/ui/button";
+
+onMounted( () => {
+//   .preview > img {
+//   object-fit: cover;
+// }
+
+// .select-file {
+// background-color: #FF4D00!important;
+// }
+// </style>
+
+  
+
+  
+
+})
 
 const files = ref([]);
 
@@ -35,6 +55,33 @@ const submitProof = () => {
   });
 
 };
+
+const dropzone = ref(null);
+
+watch(dropzone, () => {
+  // processFile();
+  console.log(dropzone.value);
+
+  // document.querySelector(".select-file").style.backgroundColor = "#FF4D00";
+  // document.querySelector(".preview").style.objectFit = "cover";
+
+  let style_body = `<style>
+.preview > img {
+  object-fit: cover;
+}
+
+.select-file {
+background-color: #FF4D00!important;
+}
+</style>`
+
+  // add the style node
+
+  let style = document.createElement("style");
+  style.innerHTML = style_body;
+  document.head.appendChild(style);
+
+});
 
 watch(files, () => {
   processFile();
@@ -87,8 +134,12 @@ const getFileData = (_file) => {
 };
 </script>
 
-<style>
+<!-- <style>
 .preview > img {
   object-fit: cover;
 }
-</style>
+
+.select-file {
+background-color: #FF4D00!important;
+}
+</style> -->

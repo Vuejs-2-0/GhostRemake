@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import vue from "@astrojs/vue";
 import tailwind from "@astrojs/tailwind";
-
+import swup from '@swup/astro';
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
@@ -15,6 +15,9 @@ export default defineConfig({
       },
     }),
     tailwind({ applyBaseStyles: false }),
+    swup({
+      globalInstance: true
+    })
   ],
   output: "server",
   adapter: cloudflare(),
