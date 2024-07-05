@@ -1,31 +1,111 @@
 <script setup lang='ts'>
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import ChangePassword from "../components/ChangePassword.vue";
+
+import ChangePersonalInfo from "../components/ChangePersonalInfo.vue";
+import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
+
+import { ref, toRefs } from 'vue';
+
+const profile = ref([
+  {
+    CName: '杨例子',
+    EName: 'Yong Example',
+    phone: '01234567899',
+    address: '11, JALAN EXAMPLE 5/7, TAMAN EXAMPLE, 81110 JOHOR BAHRU, JOHOR.',
+    email: 'example@gmail.com',
+  },
+  // Add more dummy data as needed
+]);
 </script>
 
 <template>
-  <Card class="w-[60%] mx-auto border-black">
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">个人资料</strong>
+            <ChangePersonalInfo />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">中文姓名</h1>
+              <p>{{ profile[0].CName }}</p>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h1 class="font-bold">英文姓名</h1>
+              <p>{{ profile[0].EName }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">运输资料</strong>
+            <ChangeDeliveryInfo />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">电话号码</h1>
+              <p>{{ profile[0].phone }}</p>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h1 class="font-bold">收件人地址</h1>
+              <p>{{ profile[0].address }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">账户资料</strong>
+            <ChangePassword />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">电子邮件</h1>
+              <p>{{ profile[0].email }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+  <!-- <Card class="w-[90%] sm:w-[60%] lg:w-[40%] 2xl:w-[30%] mx-auto border-black">
+
     <CardHeader>
-      <CardTitle>个人资料</CardTitle>
-      <CardDescription>请填写真实信息</CardDescription>
+      <div class="flex justify-between">
+        <CardTitle>个人资料</CardTitle>
+        <ChangePersonalInfo />
+      </div>
     </CardHeader>
     <CardContent>
       <form>
@@ -33,16 +113,18 @@ import ChangePassword from "../components/ChangePassword.vue";
           <div class="flex flex-col space-y-2">
             <Label for="CName">
               <span>中文姓名</span>
-              <span class="text-red-500 ml-1">*</span>
+
             </Label>
-            <Input id="CName" placeholder="请输入中文姓名" />
+            <Input disabled id="CName" :placeholder="profile[0].CName"/>
+
           </div>
           <div class="flex flex-col space-y-1.5">
             <Label for="EName">
               <span>英文姓名</span>
-              <span class="text-red-500 ml-1">*</span>
+
             </Label>
-            <Input id="EName" placeholder="请输入英文姓名"/>
+            <Input disabled id="EName" :placeholder="profile[0].EName"/>
+
           </div>
           <hr>
         </div>
@@ -50,8 +132,10 @@ import ChangePassword from "../components/ChangePassword.vue";
     </CardContent>
 
     <CardHeader>
-      <CardTitle>运输资料</CardTitle>
-      <CardDescription>请确保您的联系信息正确，以确保您的货物正确送达</CardDescription>
+      <div class="flex justify-between">
+        <CardTitle>运输资料</CardTitle>
+        <ChangeDeliveryInfo />
+      </div>
     </CardHeader>
     <CardContent>
       <form>
@@ -59,16 +143,14 @@ import ChangePassword from "../components/ChangePassword.vue";
           <div class="flex flex-col space-y-1.5">
             <Label for="phone">
               <span>电话号码</span>
-              <span class="text-red-500 ml-1">*</span>
             </Label>
-            <Input id="phone" placeholder="请输入电话号码" />
+            <Input disabled id="phone" :placeholder="profile[0].phone" />
           </div>
           <div class="flex flex-col space-y-1.5">
             <Label for="address">
               <span>收件人地址</span>
-              <span class="text-red-500 ml-1">*</span>
             </Label>
-            <Textarea id="address" placeholder="请输入正确的地址格式" />
+            <Textarea disabled id="address" :placeholder="profile[0].address" />
           </div>
           <hr>
         </div>
@@ -83,7 +165,7 @@ import ChangePassword from "../components/ChangePassword.vue";
         <form>
             <div class="flex flex-col space-y-1.5">
               <Label for="email">电子邮件</Label>
-              <Input disabled id="email" placeholder="example@gmail.com" />
+              <Input disabled id="email" :placeholder="profile[0].email" />
             </div>
         </form>
         <div class="flex flex-col space-y-1.5 items-start">
@@ -96,7 +178,7 @@ import ChangePassword from "../components/ChangePassword.vue";
       <a href="/">
         <Button variant="outline">取消</Button>
       </a>
-      <Button>更改</Button>
+      <Button class="bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改</Button>
     </CardFooter>
-  </Card>
+  </Card> -->
 </template>
