@@ -16,7 +16,7 @@ const purchaseHistory = ref([
   {
     date: '2024-06-14',
     orderId: 'ORD123457',
-    orderStatus: '已发货',
+    orderStatus: '未发货',
     productName: '真的友鬼2',
     productPrice: 150.00,
     productQuantity: 1,
@@ -49,7 +49,11 @@ const purchaseHistory = ref([
                         <div class="flex items-center space-x-3">
                             <img src="/img/profile2.webp" class="w-16 h-16 object-cover rounded-lg" />
                             <div class="flex flex-col">
-                                <h3 class="font-semibold text-green-600">{{ order.orderStatus }}</h3>
+                                <div>
+                                    <h3 v-if="order.orderStatus==='未发货'" class="font-semibold text-red-600">{{ order.orderStatus }}</h3>
+                                    <h3 v-else-if="order.orderStatus==='已发货'" class="font-semibold text-green-600">{{ order.orderStatus }}</h3>
+                                    <h3 v-else-if="order.orderStatus==='已送达'" class="font-semibold text-gray-600">{{ order.orderStatus }}</h3>
+                                </div>
                                 <h3 class=" font-semibold">{{ order.productName }}</h3>
                                 <p class="text-sm text-black-500">RM {{ order.productPrice.toFixed(2) }}</p>
                             </div>
