@@ -1,11 +1,23 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 import '../styles/globals.css'
 import HistoryList from '../components/HistoryList.vue';
 const props = Astro.props
 
+const { tx } = Astro.locals as any;
 ---
 
-<html lang="en">
+<Layout title="帐户设置">
+
+  <main class="w-full h-full overflow-y-auto relative">
+      <section class="w-full flex flex-col justify-center items-center">
+          <HistoryList client:only="vue" class="mt-8" />
+      </section>
+  </main>
+
+</Layout>
+
+<!-- <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,4 +43,4 @@ const props = Astro.props
     <HistoryList client:only="vue" />
   </div>
 </body>
-</html>
+</html> -->

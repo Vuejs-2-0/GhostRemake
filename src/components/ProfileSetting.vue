@@ -1,23 +1,5 @@
 <script setup lang='ts'>
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import ChangePassword from "../components/ChangePassword.vue";
 
 import ChangePersonalInfo from "../components/ChangePersonalInfo.vue";
@@ -38,7 +20,86 @@ const profile = ref([
 </script>
 
 <template>
-  <Card class="w-[90%] sm:w-[60%] lg:w-[40%] 2xl:w-[30%] mx-auto border-black">
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">个人资料</strong>
+            <ChangePersonalInfo />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">中文姓名</h1>
+              <p>{{ profile[0].CName }}</p>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h1 class="font-bold">英文姓名</h1>
+              <p>{{ profile[0].EName }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">运输资料</strong>
+            <ChangeDeliveryInfo />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">电话号码</h1>
+              <p>{{ profile[0].phone }}</p>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h1 class="font-bold">收件人地址</h1>
+              <p>{{ profile[0].address }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+
+  <div class="w-full max-w-sm py-4 flex justify-between items-center">
+    
+    <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    
+        <div class="w-full mt-2 ml-2 mb-2">
+
+          <div class="flex justify-between mr-4">
+            <strong class="text-salmon-400 text-2xl tracking-wide">账户资料</strong>
+            <ChangePassword />
+          </div>
+            
+          <div class="grid items-center w-full gap-4 mt-4">
+            <div class="flex flex-col space-y-2">
+              <h1 class="font-bold">电子邮件</h1>
+              <p>{{ profile[0].email }}</p>
+            </div>
+          </div>
+
+        </div>
+
+    </article>
+
+  </div>
+  <!-- <Card class="w-[90%] sm:w-[60%] lg:w-[40%] 2xl:w-[30%] mx-auto border-black">
 
     <CardHeader>
       <div class="flex justify-between">
@@ -119,5 +180,5 @@ const profile = ref([
       </a>
       <Button class="bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改</Button>
     </CardFooter>
-  </Card>
+  </Card> -->
 </template>
