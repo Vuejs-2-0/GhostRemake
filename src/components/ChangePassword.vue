@@ -17,9 +17,9 @@ import { Label } from '@/components/ui/label'
 <template>
   <Dialog>
     <DialogTrigger>
-        <Button  class="font-bold text-sm rounded-full">更改密码</Button>
+        <Button  class="font-bold text-sm rounded-md bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">更改密码</Button>
     </DialogTrigger>
-    <DialogContent class="sm:max-w-[425px]">
+    <DialogContent class="w-[90%]:text-xs sm:w-[60%]:text-sm lg:w-[40%]:text-lg 2xl:w-[30%]">
       <DialogHeader>
         <DialogTitle>更改密码</DialogTitle>
       </DialogHeader>
@@ -40,7 +40,7 @@ import { Label } from '@/components/ui/label'
         </div>
       </div>
       <DialogFooter>
-        <Button type="submit">
+        <Button type="submit" class="bg-salmon-500 hover:bg-salmon-100 hover:text-salmon-500">
             确认更改
         </Button>
       </DialogFooter>
