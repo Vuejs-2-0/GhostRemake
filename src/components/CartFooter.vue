@@ -35,7 +35,7 @@
       <SignUp />
     </Dialog>
       
-      <Dialog2 :form="props.form" :products="props.products">
+      <Dialog2 :form="props.form" :products="props.products" :userId="props.userId">
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
               <div class="flex justify-start items-center text-xl">
                 <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
@@ -83,6 +83,10 @@
     required: true
   },
   email: {
+    type: String,
+    required: true
+  },
+  userId:{
     type: String,
     required: true
   }

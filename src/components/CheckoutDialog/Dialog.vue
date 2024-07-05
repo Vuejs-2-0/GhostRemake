@@ -41,6 +41,10 @@
             </div>
           </template>
 
+          <template v-if="page == 'signup'">
+            <SignUp />
+          </template>
+
           <template v-if="page == 'form'">
             <div class="w-full">
               <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
@@ -162,15 +166,18 @@ import { cart } from "@/stores/cart";
 import { useStore } from "@nanostores/vue";
 import AddButton from "./AddButton.vue";
 import { VisuallyHidden } from "radix-vue";
+import SignUp from "@/components/SignUp2.vue";
 
 const open = ref(false);
 
 import Summary from "./Summary.vue";
+import { User } from "lucide-vue-next";
 
 const $cart = useStore(cart);
 const props = defineProps({
   form: Object,
   products: Object, // or Array, depending on the type you're passing
+  userId: String,
 });
 
 const productList = computed(() => {
@@ -188,14 +195,17 @@ const productList = computed(() => {
     }
   }
   return filtered;
-
 });
 
 const { form, products } = toRefs(props);
 const page = ref("list");
 
 const confirmItems = () => {
-  page.value = "form";
+  if(props.userId.substring(0, 5) == "guest"){
+    page.value = "signup";
+  } else{
+    page.value = "form";
+  }
 };
 
 
