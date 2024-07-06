@@ -20,7 +20,7 @@ const { cart, json_schema, field_config } = toRefs(props)
       <div class="flex justify-between items-start w-full mt-4">
         <p class="text-[16px] flex-grow mr-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何說。</p> -->
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger class="w-full">
             <slot></slot>
           </DialogTrigger>
           <DialogContent class="sm:max-w-[425px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
