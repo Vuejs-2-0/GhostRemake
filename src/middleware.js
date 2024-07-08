@@ -6,6 +6,13 @@ import { validateSession, getUserData, newCart, newGuestSession } from "./lib/ta
 export const onRequest = async (context, next) => {
     // if context path's has /api, then we just return next()
 
+	// console.log(context.url.pathname);
+
+	// if(context.url.pathname.startsWith('/pay')) {
+	// 	return next()
+	// }
+
+
     // if(context.url.pathname.startsWith('/api')) {
     //     return next()
     // }

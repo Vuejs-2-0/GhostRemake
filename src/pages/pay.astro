@@ -12,8 +12,14 @@ const tx_id = Astro.url.searchParams.get('tx') || '';
 
 let tx = await getTxByUUID(tx_id);
 
+// only allow the owner to visit this page if status is 'pending'
+
+if (tx.status !== 'pending') {
+    return Astro.redirect('/history');
+}
 
 
+// console.log(tx.status);
 
 ---
 

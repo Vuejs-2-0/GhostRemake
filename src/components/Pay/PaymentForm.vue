@@ -55,7 +55,8 @@
             })
 
             if(result.redirected){
-                window.location.href = result.url
+                // window.location.href = result.url
+                window.location.replace(result.url)
             }
         }
     }
