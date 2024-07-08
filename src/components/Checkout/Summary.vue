@@ -24,7 +24,7 @@
         </template>
         <br>
         <p>Total</p>
-        <p>RM {{ dry_run_result.value }}</p>
+        <p>RM {{ Number(dry_run_result.value).toFixed(2) }}</p>
         
         <Button @click="proceedToPayment()">Proceed to Payment</Button>
 

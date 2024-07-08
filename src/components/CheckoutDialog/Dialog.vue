@@ -200,7 +200,7 @@ const braceletList = computed(() => {
   let quantity = 0;
   quantity = $cart.value.items["9"];
   console.log(quantity);
-  console.log(localCart.value.metadata.bracelets);
+  console.log(localCart?.value?.metadata?.bracelets);
   
   const braceletList = [];
   for (let i = 0; i < quantity; i++) {

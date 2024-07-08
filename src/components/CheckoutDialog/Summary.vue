@@ -70,7 +70,7 @@
             <div class="pt-8 w-full">
               <div class="w-full flex justify-between items-center px-2 py-4 border-t mb-4">
                 <p class="text-xl">总计</p>
-                <p class="text-2xl font-bold">RM {{ value }}</p>
+                <p class="text-2xl font-bold">RM {{ Number(value).toFixed(2) }}</p>
               </div>
 
               
