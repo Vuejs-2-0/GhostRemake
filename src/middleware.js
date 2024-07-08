@@ -22,62 +22,101 @@ export const onRequest = async (context, next) => {
 
 	const sessionId = context.cookies.get("auth_session")?.value ?? null;
 
+	
+
 // console.log(sessionId);
 
-
-
-	// works for both guest and auth user
-	if(sessionId){
-
-		let { session, user:auth_user, cookie } = await validateSession(sessionId);
-
-		// then, we fetch the user data from the session
-
-		context.locals.session = session;
-		context.cookies.set(cookie.name, cookie.value, cookie.attributes);
-
-		if(auth_user.id){
-
-			let { user, cart, tx} = await getUserData(auth_user.id);
-
-
-			// console.log(cart)
-
-			if (cart?.length <= 0) {
-				await newCart(auth_user.id);
-				let new_data = await getUserData(auth_user.id);
-				cart = new_data.cart;
-			}
-			
-
-			context.locals.user = user;
-			context.locals.cart = cart[0];
-			context.locals.tx = tx;
-
-		}
+	let getSession = async (sessionId) => {
+		try {
 		
-	} else {
-
-		// make a guest session
+			if(sessionId) {
+				let { session, user:auth_user, cookie } = await validateSession(sessionId);
+				return { session, user:auth_user, cookie };
+			}
+		
+		} catch(error){
+		
+		}
 
 		let { user:auth_user, cookie, session} = await newGuestSession({});
 		// console.log(result);
 		// create a new cart for the guest
 
-		context.locals.session = session;
-		context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+		return { session, user:auth_user, cookie };
 
+	}
+
+	let { session, user:auth_user, cookie } = await getSession(sessionId);
+
+	context.locals.session = session;
+	context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+
+	let { user, cart, tx} = await getUserData(auth_user.id);
+
+	if (cart?.length <= 0) {
 		await newCart(auth_user.id);
+		let new_data = await getUserData(auth_user.id);
+		cart = new_data.cart;
+	}
 
-		let { user, cart, tx} = await getUserData(auth_user.id);
+	context.locals.user = user;
+	context.locals.cart = cart[0];
+	context.locals.tx = tx;
 
-		context.locals.user = user;
-		context.locals.cart = cart[0];
-		context.locals.tx = tx;
+
+	// works for both guest and auth user
+	// if(sessionId){
+
+	// 	let { session, user:auth_user, cookie } = await validateSession(sessionId);
+
+	// 	// then, we fetch the user data from the session
+
+	// 	context.locals.session = session;
+	// 	context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+	// 	if(auth_user.id){
+
+	// 		let { user, cart, tx} = await getUserData(auth_user.id);
+
+
+	// 		// console.log(cart)
+
+	// 		if (cart?.length <= 0) {
+	// 			await newCart(auth_user.id);
+	// 			let new_data = await getUserData(auth_user.id);
+	// 			cart = new_data.cart;
+	// 		}
+			
+
+	// 		context.locals.user = user;
+	// 		context.locals.cart = cart[0];
+	// 		context.locals.tx = tx;
+
+	// 	}
+		
+	// } else {
+
+	// 	// make a guest session
+
+	// 	let { user:auth_user, cookie, session} = await newGuestSession({});
+	// 	// console.log(result);
+	// 	// create a new cart for the guest
+
+	// 	context.locals.session = session;
+	// 	context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+
+	// 	await newCart(auth_user.id);
+
+	// 	let { user, cart, tx} = await getUserData(auth_user.id);
+
+	// 	context.locals.user = user;
+	// 	context.locals.cart = cart[0];
+	// 	context.locals.tx = tx;
 
 		
 
-	}
+	// }
 
 	// first validate the session
 
