@@ -22,7 +22,7 @@
             <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">注册帐号</Button>
             </form>
             <div class="flex justify-center w-full">
-                <p class="px-6 pb-4">已有帐号？<a @click.prevent="switchToLogin" href="#" class="text-[#B551F3]">立即登录</a></p>
+                <p class="px-6 pb-4">已有帐号？<a @click.prevent="switchToLogin" href="#" class="text-salmon">立即登录</a></p>
             </div>
         </div>
         <div v-else class="grid gap-4 py-4 overflow-y-auto px-6">
@@ -42,7 +42,7 @@
             <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">登录帐号</Button>
             </form>
             <div class="flex justify-center w-full">
-                <p class="px-6 pb-4">没有帐号？<a @click.prevent="switchToSignup" href="#" class="text-[#B551F3]">立即注册</a></p>
+                <p class="px-6 pb-4">没有帐号？<a @click.prevent="switchToSignup" href="#" class="text-salmon">立即注册</a></p>
             </div>
         </div>  
       </DialogContent>

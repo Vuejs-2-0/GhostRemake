@@ -1,8 +1,8 @@
 <template>
-  <div class="navbar p-4 text-lg text-[#B551F3]">
+  <div class="navbar p-4 text-lg text-salmon">
     <SignUp v-if="!userExist"/>
     <div v-else>
-      <div class="navbar flex justify-between items-center p-4 text-lg text-[#B551F3]">
+      <div class="navbar flex justify-between items-center p-4 text-lg text-salmon">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <button class="btn btn-outline">账户管理</button>
@@ -26,7 +26,7 @@
           </DropdownMenuContent>
         </DropdownMenu>
         <a href="/history">
-          <button class="profile-icon text-lg text-[#B551F3]">
+          <button class="profile-icon text-lg text-salmon">
             <p>购买记录</p>
           </button>
         </a>
