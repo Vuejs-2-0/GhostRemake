@@ -118,5 +118,7 @@ const _updateCart = async () => {
   cartMetadata.bracelets = existingBracelets;
 
   await updateProductBraceletInCart(productId, _new_qty, cartMetadata);
+  // Refresh page
+  window.location.reload();
 };
 </script>
