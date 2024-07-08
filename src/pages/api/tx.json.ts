@@ -56,16 +56,19 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         // Loop through all quantity for the product
         for (let j = 0; j < product.quantity; j++) {
 
-          let details = "";
+          let details = "（";
           if (cart.metadata.bracelets[i].effect && typeof cart.metadata.bracelets[i].effect === 'object') {
-            details += `（效果:${Object.keys(cart.metadata.bracelets[i].effect).filter(key => cart.metadata.bracelets[i].effect[key]).join(', ')}`;
+            // This is example: 效果: 招桃花,防小人,挡煞,招财 and I want it to have a space after each comma
+            let effects = cart.metadata.bracelets[i].effect.join(', ');
+            details += `效果: ${effects}`;
           }
           if (cart.metadata.bracelets[i].size) {
-            details += `, 大小:${cart.metadata.bracelets[i].size}`;
+            details += `, 大小: ${cart.metadata.bracelets[i].size}`;
           }
           if (cart.metadata.bracelets[i].comment) {
-            details += `, 备注:${cart.metadata.bracelets[i].comment}）`;
+            details += `, 备注: ${cart.metadata.bracelets[i].comment}`;
           }
+          details += `）`;
 
           let metadata = {
             label: `1 x ${product.name}`,

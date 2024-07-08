@@ -32,6 +32,20 @@
                 </div>
                 <AddButton :product="product" />
               </div>
+              <div v-for="product in braceletList" :key="product.id" class="w-full grid grid-cols-11 gap-2 mt-4 justify-center items-center">
+                <img src="/img/bracelet.webp" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
+                <div class="col-span-5">
+                  <div class="flex justify-start items-center">
+                    <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
+                    <p class="text-lg font-semibold">五色绳</p>
+                  </div>
+                  <p class="text-[12px] font-light">效果: {{ product.effect }}</p>
+                  <p class="text-[12px] font-light">大小: {{ product.size }}</p>
+                  <p class="text-[12px] font-light">备注: {{ product.comment }}</p>
+                  <p>RM 28.00</p>
+                </div>
+                <RemoveButton :product="product" :localCart="props.localCart" />
+              </div>
             </div>
 
             <div class="pt-8 w-full sticky bottom-4">
@@ -65,31 +79,13 @@
 
             <Summary class="w-full" :form="dry_run_result.form" :productEntries="productEntries" :postageEntry="postageEntry" :value="dry_run_result.value" />
 
-            <!--<div class="w-full grid grid-cols-4 text-center text-sm border-b pb-2 font-bold">
-              <p class="text-left pl-1 col-span-2">商品</p>
-              <!~~ <p>数量</p> ~~>
-              <p>单价</p>
-              <p>小计</p>
-            </div>
-
-            <div class="w-full">
-              <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
-                <!~~ <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> ~~>
-                <p class="text-left pl-1 col-span-2">{{ entry?.metadata?.label }}</p>
-                <!~~ <p class="col-span-1 text-sm">{{ entry?.quantity }}</p> ~~>
-                <p class="col-span-1 text-sm">RM {{ entry?.metadata?.product?.price }}</p>
-                <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
-              </div> -->
-
-          <div class="w-full">
+          <!-- <div class="w-full">
             <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
-              <!--- <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> -->
               <p class="text-left pl-1 col-span-2">{{ entry?.metadata?.label }} {{ entry?.metadata?.bracelets }}</p>
-              <!-- <p class="col-span-1 text-sm">{{ entry?.quantity }}</p> -->
               <p class="col-span-1 text-sm">RM {{ entry?.metadata?.product?.price }}</p>
               <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
             </div>
-            </div>
+          </div>
 
             <hr class="my-6 w-full" />
 
@@ -126,7 +122,7 @@
                 电邮地址：
                 <span class="text-sm font-light">{{ dry_run_result.form.email }}</span>
               </p>
-            </div>
+            </div> -->
 
             <div class="pt-8 w-full sticky bottom-4">
               <!-- <div class="w-full flex justify-between items-center px-2 py-4 border-y mb-4">
@@ -165,6 +161,7 @@ import { computed } from "vue";
 import { cart } from "@/stores/cart";
 import { useStore } from "@nanostores/vue";
 import AddButton from "./AddButton.vue";
+import RemoveButton from "./RemoveButton.vue";
 import { VisuallyHidden } from "radix-vue";
 import SignUp from "@/components/SignUp2.vue";
 
@@ -172,13 +169,17 @@ const open = ref(false);
 
 import Summary from "./Summary.vue";
 import { User } from "lucide-vue-next";
+import { effect } from "zod";
 
 const $cart = useStore(cart);
 const props = defineProps({
   form: Object,
   products: Object, // or Array, depending on the type you're passing
   userId: String,
+  localCart: Object,
 });
+
+const { localCart } = toRefs(props);
 
 const productList = computed(() => {
   if (!$cart.value.items) return [];
@@ -187,15 +188,34 @@ const productList = computed(() => {
                                  .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));;
   //If there is a product with id "9", separate it out
   const product9 = filtered.find(p => p.id === 9);
-  //If there is a product with id "9", make each of them as single product, and each of them will have quantity of 1
+  //If there is a product with id "9", remove it from the filtered array
   if (product9) {
     filtered.splice(filtered.indexOf(product9), 1);
-    for (let i = 0; i < product9.quantity; i++) {
-      filtered.push({ ...product9, quantity: 1 });
-    }
   }
   return filtered;
 });
+
+const braceletList = computed(() => {
+  if (!$cart.value.items) return [];
+  let quantity = 0;
+  quantity = $cart.value.items["9"];
+  console.log(quantity);
+  console.log(localCart.value.metadata.bracelets);
+  
+  const braceletList = [];
+  for (let i = 0; i < quantity; i++) {
+    braceletList.push({
+      id: i,
+      quantity: 1,
+      comment: localCart.value.metadata.bracelets[i].comment,
+      effect: localCart.value.metadata.bracelets[i].effect,
+      size: localCart.value.metadata.bracelets[i].size,
+    });
+  }
+  console.log(braceletList);
+  return braceletList;
+});
+
 
 const { form, products } = toRefs(props);
 const page = ref("list");
