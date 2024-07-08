@@ -1,7 +1,8 @@
 <template>
   <div class="">
     <div class="bg-white rounded-xl flex justify-between items-center p-2 pl-4 shadow-lg">
-      <div class="text-lg font-semibold text-salmon">总额: RM 123.45</div>
+      <div class="text-lg font-semibold text-salmon">总额: RM {{Number(tx.value).toFixed(2)}}</div>
+      
       
 
       <Dialog>
