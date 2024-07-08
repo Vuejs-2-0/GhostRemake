@@ -11,14 +11,14 @@
 
         <div v-else class="grid grid-cols-3 justify-center items-center">
 
-            <Button @click="_updateCart(-1)"  class="bg-salmon-100 text-salmon-500 w-8 h-8 rounded">
+            <Button @click="_updateCart(-1)"  class="bg-salmon-100 hover:bg-salmon-500 hover:text-white duration-200 text-salmon-500 w-8 h-8 rounded">
                 -
             </Button>
 
             <div class="w-8 h-8 flex justify-center items-center">{{ quantity }}</div>
 
 
-            <Button @click="_updateCart(1)" class="bg-salmon-100 text-salmon-500 w-8 h-8 rounded">
+            <Button @click="_updateCart(1)" class="bg-salmon-100 hover:bg-salmon-500 hover:text-white duration-200 text-salmon-500 w-8 h-8 rounded">
                 +
             </Button>
 

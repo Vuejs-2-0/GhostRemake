@@ -23,7 +23,7 @@ const { cart, json_schema, field_config } = toRefs(props)
           <DialogTrigger class="w-full">
             <slot></slot>
           </DialogTrigger>
-          <DialogContent class="sm:max-w-[425px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+          <DialogContent class="sm:max-w-[425px] p-0 max-h-[90vh]">
             <div class="grid gap-4 py-4 overflow-y-auto px-6">
               <DialogTitle class="text-[25px] text-center">五色绳</DialogTitle>
               <DialogDescription></DialogDescription>
