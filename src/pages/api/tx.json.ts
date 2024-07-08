@@ -137,6 +137,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             }
           }
         }
+
+        return postage_cost_map["default"];
+
       };
 
       let atomic_shipping_type = detect_non_malaysia_shipping(address_metadata);
