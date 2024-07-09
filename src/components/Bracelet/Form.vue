@@ -2,7 +2,7 @@
   <div class="w-full">
     <template v-if="page == 1">
       <div class="space-y-4 pb-5">
-        <p>效果 <span class="text-red-500">*</span> </p>
+        <p>效果</p>
         <div v-for="(effect, index) in effectsOptions" :key="index" class="flex items-center space-x-2">
           <input
             type="checkbox"
@@ -21,7 +21,6 @@
           </label>
           <label :for="`effect-${index}`" class="cursor-pointer text-sm">{{ effect }}</label>
         </div>
-        <p v-if="effectError" class="text-red-500 text-sm">请选择至少一个效果。</p>
       </div>
       <AutoForm
         class="w-full space-y-6 mb-8"
@@ -81,20 +80,10 @@ const effectsOptions = ref(["防小人", "挡煞", "招桃花", "招财"]);
 // Selected effects state
 const selectedEffects = ref([]);
 
-// Effect error state
-const effectError = ref(false);
-
 const _updateCart = async () => {
   const { values, valid } = await form.validate();
   if (!valid) {
     return;
-  }
-
-  if (selectedEffects.value.length === 0) {
-    effectError.value = true;
-    return;
-  } else {
-    effectError.value = false;
   }
 
   const productId = "9";
@@ -118,6 +107,10 @@ const _updateCart = async () => {
   cartMetadata.bracelets = existingBracelets;
 
   await updateProductBraceletInCart(productId, _new_qty, cartMetadata);
+  
+  // Add an alert before reload page
+  alert("加入购物车成功！");
+
   // Refresh page
   window.location.reload();
 };
