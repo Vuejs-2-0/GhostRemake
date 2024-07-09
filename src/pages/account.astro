@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ProfileSetting from "../components/ProfileSetting.vue";
+import "../styles/globals.css";
+
+const props = Astro.props
+
+const { user } = Astro.locals as any;
+---
+
+<Layout title="帐户设置">
+
+    <!-- {JSON.stringify(user)} -->
+
+    <section class="w-full flex flex-col justify-center items-center">
+        <ProfileSetting client:only="vue" class="mt-8" user={user} />
+    </section>
+
+</Layout>

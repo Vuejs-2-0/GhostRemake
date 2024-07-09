@@ -46,8 +46,27 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
 import { VisuallyHidden } from "radix-vue";
 
-const confirmCancel = () => {
+import { toRefs } from 'vue' 
+
+const props = defineProps(["uuid"])
+const { uuid } = toRefs(props)
+
+const confirmCancel = async () => {
     console.log('Cancel Order');
+
+    let payload = {
+        // ...ev,
+        uuid: uuid.value,
+        status: 'void'
+    }
+
+    // PUT because we are actually updating the transaction
+    let result = await fetch('/api/tx.json', {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+    })
+
+    console.log(result)
     // window.location.
     // navigate
     window.swup.navigate('/');
