@@ -1,12 +1,10 @@
 <template>
-    <div class="col-span-4 grid grid-cols-3 justify-center items-center">
-      <div class="w-full flex justify-center items-center">
-        <Button @click="_updateCart()" class=" bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg flex justify-center items-center">
-          Remove
-        </Button>
-      </div>
-    </div>
-  </template>
+  <div class="flex justify-center items-center h-full">
+    <Button @click="_updateCart()" class="bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg px-4 py-2 rounded-md">
+      Remove
+    </Button>
+  </div>
+</template>
   
   <script setup>
   import { Button } from "@/components/ui/button";
