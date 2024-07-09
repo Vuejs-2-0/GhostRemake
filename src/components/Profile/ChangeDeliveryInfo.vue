@@ -15,13 +15,8 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { ref, toRefs } from 'vue';
 
-const profile = ref([
-  {
-    phone: '01234567899',
-    address: '11, JALAN EXAMPLE 5/7, TAMAN EXAMPLE, 81110 JOHOR BAHRU, JOHOR.',
-  },
-  // Add more dummy data as needed
-]);
+const props = defineProps(["phoneNumber", "address"])
+const {  phoneNumber, address } = toRefs(props)
 </script>
 
 <template>
@@ -42,14 +37,14 @@ const profile = ref([
             <span>电话号码</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Input id="phone" class="col-span-3" :placeholder="profile[0].phone" />
+          <Input id="phone" class="col-span-3" :placeholder="phoneNumber" />
         </div>
         <div class="grid grid-cols-4 items-center gap-4">
           <Label for="address" class="text-right">
             <span>收件人地址</span>
             <span class="text-red-500 ml-1">*</span>
           </Label>
-          <Textarea id="address" class="col-span-3" :placeholder="profile[0].address"  />
+          <Textarea id="address" class="col-span-3" :placeholder="address" />
         </div>
       </div>
       <DialogFooter>

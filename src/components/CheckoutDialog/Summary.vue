@@ -55,7 +55,7 @@
               </p>
               <p>
                 英文姓名：
-                <span class="text-sm font-light">{{ form.chineseName }}</span>
+                <span class="text-sm font-light">{{ form.englishName }}</span>
               </p>
               <p>
                 联络号码：

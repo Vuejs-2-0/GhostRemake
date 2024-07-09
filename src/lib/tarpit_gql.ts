@@ -529,6 +529,41 @@ const getTxByUUID = async (uuid: string) => {
   return data.getTxByUUID;
 };
 
+const getTxByID = async (ownerId: string) => {
+  const GetTxByOwner = gql`
+    query GetTxByOwner($ownerId: String!) {
+      getTxByOwner(owner_id: $ownerId) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetTxByOwner, {
+    "ownerId": ownerId
+  }).toPromise();
+  return data.GetTxByOwner;
+};
+
 const uploadPaymentProof = async (base64Data: string, extension: string) => {
   const UploadPaymentProofMutation = gql`
     mutation UploadPaymentProof($base64Data: String!, $extension: String!) {
@@ -581,6 +616,7 @@ export {
   updateTx,
   getTxByUUID,
   uploadPaymentProof,
-  getStripePI
+  getStripePI,
+  getTxByID
 };
 
