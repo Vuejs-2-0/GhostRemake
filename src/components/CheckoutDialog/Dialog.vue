@@ -50,9 +50,22 @@
             </div>
 
             <div class="pt-8 w-full sticky bottom-4">
-              <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
-                <span class="text-xl text-white">确认</span>
-              </Button>
+              <div v-if="isGuestUser">
+                <div class="w-full flex flex-col items-center">
+                  <p class="px-6 pb-4 text-center">
+                    请先登录帐号 
+                    <a @click.prevent="goToLoginPage" href="#" class="text-salmon pl-2">立即登录</a>
+                  </p>
+                  <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3" disabled>
+                    <span class="text-xl text-white">确认</span>
+                  </Button>
+                </div>
+              </div>
+              <div v-else>
+                <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+                  <span class="text-xl text-white">确认</span>
+                </Button>
+              </div>
             </div>
           </template>
 
@@ -245,6 +258,8 @@ const braceletList = computed(() => {
 const { form, products } = toRefs(props);
 const page = ref("list");
 
+const isGuestUser = computed(() => props.userId.substring(0, 5) == "guest");
+
 const confirmItems = () => {
   if(props.userId.substring(0, 5) == "guest"){
     page.value = "login";
@@ -253,6 +268,9 @@ const confirmItems = () => {
   }
 };
 
+const goToLoginPage = () => {
+  page.value = 'login';
+};
 
 const dry_run_result = ref(false);
 
