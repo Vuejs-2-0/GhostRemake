@@ -13,7 +13,7 @@
               <Button variant="ghost" class="w-full justify-start" @click="openDialog">注册帐号</Button>
             </MenubarItem>
             <div v-else>
-              <a href="/setting">
+              <a href="/profile">
                 <MenubarItem >
                     <span>个人资料</span>
                 </MenubarItem>

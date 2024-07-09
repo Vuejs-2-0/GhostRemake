@@ -1,22 +1,14 @@
 <script setup lang='ts'>
 import { Button } from '@/components/ui/button'
-import ChangePassword from "../components/ChangePassword.vue";
+import ChangePassword from "../Profile/ChangePassword.vue";
 
-import ChangePersonalInfo from "../components/ChangePersonalInfo.vue";
-import ChangeDeliveryInfo from "../components/ChangeDeliveryInfo.vue";
+import ChangePersonalInfo from "../Profile/ChangePersonalInfo.vue";
+import ChangeDeliveryInfo from "../Profile/ChangeDeliveryInfo.vue";
 
 import { ref, toRefs } from 'vue';
 
-const profile = ref([
-  {
-    CName: '杨例子',
-    EName: 'Yong Example',
-    phone: '01234567899',
-    address: '11, JALAN EXAMPLE 5/7, TAMAN EXAMPLE, 81110 JOHOR BAHRU, JOHOR.',
-    email: 'example@gmail.com',
-  },
-  // Add more dummy data as needed
-]);
+const props = defineProps(["chineseName","englishName","phoneNumber", "address", "email"])
+const { chineseName, englishName, phoneNumber, address, email } = toRefs(props)
 </script>
 
 <template>
@@ -28,17 +20,17 @@ const profile = ref([
 
           <div class="flex justify-between mr-4">
             <strong class="text-salmon-400 text-2xl tracking-wide">个人资料</strong>
-            <ChangePersonalInfo />
+            <ChangePersonalInfo :chineseName="chineseName" :englishName="englishName"/>
           </div>
             
           <div class="grid items-center w-full gap-4 mt-4">
             <div class="flex flex-col space-y-2">
               <h1 class="font-bold">中文姓名</h1>
-              <p>{{ profile[0].CName }}</p>
+              <p>{{ chineseName }}</p>
             </div>
             <div class="flex flex-col space-y-1.5">
               <h1 class="font-bold">英文姓名</h1>
-              <p>{{ profile[0].EName }}</p>
+              <p>{{ englishName }}</p>
             </div>
           </div>
 
@@ -56,17 +48,17 @@ const profile = ref([
 
           <div class="flex justify-between mr-4">
             <strong class="text-salmon-400 text-2xl tracking-wide">运输资料</strong>
-            <ChangeDeliveryInfo />
+            <ChangeDeliveryInfo :phoneNumber="phoneNumber" :address="address"/>
           </div>
             
           <div class="grid items-center w-full gap-4 mt-4">
             <div class="flex flex-col space-y-2">
               <h1 class="font-bold">电话号码</h1>
-              <p>{{ profile[0].phone }}</p>
+              <p>{{ phoneNumber }}</p>
             </div>
             <div class="flex flex-col space-y-1.5">
               <h1 class="font-bold">收件人地址</h1>
-              <p>{{ profile[0].address }}</p>
+              <p>{{ address }}</p>
             </div>
           </div>
 
@@ -90,7 +82,7 @@ const profile = ref([
           <div class="grid items-center w-full gap-4 mt-4">
             <div class="flex flex-col space-y-2">
               <h1 class="font-bold">电子邮件</h1>
-              <p>{{ profile[0].email }}</p>
+              <p>{{ email }}</p>
             </div>
           </div>
 
