@@ -94,11 +94,14 @@
           </template>
 
           <template v-if="page == 'summary'">
-            <div class="py-12">
+            <div class="py-12 flex justify-center items-center relative w-full">
+
+              <Button class="absolute top-0 left-0" @click="backToForm()" variant="outline">返回</Button>
+
               <h1 class="text-2xl font-semibold">请确认订单</h1>
             </div>
 
-            <Summary class="w-full" :form="dry_run_result.form" :productEntries="productEntries" :postageEntry="postageEntry" :value="dry_run_result.value" />
+            <Summary class="w-full" :form="dry_run_result.form" :productEntries="productEntries" :postageEntry="postageEntry" :value="dry_run_result.value" :hide_footer="true" />
 
 
             <div class="flex gap-x-2 w-full pt-4 px-2">
@@ -159,19 +162,15 @@
               </p>
             </div> -->
 
-            <div class="pt-8 w-full sticky bottom-4">
-              <!-- <div class="w-full flex justify-between items-center px-2 py-4 border-y mb-4">
+            <div class="mt-4 pt-4 w-full flex justify-between items-center border-t">
+              <div class="">
                 <p class="text-xl">总计</p>
                 <p class="text-2xl font-bold">RM {{ dry_run_result.value }}</p>
-              </div> -->
+              </div>
 
-              <div class="w-full flex justify-between items-center">
-                <Button @click="backToForm()" variant="outline">上一步</Button>
-
-                <Button @click="confirmOrder()" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+              <Button @click="confirmOrder()" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
                   <span class="text-white">确认并付款</span>
                 </Button>
-              </div>
             </div>
           </template>
 

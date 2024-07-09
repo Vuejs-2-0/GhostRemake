@@ -82,14 +82,14 @@ const submit = async () => {
               <span>电话号码</span>
               <span class="text-red-500 ml-1">*</span>
             </Label>
-            <Input v-model="phoneNumberInput" class="col-span-3" :placeholder="请输入电话号码" />
+            <Input v-model="phoneNumberInput" class="col-span-3" placeholder="请输入电话号码" />
           </div>
           <div class="grid grid-cols-4 items-center gap-4">
             <Label for="address" class="text-right">
               <span>收件人地址</span>
               <span class="text-red-500 ml-1">*</span>
             </Label>
-            <Textarea v-model="addressInput" class="col-span-3" :placeholder="请输入正确的地址格式" />
+            <Textarea v-model="addressInput" class="col-span-3" placeholder="请输入正确的地址格式" />
           </div>
         </div>
       <div class="w-full flex justify-end items-center">

@@ -77,7 +77,7 @@ const { user } = toRefs(props);
         <div class="w-full mt-2 ml-2 mb-2">
 
           <div class="flex justify-between mr-4">
-            <strong class="text-salmon-400 text-2xl tracking-wide">运输资料</strong>
+            <strong class="text-salmon-400 text-2xl tracking-wide">物流资料</strong>
             <ChangeDeliveryInfo :user="user"/>
           </div>
             

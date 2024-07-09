@@ -67,9 +67,15 @@ export const onRequest = async (context, next) => {
 		cart = new_data.cart;
 	}
 
+	tx = tx.sort((a, b) => {
+		return b.id - a.id;
+	})
+
 	context.locals.user = user;
 	context.locals.cart = cart[0];
 	context.locals.tx = tx;
+
+	// console.log(tx);
 
 
 	// works for both guest and auth user

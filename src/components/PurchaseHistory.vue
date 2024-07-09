@@ -64,7 +64,7 @@ let status_map = {
                 
                 <div class="w-full max-w-sm bg-white p-4 rounded-xl ">
         
-                    <Summary :postageEntry="tx.entries.filter((entry: any) => entry.type === 'postage')" :productEntries="tx.entries.filter((entry: any) => entry.type == 'product')" :form="tx.form" :value="tx.value"></Summary>
+                    <Summary :postageEntry="tx.entries.filter((entry) => entry.type === 'postage')" :productEntries="tx.entries.filter((entry) => entry.type == 'product')" :form="tx.form" :value="tx.value"></Summary>
 
                 </div>
         
