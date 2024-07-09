@@ -45,20 +45,30 @@
       <Dialog v-model:open="isDialogOpen2">
         <Login />
       </Dialog>
+
+      <div v-if="totalItems > 0">
       
       <Dialog2 :form="props.form" :products="props.products" :userId="props.userId" :localCart="props.localCart" :userEmail="props.email" :userMetadata="userMetadata">
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
           <div class="flex justify-start items-center text-xl">
             <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
-            <p>已选 <IteminCart client:only="vue"/> 件</p>
+            <p>已选 {{totalItems}} 件</p>
           </div>
-
           <div class="flex justify-end items-center space-x-2">
             <p>去结账</p>
             <iconify-icon class="text-2xl mr-2" icon="mdi:arrow-right-bold"></iconify-icon>
           </div>
         </Button>
       </Dialog2>
+      </div>
+      <div v-else>
+        <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
+          <div class="flex justify-start items-center text-xl">
+            <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
+            <p>请先添加商品</p>
+          </div>
+        </Button>
+      </div>
     </div>
   </div>
 </template>
@@ -79,7 +89,20 @@
   import SignUp from './Authentication/SignUp2.vue';
   import Login from './Authentication/Login.vue';
   import { defineProps, ref, computed} from 'vue';
-  import IteminCart from '@/components/Footer/ItemInCart.vue';
+  import { cart } from '@/stores/cart';
+  import { useStore } from '@nanostores/vue';
+
+  const $cart = useStore(cart);
+
+  const totalItems = computed(() => {
+    if (!$cart.value.items) return 0;
+
+    let items = Object.entries($cart.value.items);
+
+    return items.reduce((acc, [item_id, quantity]) => {
+      return acc + quantity;
+    }, 0);
+  });
 
   const props = defineProps({
   products: {
@@ -111,7 +134,6 @@
     required: false
   }
   });
-
 
   const isDialogOpen = ref(false);
   const isDialogOpen2 = ref(false);

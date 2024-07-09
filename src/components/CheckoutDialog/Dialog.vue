@@ -40,12 +40,15 @@
                     <p class="text-lg font-semibold">五色绳</p>
                   </div>
                   <p>RM 28.00</p>
-                  <p class="text-[12px] font-light">效果: {{ product.effect }}</p>
-                  <p class="text-[12px] font-light">大小: {{ product.size }}</p>
-                  <p class="text-[12px] font-light">备注: {{ product.comment }}</p>
-                  
+                  <p class="text-[12px] font-light">
+                    <template v-if="product.effect && product.effect.length > 0">效果: {{ product.effect.join(', ') }}, </template>
+                    大小: {{ product.size }}
+                    <template v-if="product.comment">, 备注: {{ product.comment }}</template>
+                  </p>
                 </div>
-                <RemoveButton :product="product" :localCart="props.localCart" />
+                <div class="col-span-4 flex justify-center items-center h-full">
+                  <RemoveButton :product="product" :localCart="props.localCart" />
+                </div>
               </div>
             </div>
 
