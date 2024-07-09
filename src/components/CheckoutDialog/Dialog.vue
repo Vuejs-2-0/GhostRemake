@@ -61,7 +61,7 @@
 
           <template v-if="page == 'form'">
             <div class="w-full">
-              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" :userEmail="userEmail" @submit="computeTx" />
+              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" :userEmail="userEmail" :userMetadata="userMetadata" @submit="computeTx" />
             </div>
           </template>
 
@@ -195,6 +195,7 @@ const props = defineProps({
   userId: String,
   localCart: Object,
   userEmail: String,
+  userMetadata: Object,
 });
 
 const { localCart } = toRefs(props);

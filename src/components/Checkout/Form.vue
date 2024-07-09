@@ -164,7 +164,7 @@
 </template>
 
 <script setup>
-import { toRefs, ref, computed } from "vue";
+import { toRefs, ref, computed, onMounted } from "vue";
 import * as z from "zod";
 import { AutoForm, AutoFormField } from "@/components/ui/auto-form";
 import { Button } from "@/components/ui/button";
@@ -179,9 +179,9 @@ import { toTypedSchema } from "@vee-validate/zod";
 
 import { jsonSchemaToZod } from "json-schema-to-zod";
 
-const props = defineProps(["json_schema", "field_config","userEmail"]);
+const props = defineProps(["json_schema", "field_config","userEmail","userMetadata"]);
 
-const { json_schema, field_config, userEmail } = toRefs(props);
+const { json_schema, field_config, userEmail, userMetadata} = toRefs(props);
 
 const schema = eval(jsonSchemaToZod(json_schema.value));
 
@@ -334,4 +334,22 @@ const onSubmit = () => {
 
   emits("submit", payload);
 };
+
+onMounted(() => {
+  console.log("Form mounted", userMetadata.value);
+  // console.log("Form", form);
+  if(userMetadata.value?.chineseName){
+    form.setFieldValue('chineseName', userMetadata.value.chineseName)
+  }
+
+  if(userMetadata.value?.phoneNumber){
+    form.setFieldValue('phoneNumber', userMetadata.value.phoneNumber)
+  }
+
+  if(userMetadata.value?.englishName){
+    form.setFieldValue('englishName', userMetadata.value.englishName)
+  }
+
+  
+});
 </script>

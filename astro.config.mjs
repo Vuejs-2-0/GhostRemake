@@ -16,7 +16,8 @@ export default defineConfig({
     }),
     tailwind({ applyBaseStyles: false }),
     swup({
-      globalInstance: true
+      globalInstance: true,
+      cache: false
     })
   ],
   output: "server",
