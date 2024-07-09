@@ -8,21 +8,21 @@ import Bracelet from "../components/Bracelet/Bracelet.vue";
 // import About from "../components/About.vue";
 // // import Footer from "../components/Footer.astro";
 // import Footer from "@/components/Footer.astro";
-import CartStore from "@/components/Product/CartStore.vue";
+// import CartStore from "@/components/Product/CartStore.vue";
 // // import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
 import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 import Layout from "@/layouts/Layout.astro";
 
-import { getProducts } from "../lib/tarpit_gql";
+// import { getProducts } from "../lib/tarpit_gql";
 import { ref } from "vue";
 import { getBookProducts } from "../lib/tarpit_gql";
 
 
 const products = await getBookProducts();
 
-import { getFormById, getProductsByIds } from "@/lib/tarpit_gql"
+import { getFormById } from "@/lib/tarpit_gql"
 let form = await getFormById(1)
 let form2 = await getFormById(3)
 

@@ -31,11 +31,11 @@ if (Astro.url.pathname !== "/") {
       import "iconify-icon";
 
       import "overlayscrollbars/overlayscrollbars.css";
-      import { OverlayScrollbars, ScrollbarsHidingPlugin, SizeObserverPlugin, ClickScrollPlugin } from "overlayscrollbars";
+      import { OverlayScrollbars } from "overlayscrollbars";
 
       if (document?.querySelector("body") != null) {
         let _body = document.querySelector("body") as any;
-        const osInstance = OverlayScrollbars(_body, {});
+        OverlayScrollbars(_body, {});
       }
     </script>
 
