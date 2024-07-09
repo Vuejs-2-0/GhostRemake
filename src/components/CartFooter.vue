@@ -1,24 +1,26 @@
 <template>
   <div class="fixed bottom-3 w-full flex justify-center items-center z-50">
-    <div class="w-full max-w-sm flex justify-start items-center space-x-2">
-      <Menubar >
+    <div class="w-full max-w-sm grid grid-cols-[auto_1fr] justify-center items-center gap-2">
+      <Menubar v-model:modelValue="menuIsOpen" class="w-full h-full bg-transparent border-none" >
         <MenubarMenu >
-          <MenubarTrigger >
-            <div class=" bg-white rounded-2xl min-h-0 h-auto text-salmon flex justify-center items-center text-xl  hover:text-salmon-500  duration-300 transition-all scale-100 active:scale-95">
+          <MenubarTrigger class="w-12 aspect-square border-none focus:bg-transparent bg-transparent p-0 m-0 rounded-xl duration-300 transition-all" :class="[menuIsOpen?'scale-95 shadow-xl':'scale-100']" >
+
+            <button :class="[menuIsOpen?'bg-salmon text-white scale-95':'bg-white hover:bg-salmon-300 hover:text-white text-salmon','w-full h-full  rounded-xl border flex justify-center items-center text-2xl  duration-300 transition-all scale-100']">
               <iconify-icon class="text-2xl " icon="iconamoon:menu-burger-horizontal-duotone"></iconify-icon>
-            </div>
+            </button>
+            
           </MenubarTrigger>
           <MenubarContent>
             <MenubarItem v-if="!userExist">
               <Button variant="ghost" class="w-full justify-start" @click="openDialog">注册帐号</Button>
             </MenubarItem>
             <div v-else>
-              <a href="/profile">
+              <a @click="navigateToPath('/account')">
                 <MenubarItem >
                     <span>个人资料</span>
                 </MenubarItem>
               </a>
-              <a href="/history">
+              <a @click="navigateToPath('/history')">
                 <MenubarItem >
                     <span>购买记录</span>
                 </MenubarItem>
@@ -35,7 +37,7 @@
       <SignUp />
     </Dialog>
       
-      <Dialog2 :form="props.form" :products="props.products" :userId="props.userId" :localCart="props.localCart">
+      <Dialog2 :form="props.form" :products="props.products" :userId="props.userId" :localCart="props.localCart" :userEmail="props.email">
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
               <div class="flex justify-start items-center text-xl">
                 <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
@@ -66,7 +68,7 @@
     MenubarTrigger,
   } from '@/components/ui/menubar'
   import SignUp from './SignUp2.vue';
-  import { defineProps, ref } from 'vue';
+  import { defineProps, ref, computed} from 'vue';
   import IteminCart from '@/components/Footer/ItemInCart.vue';
 
   const props = defineProps({
@@ -99,9 +101,15 @@
 
   const isDialogOpen = ref(false);
 
+  const menuIsOpen = ref(null);
+
   const openDialog = () => {
     isDialogOpen.value = true;
   };
+
+  const navigateToPath = (path) => {
+    window.swup.navigate(path)
+  }
 
   const handleLogout = async () => {
     const formData = new FormData();

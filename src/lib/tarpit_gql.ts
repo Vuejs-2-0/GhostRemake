@@ -493,6 +493,24 @@ const updateTx = async (uuid: string, status: string, paymentType: string, payme
   return result.data.updateTx;
 };
 
+const updateUserByID = async (userId: string, metadata: any) => {
+  const UpdateUserMutation = gql`
+    mutation UpdateUserByID($userId: String!, $metadata: JSON) {
+      updateUserByID(userID: $userId, metadata: $metadata) {
+        user {
+          id
+          email
+          metadata
+        }
+      }
+    }
+  `;
+  let { data } = await client.mutation(UpdateUserMutation, {
+    "userId": userId,
+    "metadata": metadata
+  }).toPromise();
+  return data.updateUserByID;
+};
 
 const getTxByUUID = async (uuid: string) => {
   const GetTxByUUIDQuery = gql`
@@ -617,6 +635,7 @@ export {
   getTxByUUID,
   uploadPaymentProof,
   getStripePI,
-  getTxByID
+  getTxByID,
+  updateUserByID
 };
 

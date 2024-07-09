@@ -1,4 +1,4 @@
-import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartStatus } from "../../lib/tarpit_gql";
+import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartStatus, updateUserByID } from "../../lib/tarpit_gql";
 
 import type { APIRoute } from "astro";
 
@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({ request }) => {
 };
 
 export const POST: APIRoute = async ({ request, redirect }) => {
-  const { cartId, form, dry_run } = await request.json();
+  const { cartId, form, dry_run, update_metadata, user_id } = await request.json();
 
   console.log(request);
 
@@ -195,6 +195,22 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         },
       });
     } else {
+
+      if (update_metadata) {
+        // update user's metadata
+
+        let user_metadata = {
+          chineseName: form.chineseName,
+          englishName: form.englishName,
+          phoneNumber: form.phoneNumber,
+          address: form?.address,
+        };
+
+        await updateUserByID(user_id, user_metadata);
+
+      }
+
+
       let tx = await createTx({
         entries: entries,
         form: form,

@@ -61,7 +61,7 @@
 
           <template v-if="page == 'form'">
             <div class="w-full">
-              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" @submit="computeTx" />
+              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" :userEmail="userEmail" @submit="computeTx" />
             </div>
           </template>
 
@@ -78,6 +78,20 @@
             </div>
 
             <Summary class="w-full" :form="dry_run_result.form" :productEntries="productEntries" :postageEntry="postageEntry" :value="dry_run_result.value" />
+
+
+            <div class="flex gap-x-2 w-full pt-4 px-2">
+    <Checkbox v-model:checked="checkedUpdateUserMetadata" />
+    <div class="grid gap-1.5 leading-none">
+      <label
+        for="terms1"
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        保存资料至我的账户
+      </label>
+      
+    </div>
+  </div>
 
           <!-- <div class="w-full">
             <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
@@ -155,6 +169,7 @@
 <script setup>
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from '@/components/ui/checkbox'
 import { ref, toRefs } from "vue";
 import Form from "@/components/Checkout/Form.vue";
 import { computed } from "vue";
@@ -167,9 +182,11 @@ import SignUp from "@/components/SignUp2.vue";
 
 const open = ref(false);
 
+const checkedUpdateUserMetadata = ref(true);
+
 import Summary from "./Summary.vue";
-import { User } from "lucide-vue-next";
-import { effect } from "zod";
+// import { User } from "lucide-vue-next";
+// import { effect } from "zod";
 
 const $cart = useStore(cart);
 const props = defineProps({
@@ -177,6 +194,7 @@ const props = defineProps({
   products: Object, // or Array, depending on the type you're passing
   userId: String,
   localCart: Object,
+  userEmail: String,
 });
 
 const { localCart } = toRefs(props);
@@ -273,6 +291,10 @@ const backToForm = () => {
 
 const confirmOrder = async () => {
 
+  // console.log(dry_run_result.value.form);
+
+  // return
+
   page.value = "payment_loading";
 
   let _submit_result = await fetch("/api/tx.json", {
@@ -281,6 +303,8 @@ const confirmOrder = async () => {
       form: dry_run_result.value.form,
       cartId: cart.value.id,
       dry_run: false,
+      update_metadata: checkedUpdateUserMetadata.value,
+      user_id: props.userId,
     }),
     redirect: "follow",
   });

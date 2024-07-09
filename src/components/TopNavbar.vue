@@ -9,7 +9,7 @@
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-56">
             <DropdownMenuGroup>
-              <a href="/setting">
+              <a href="/account">
                 <DropdownMenuItem>
                     <span>个人资料</span>
                 </DropdownMenuItem>
