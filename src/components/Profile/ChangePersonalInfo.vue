@@ -24,14 +24,6 @@ const open = ref(false)
 const chineseNameInput = ref(user?.value?.metadata?.chineseName)
 const englishNameInput = ref(user?.value?.metadata?.englishName)
 
-// const profile = ref([
-//   {
-//     CName: '杨例子',
-//     EName: 'Yong Example',
-//   },
-//   // Add more dummy data as needed
-// ]);
-
 const submit = async () => {
 
   busy.value = true
