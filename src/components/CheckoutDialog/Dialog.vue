@@ -39,10 +39,11 @@
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
                     <p class="text-lg font-semibold">五色绳</p>
                   </div>
+                  <p>RM 28.00</p>
                   <p class="text-[12px] font-light">效果: {{ product.effect }}</p>
                   <p class="text-[12px] font-light">大小: {{ product.size }}</p>
                   <p class="text-[12px] font-light">备注: {{ product.comment }}</p>
-                  <p>RM 28.00</p>
+                  
                 </div>
                 <RemoveButton :product="product" :localCart="props.localCart" />
               </div>
@@ -57,6 +58,10 @@
 
           <template v-if="page == 'signup'">
             <SignUp />
+          </template>
+
+          <template v-if="page == 'login'">
+            <Login />
           </template>
 
           <template v-if="page == 'form'">
@@ -178,7 +183,8 @@ import { useStore } from "@nanostores/vue";
 import AddButton from "./AddButton.vue";
 import RemoveButton from "./RemoveButton.vue";
 import { VisuallyHidden } from "radix-vue";
-import SignUp from "@/components/SignUp2.vue";
+import SignUp from "@/components/Authentication/SignUp2.vue";
+import Login from "@/components/Authentication/Login.vue";
 
 const open = ref(false);
 
@@ -241,7 +247,7 @@ const page = ref("list");
 
 const confirmItems = () => {
   if(props.userId.substring(0, 5) == "guest"){
-    page.value = "signup";
+    page.value = "login";
   } else{
     page.value = "form";
   }
