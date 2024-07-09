@@ -23,8 +23,8 @@ import { getBookProducts } from "../lib/tarpit_gql";
 const products = await getBookProducts();
 
 import { getFormById } from "@/lib/tarpit_gql"
-let form = await getFormById(1)
-let form2 = await getFormById(3)
+let form = await getFormById(4)
+let form2 = await getFormById(5)
 
 let info = [1,1,1]
 const { cart, user } = Astro.locals as { cart: any, user: any };
