@@ -11,9 +11,14 @@
             
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem v-if="!userExist">
-              <Button variant="ghost" class="w-full justify-start" @click="openDialog">注册帐号</Button>
-            </MenubarItem>
+            <div v-if="!userExist">
+              <MenubarItem v-if="!userExist">
+                <Button variant="ghost" class="w-full justify-start" @click="openDialog">注册帐号</Button>
+              </MenubarItem>
+              <MenubarItem v-if="!userExist">
+                <Button variant="ghost" class="w-full justify-start" @click="openDialog2">登入帐号</Button>
+              </MenubarItem>
+            </div>
             <div v-else>
               <a @click="navigateToPath('/account')">
                 <MenubarItem >
@@ -34,8 +39,12 @@
 
 
       <Dialog v-model:open="isDialogOpen">
-      <SignUp />
-    </Dialog>
+        <SignUp />
+      </Dialog>
+
+      <Dialog v-model:open="isDialogOpen2">
+        <Login />
+      </Dialog>
       
       <Dialog2 :form="props.form" :products="props.products" :userId="props.userId" :localCart="props.localCart" :userEmail="props.email" :userMetadata="userMetadata">
         <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
@@ -67,7 +76,8 @@
     MenubarShortcut,
     MenubarTrigger,
   } from '@/components/ui/menubar'
-  import SignUp from './SignUp2.vue';
+  import SignUp from './Authentication/SignUp2.vue';
+  import Login from './Authentication/Login.vue';
   import { defineProps, ref, computed} from 'vue';
   import IteminCart from '@/components/Footer/ItemInCart.vue';
 
@@ -104,11 +114,16 @@
 
 
   const isDialogOpen = ref(false);
+  const isDialogOpen2 = ref(false);
 
   const menuIsOpen = ref(null);
 
   const openDialog = () => {
     isDialogOpen.value = true;
+  };
+
+  const openDialog2 = () => {
+    isDialogOpen2.value = true;
   };
 
   const navigateToPath = (path) => {

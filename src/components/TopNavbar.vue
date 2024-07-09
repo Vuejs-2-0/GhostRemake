@@ -38,7 +38,7 @@
 <script setup>
 import { ref, onMounted, defineProps } from 'vue';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import SignUp from './SignUp2.vue';
+import SignUp from './Authentication/SignUp2.vue';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
