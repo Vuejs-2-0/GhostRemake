@@ -2,6 +2,194 @@ import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartS
 
 import type { APIRoute } from "astro";
 
+const renderEmail = (args:any) => {
+
+  const { entries, date, shipping, address, total } = args;
+
+  let email_template_1 = `<!DOCTYPE html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+  <meta charset="utf-8">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <style>
+    td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
+  </style>
+  <![endif]-->
+  <title>真的友鬼: 🎉 付款成功</title>
+  <style>
+    img {
+      max-width: 100%;
+      vertical-align: middle
+    }
+    .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-x-reverse: 0;
+      margin-right: calc(16px * var(--tw-space-x-reverse));
+      margin-left: calc(16px * calc(1 - var(--tw-space-x-reverse)))
+    }
+    @media (max-width: 600px) {
+      .sm-my-8 {
+        margin-top: 32px !important;
+        margin-bottom: 32px !important
+      }
+      .sm-px-4 {
+        padding-left: 16px !important;
+        padding-right: 16px !important
+      }
+      .sm-px-6 {
+        padding-left: 24px !important;
+        padding-right: 24px !important
+      }
+      .sm-leading-8 {
+        line-height: 32px !important
+      }
+    }
+  </style>
+</head>
+<body style="margin: 0; width: 100%; background-color: #f8fafc; padding: 0; -webkit-font-smoothing: antialiased; word-break: break-word">
+  <div style="display: none">
+    感谢您耐心等候，我们已处理您的订单。
+    &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847; &#8199;&#65279;&#847;
+  </div>
+  <div role="article" aria-roledescription="email" aria-label="真的友鬼: 🎉 付款成功" lang="en">
+    <div class="sm-px-4" style="background-color: #f8fafc; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+      <table align="center" cellpadding="0" cellspacing="0" role="none">
+        <tr>
+          <td style="width: 552px; max-width: 100%">
+            <div class="sm-my-8" style="margin-top: 48px; margin-bottom: 48px; text-align: center">
+              <h1 style="font-size: 36px; color: #0f172a">真的友鬼</h1>
+            </div>
+            <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+              <tr>
+                <td class="sm-px-6" style="border-radius: 4px; background-color: #fff; padding: 48px; font-size: 16px; color: #334155; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05)">
+                  <h1 class="sm-leading-8" style="margin: 0 0 24px; font-size: 24px; font-weight: 600; color: #000">
+                    订购收据
+                  </h1>
+                  <p style="margin: 0; line-height: 24px">
+                    感谢您耐心等候，我们已处理您的订单。
+                    <br>
+                    您的订单详情如下，请查收：
+                  </p>
+                  <div role="separator" style="background-color: #e2e8f0; height: 1px; line-height: 1px; margin: 32px 0">&zwj;</div>
+                  <p style="margin: 0; line-height: 24px;">
+                    <strong>订单日期</strong>：${date}
+                    <br>
+                    <strong>配送</strong>：${shipping}
+
+                    ${address ? '<br><strong>地址</strong>：' + address : ''}
+                    
+                  </p>
+                  
+                  <div role="separator" style="background-color: #e2e8f0; height: 1px; line-height: 1px; margin: 32px 0;">&zwj;</div>
+                  <div>
+                    <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                      <thead>
+                        <tr>
+                          <th style="width: 50%; text-align: left">项目</th>
+                          <th style="text-align: right">数量</th>
+                          <th style="text-align: right;">价格</th>
+                        </tr>
+                      </thead>
+                      <tbody>`
+                        let email_template_2 = `</tbody>
+                    </table>
+
+                    <p style="text-align: right; font-size: 20px">
+                      <strong>总额</strong>：RM ${Number(total).toFixed(2)}
+                    </p>
+
+                  </div>
+                  <div role="separator" style="background-color: #e2e8f0; height: 1px; line-height: 1px; margin: 32px 0;">&zwj;</div>
+                  <div class="space-x-4" style="margin: 0; display: flex; align-items: center; justify-content: space-between">
+                    <p>您也可以到网站查看您的所有订单。</p>
+                    <div style="margin-right: calc(16px * 0); margin-left: calc(16px * calc(1 - 0));">
+                      <a href="https://真的友鬼.com" style="display: inline-block; flex-wrap: nowrap; white-space: nowrap; border-radius: 4px; padding: 16px 24px; font-size: 16px; line-height: 1; font-weight: 600; text-decoration: none; color: #f8fafc; background-color: #4338ca">
+                        <!--[if mso]>
+      <i style="mso-font-width: 150%; mso-text-raise: 30px" hidden>&emsp;</i>
+    <![endif]-->
+                        <span style="mso-text-raise: 16px">
+                    真的友鬼.com &rarr;
+                  </span>
+                        <!--[if mso]>
+      <i hidden style="mso-font-width: 150%;">&emsp;&#8203;</i>
+    <![endif]-->
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr role="separator">
+                <td style="line-height: 16px">&zwj;</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 24px; padding-right: 24px; text-align: center; font-size: 12px; color: #475569">
+                  <p style="margin: 16px 0; text-transform: uppercase">
+                    Powered By 友鬼小团队
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>`
+  
+  let trows = ''
+
+  for(let entry of entries) {
+    if(entry.type === 'product') {
+
+      if(entry.metadata.product.id === 9) {
+
+          
+          trows += `<tr>
+          <td style="padding-top: 16px; padding-bottom: 16px;">
+            ${entry.metadata.label}
+            <p style="font-size: 14px; color: #64748b">${entry.metadata.bracelet}</p>
+          </td>
+          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">${entry.metadata.quantity}</td>
+          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry.metadata.price).toFixed(2)}</td>
+        </tr>`
+
+      } else {
+
+        trows += `<tr>
+        <td style="padding-top: 16px; padding-bottom: 16px;">${entry.metadata.label}</td>
+        <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">${entry.metadata.quantity}</td>
+        <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry.value).toFixed(2)}</td>
+      </tr>`
+
+      }
+    }
+
+    if(entry.type === 'postage') {
+      trows += `<tr>
+      <td style="padding-top: 16px; padding-bottom: 16px;">${entry.metadata.label}</td>
+      <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;"></td>
+      <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry.value).toFixed(2)}</td>
+    </tr>`
+    }
+  }
+
+  return email_template_1 + trows + email_template_2;
+
+
+}
+
 export const GET: APIRoute = async ({ request }) => {
   const tx = new URL(request.url).searchParams.get("tx");
 
@@ -173,6 +361,26 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       });
     }
 
+    /// date formate YYYY-MMM-DD HH:MM AM/PM
+
+    let _date = new Date();
+
+    let formatted_date = `${_date.getFullYear()}-${_date.toLocaleString('default', { month: 'short' })}-${_date.getDate()} ${_date.getHours()}:${_date.getMinutes()} ${_date.getHours() >= 12 ? 'PM' : 'AM'}`;
+
+    let email_template = renderEmail({
+      entries: entries,
+      date: formatted_date,
+      shipping: form.delivery_method === "postal" ? "邮寄" : "自取",
+      address: form.delivery_method === "postal" ? form.address : null,
+      total: entries.reduce((acc, entry) => acc + entry.value, 0)
+    });
+    let email_payload = JSON.stringify({
+      html: email_template,
+      subject: "真的友鬼: 🎉 付款成功",
+      to: [form.email],
+      from: '友鬼团队 <updates@update.xn--iorx12fjnaw96i.com>'
+    })
+
     if (dry_run) {
       let tx_data = {
         dry_run: true,
@@ -181,6 +389,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         metadata: {
           cart_id: cartId,
           created_at: new Date().toISOString(),
+          email: email_payload
         },
         paymentType: "",
         status: "pending",
@@ -217,6 +426,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         metadata: {
           cart_id: cartId,
           created_at: new Date().toISOString(),
+          email: email_payload
         },
         paymentType: null,
         paymentMetadata: null,

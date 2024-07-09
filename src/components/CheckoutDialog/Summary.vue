@@ -67,7 +67,7 @@
               </p>
             </div>
 
-            <div class="pt-8 w-full">
+            <div v-if="!hide_footer" class="pt-8 w-full">
               <div class="w-full flex justify-between items-center px-2  pt-4 border-t">
                 <p class="text-xl">总计</p>
                 <p class="text-2xl font-bold">RM {{ Number(value).toFixed(2) }}</p>
@@ -81,7 +81,7 @@
 <script setup>
 
     import { defineProps, toRefs } from 'vue'
-    const props = defineProps(['productEntries', 'postageEntry', 'form', 'value'])
-    const { productEntries, postageEntry, form, value } = toRefs(props)
+    const props = defineProps(['productEntries', 'postageEntry', 'form', 'value','hide_footer'])
+    const { productEntries, postageEntry, form, value, hide_footer } = toRefs(props)
 
 </script>
