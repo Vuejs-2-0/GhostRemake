@@ -31,6 +31,9 @@ const { cart, user } = Astro.locals as { cart: any, user: any };
 
 const { session } = Astro.locals as unknown as { session: any };
 
+// import { getUser } from "../lib/tarpit_gql";
+// const existingUser = await getUser("yongwernjie.2003@gmail.com");
+
 // Below is Signup for Astro
 import { signUp, signOut, login } from "../lib/tarpit_gql";
 // import { UserCheck } from "lucide-vue-next";
