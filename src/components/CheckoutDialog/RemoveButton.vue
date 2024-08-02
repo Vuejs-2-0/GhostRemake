@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center h-full">
     <Button @click="_updateCart()" class="bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-lg px-4 py-2 rounded-md">
-      Remove
+      移除
     </Button>
   </div>
 </template>
