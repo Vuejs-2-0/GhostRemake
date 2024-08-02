@@ -141,7 +141,27 @@ const login = async (email: string, signature: string) => {
   return data.login;
 }
 
+const getUser = async (email: string) => {
+  
+  const GetUserByEmailQuery = gql`
+    query GetUserByEmail($email: String!) {
+      getUserByEmail(email: $email) {
+        user {
+          id
+          email
+          metadata
+        }
+      }
+    }
+  `;
+  let { data } = await client.query(GetUserByEmailQuery, {
+    "email": email,
+  }).toPromise();
 
+  return {
+    user: data.getUserByEmail.user
+  };
+}
 
 const getUserData = async (userId: string) => {
   
@@ -636,6 +656,7 @@ export {
   uploadPaymentProof,
   getStripePI,
   getTxByID,
-  updateUserByID
+  updateUserByID,
+  getUser
 };
 

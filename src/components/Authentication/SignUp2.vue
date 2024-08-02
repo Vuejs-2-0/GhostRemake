@@ -3,28 +3,29 @@
         <DialogDescription></DialogDescription>
         <div v-if="isSignupOpen" class="grid gap-4 py-4 overflow-y-auto px-6">
             <form @submit.prevent="handleSubmit('signup')" class="grid gap-4 py-4 overflow-y-auto px-6">
-            <div class="flex justify-center w-full pt-4 pb-4">
-                <DialogTitle class="text-2xl font-bold text-center">注册帐号</DialogTitle>
-            </div>
-            <input type="hidden" name="operation" value="signup" />
-            <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
-                <Label htmlFor="signup_email" class="text-base">邮箱地址 - Email Address</Label>
-                <Input type="email" id="signup_email" v-model="email" placeholder="Email" class="border rounded p-2" required />
-            </div>
-            <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
-                <Label htmlFor="signup_password" class="text-base">密码 - Password</Label>
-                <Input type="password" id="signup_password" v-model="password" placeholder="Password" class="border rounded p-2" required autocomplete="true" />
-            </div>
-            <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
-                <Label htmlFor="cfm_password" class="text-base">确认密码 - Confirm Password</Label>
-                <Input type="password" id="cfm_password" v-model="confirmPassword" placeholder="Confirm Password" class="border rounded p-2" required autocomplete="true" />
-            </div>
-            <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">注册帐号</Button>
+              <div class="flex justify-center w-full pt-4 pb-4">
+                  <DialogTitle class="text-2xl font-bold text-center">注册帐号</DialogTitle>
+              </div>
+              <input type="hidden" name="operation" value="signup" />
+              <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
+                  <Label htmlFor="signup_email" class="text-base">邮箱地址 - Email Address</Label>
+                  <Input type="email" id="signup_email" v-model="email" placeholder="Email" class="border rounded p-2" required />
+              </div>
+              <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
+                  <Label htmlFor="signup_password" class="text-base">密码 - Password</Label>
+                  <Input type="password" id="signup_password" v-model="password" placeholder="Password" class="border rounded p-2" required autocomplete="true" />
+              </div>
+              <div class="grid w-full max-w-sm items-center gap-1.5 mb-2">
+                  <Label htmlFor="cfm_password" class="text-base">确认密码 - Confirm Password</Label>
+                  <Input type="password" id="cfm_password" v-model="confirmPassword" placeholder="Confirm Password" class="border rounded p-2" required autocomplete="true" />
+              </div>
+              <Button type="submit" class="text-lg mt-4 text-white rounded-xl font-semibold">注册帐号</Button>
             </form>
             <div class="flex justify-center w-full">
                 <p class="px-6 pb-4">已有帐号？<a @click.prevent="switchToLogin" href="#" class="text-salmon">立即登录</a></p>
             </div>
         </div>
+        
         <div v-else class="grid gap-4 py-4 overflow-y-auto px-6">
             <form @submit.prevent="handleSubmit('login')" class="grid gap-4 py-4 overflow-y-auto px-6">
             <div class="flex justify-center w-full pt-4 pb-4">
@@ -54,6 +55,8 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from "@/components/ui/button";
+import { getUser } from "../../lib/tarpit_gql";
+
 
 const isSignupOpen = ref(true);
 const email = ref('');
@@ -82,6 +85,24 @@ const handleSubmit = async (operation: string) => {
     alert('Passwords do not match');
     return;
   }
+
+  let existingUser = await fetch("/api/check_email.json", {
+    method: "POST",
+    body: JSON.stringify({
+      email: "yongwernjie.2003@gmail.com"
+    }),
+  });
+
+  existingUser = await existingUser.json();
+  console.log(existingUser);
+  return;
+
+  // const existingUser = await getUser("yongwernjie.2003@gmail.com");
+  // alert(existingUser);
+  //   if (existingUser) {
+  //     alert('This email is already registered.');
+  //     return;
+  //   }
 
   try {
     const response = await fetch(window.location.pathname, {
