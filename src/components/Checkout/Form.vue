@@ -6,8 +6,17 @@
       </div>
 
       <div class="mb-4">
-        <p class="text-sm font-semibold my-1">电邮地址 Email</p>
-        <p>{{ userEmail }}</p>
+        <div v-if="isGuestUser">
+          <div class="mb-2">
+            <span class="text-sm font-semibold my-1">电邮地址 Email</span>
+            <span class="text-red-500 ml-1">*</span>
+          </div>
+          <Input v-model="guestEmail" class="col-span-5" placeholder="请输入您的电邮地址 Email"/>
+        </div>
+        <div v-else>
+          <p class="text-sm font-semibold my-1">电邮地址 Email</p>
+          <p>{{ userEmail }}</p>
+        </div>
       </div>
 
       <AutoForm class="w-full space-y-6 mb-8" :form="form" :schema="schema" :field-config="field_config" @submit="submitPage1"></AutoForm>
@@ -192,7 +201,7 @@ const form = useForm({
 });
 
 const delivery_method = ref(undefined);
-
+const guestEmail = ref(undefined);
 const addressInput = ref(undefined);
 const addressOptions = ref([]);
 const addressMetadata = ref(undefined);
@@ -256,6 +265,11 @@ const showAddressSearch = computed(() => {
   return true;
 });
 
+const isGuestUser = computed(() => {
+  // props.userId.substring(0, 5) == "guest";
+  return (String(userEmail.value).split("@").pop() === "guest.com")
+});
+
 const showAddressOptions = computed(() => {
   if (addressInput.value?.length < 3) return false;
 
@@ -315,6 +329,19 @@ const cancelAddressSelection = () => {
 
 const onSubmit = () => {
   console.log(validatedForm.value);
+
+  // if(isGuestUser)
+  // {
+  //   let payload = {
+  //   ...validatedForm.value,
+  //   delivery_method: delivery_method.value,
+  //   email: guestEmail.value}
+  // }else{
+  //   let payload = {
+  //   ...validatedForm.value,
+  //   delivery_method: delivery_method.value,
+  //   email: userEmail.value}
+  // };
 
   let payload = {
     ...validatedForm.value,

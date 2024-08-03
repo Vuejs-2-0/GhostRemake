@@ -4,7 +4,7 @@
 
         <p class="mb-8 font-bold">Item Subtotal: {{ item_subtotal }}</p>
 
-        <Form :json_schema="json_schema" :field_config="field_config" @submit="computeTx" />
+        <Form :json_schema="json_schema" :field_config="field_config" @submit="computeTx" :userId="userId" />
 
         <template v-if="dry_run_result" >
             <Summary :dry_run_result="dry_run_result" @submit="submitTx" />  
@@ -20,8 +20,8 @@
     import Form from "./Form.vue"
     import Summary from './Summary.vue';
 
-    const props = defineProps(["json_schema","field_config","products","cart"])
-    const { json_schema, field_config, products, cart } = toRefs(props)
+    const props = defineProps(["json_schema","field_config","products","cart","userId"])
+    const { json_schema, field_config, products, cart, userId } = toRefs(props)
 
     const dry_run_result = ref(false)
 

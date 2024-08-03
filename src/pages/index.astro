@@ -119,6 +119,10 @@ if (Astro.request.method === "POST") {
         return Astro.redirect("/");
       } else {
         console.error("Login failed: No result returned");
+        return new Response(null,{
+          status: 409,
+          statusText: "Login failed"
+        })
       }
     }
   } catch (error) {

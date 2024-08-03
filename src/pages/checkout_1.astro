@@ -14,6 +14,7 @@ let { cart } = Astro.locals as any
 let item_ids = Object.keys(cart.items).map(id => parseInt(id))
 // make items into an array
 
+const { session } = Astro.locals as unknown as { session: any };
 
 let products = await getProductsByIds(item_ids)
 
@@ -53,7 +54,7 @@ products = products.map((product: { id: string | number }) => {
   
   <div class="p-4">
 
-    <CheckoutVue client:only="vue" cart={cart} products={products} json_schema={form.schema.definitions.zodSchema} field_config={form.metadata.field_config} />
+    <CheckoutVue client:only="vue"  cart={cart} products={products} json_schema={form.schema.definitions.zodSchema} field_config={form.metadata.field_config} userId={session?.userId} />
     
   </div>
 

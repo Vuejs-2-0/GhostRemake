@@ -78,9 +78,31 @@ const handleSubmit = async (operation: string) => {
   formData.append('email', email.value);
   formData.append('password', password.value);
   
-  if (operation === 'signup' && password.value !== confirmPassword.value) {
-    alert('Passwords do not match');
-    return;
+  if (operation === 'signup') {
+    
+    let existingUserResponse = await fetch("/api/check_email.json", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "yongwernjie.2003@gmail.com"
+      }),
+    });
+  
+    existingUserResponse = await existingUserResponse.json() as any;
+    let exist = existingUserResponse?.exist
+    console.log(exist);
+    // return;
+    if(exist) {
+      alert('This email is already registered.');
+      email.value = null;
+      password.value = null;
+      confirmPassword.value = null;
+      return;
+    }
+
+    if(password.value !== confirmPassword.value){
+      alert('Passwords do not match');
+      return;
+    }
   }
 
   try {
@@ -94,6 +116,9 @@ const handleSubmit = async (operation: string) => {
         window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);
+      email.value = null;
+      password.value = null;
+      alert("Invalid User Email or Password");
     }
   } catch (error) {
     console.error('Error submitting form:', error);
