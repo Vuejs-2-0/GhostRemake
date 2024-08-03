@@ -52,7 +52,7 @@ const props = defineProps(["uuid"])
 const { uuid } = toRefs(props)
 
 const confirmCancel = async () => {
-    console.log('Cancel Order');
+    // console.log('Cancel Order');
 
     let payload = {
         // ...ev,
@@ -66,7 +66,7 @@ const confirmCancel = async () => {
         body: JSON.stringify(payload)
     })
 
-    console.log(result)
+    // console.log(result)
     // window.location.
     // navigate
     window.swup.navigate('/');

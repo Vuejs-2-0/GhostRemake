@@ -45,7 +45,7 @@ const publicURL = ref("");
 const emit = defineEmits(["submit"]);
 
 const submitProof = () => {
-  console.log("submitting proof");
+  // console.log("submitting proof");
 
   emit("submit", {
     paymentMethod: "upload_proof",
@@ -60,7 +60,7 @@ const dropzone = ref(null);
 
 watch(dropzone, () => {
   // processFile();
-  console.log(dropzone.value);
+  // console.log(dropzone.value);
 
   // document.querySelector(".select-file").style.backgroundColor = "#FF4D00";
   // document.querySelector(".preview").style.objectFit = "cover";
@@ -102,7 +102,7 @@ const processFile = async () => {
         })
     })
     let { message, url } = await uploadResponse.json();
-    console.log(message, url);
+    // console.log(message, url);
     uploadBusy.value = false;
     publicURL.value = url;
 

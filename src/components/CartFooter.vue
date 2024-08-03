@@ -165,7 +165,7 @@
       });
 
       if (response.ok) {
-          console.log('Form submitted successfully');
+          // console.log('Form submitted successfully');
           window.location.reload();
       } else {
         console.error('Form submission failed:', response.statusText);

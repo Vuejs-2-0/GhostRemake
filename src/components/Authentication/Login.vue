@@ -69,7 +69,7 @@ const switchToSignup = () => {
 };
 
 const runConsole = () => {
-  console.log('Hello, world!');
+  // console.log('Hello, world!');
 };
 
 const handleSubmit = async (operation: string) => {
@@ -89,7 +89,7 @@ const handleSubmit = async (operation: string) => {
   
     existingUserResponse = await existingUserResponse.json() as any;
     let exist = existingUserResponse?.exist
-    console.log(exist);
+    // console.log(exist);
     // return;
     if(exist) {
       alert('This email is already registered.');
@@ -112,7 +112,7 @@ const handleSubmit = async (operation: string) => {
     });
 
     if (response.ok) {
-        console.log('Form submitted successfully');
+        // console.log('Form submitted successfully');
         window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);

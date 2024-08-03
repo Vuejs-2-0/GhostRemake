@@ -81,7 +81,7 @@ if (Astro.request.method === "POST") {
       if (result) {
         const { user, session, cookie } = result;
 
-        console.log(user, session, cookie);
+        // console.log(user, session, cookie);
 
         Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
 
@@ -105,14 +105,14 @@ if (Astro.request.method === "POST") {
       const hashHex = hashArray
         .map((b) => b.toString(16).padStart(2, "0"))
         .join(""); // convert bytes to hex string
-      console.log(email, hashHex);
+      // console.log(email, hashHex);
 
       let result = await login(email, hashHex);
 
       if (result) {
         const { user, session, cookie } = result;
 
-        console.log(user, session, cookie);
+        // console.log(user, session, cookie);
 
         Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
 

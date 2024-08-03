@@ -60,7 +60,7 @@ const stripeBusy = ref(false);
 // const stripe = await loadStripe(stripe_pk);
 
 onMounted(async () => {
-  console.log(tx.value);
+  // console.log(tx.value);
   stripe.value = await loadStripe(stripe_pk);
 
   let _value = tx.value.value;
@@ -111,7 +111,7 @@ const submitStripe = async () => {
     }),
   });
 
-  console.log(_result);
+  // console.log(_result);
 
   const result = await stripe.value.confirmPayment({
     elements: elements.value,
@@ -124,6 +124,6 @@ const submitStripe = async () => {
 
   stripeBusy.value = false;
 
-  console.log(result);
+  // console.log(result);
 };
 </script>
