@@ -69,7 +69,7 @@
             </div>
 
             <div class="pt-8 w-full sticky bottom-4">
-              <div v-if="isGuestUser">
+              <!-- <div v-if="isGuestUser">
                 <div class="w-full flex flex-col items-center">
                   <p class="px-6 pb-4 text-center">
                     请先登录帐号 
@@ -80,11 +80,11 @@
                   </Button>
                 </div>
               </div>
-              <div v-else>
+              <div v-else> -->
                 <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
                   <span class="text-xl text-white">确认</span>
                 </Button>
-              </div>
+              <!-- </div> -->
             </div>
           </template>
 
@@ -125,16 +125,19 @@
 
 
             <div class="flex gap-x-2 w-full pt-4 px-2">
-    <Checkbox v-model:checked="checkedUpdateUserMetadata" />
-    <div class="grid gap-1.5 leading-none">
-      <label
-        for="terms1"
-        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-      >
-        保存资料至我的账户
-      </label>
-      
-    </div>
+      <div v-if ="isGuestUser==false">
+        <Checkbox v-model:checked="checkedUpdateUserMetadata" />
+        <!-- <div class="grid gap-1.5 leading-none"> -->
+          <label
+            for="terms1"
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            保存资料至我的账户
+          </label>
+          
+        <!-- </div> -->
+      </div>   
+    
   </div>
 
           <!-- <div class="w-full">
@@ -299,11 +302,11 @@ const page = ref("list");
 const isGuestUser = computed(() => props.userId.substring(0, 5) == "guest");
 
 const confirmItems = () => {
-  if(props.userId.substring(0, 5) == "guest"){
-    page.value = "login";
-  } else{
+  // if(props.userId.substring(0, 5) == "guest"){
+  //   page.value = "login";
+  // } else{
     page.value = "form";
-  }
+  // }
 };
 
 const goToLoginPage = () => {

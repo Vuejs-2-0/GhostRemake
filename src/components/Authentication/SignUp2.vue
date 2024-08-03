@@ -55,7 +55,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from "@/components/ui/button";
-import { getUser } from "../../lib/tarpit_gql";
 
 
 const isSignupOpen = ref(true);
@@ -81,21 +80,33 @@ const handleSubmit = async (operation: string) => {
   formData.append('email', email.value);
   formData.append('password', password.value);
   
-  if (operation === 'signup' && password.value !== confirmPassword.value) {
-    alert('Passwords do not match');
-    return;
+  if (operation === 'signup') {
+    
+    let existingUserResponse = await fetch("/api/check_email.json", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "yongwernjie.2003@gmail.com"
+      }),
+    });
+  
+    existingUserResponse = await existingUserResponse.json() as any;
+    let exist = existingUserResponse?.exist
+    console.log(exist);
+    // return;
+    if(exist) {
+      alert('This email is already registered.');
+      email.value = null;
+      password.value = null;
+      confirmPassword.value = null;
+      return;
+    }
+
+    if(password.value !== confirmPassword.value){
+      alert('Passwords do not match');
+      return;
+    }
   }
 
-  let existingUser = await fetch("/api/check_email.json", {
-    method: "POST",
-    body: JSON.stringify({
-      email: "yongwernjie.2003@gmail.com"
-    }),
-  });
-
-  existingUser = await existingUser.json();
-  console.log(existingUser);
-  return;
 
   // const existingUser = await getUser("yongwernjie.2003@gmail.com");
   // alert(existingUser);
@@ -115,6 +126,9 @@ const handleSubmit = async (operation: string) => {
         window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);
+      email.value = null;
+      password.value = null;
+      alert("Invalid User Email or Password");
     }
   } catch (error) {
     console.error('Error submitting form:', error);
