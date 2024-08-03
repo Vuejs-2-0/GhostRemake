@@ -263,8 +263,8 @@ const braceletList = computed(() => {
   if (!$cart.value.items) return [];
   let quantity = 0;
   quantity = $cart.value.items["9"];
-  console.log(quantity);
-  console.log(localCart?.value?.metadata?.bracelets);
+  // console.log(quantity);
+  // console.log(localCart?.value?.metadata?.bracelets);
   
   const braceletList = [];
   for (let i = 0; i < quantity; i++) {
@@ -276,7 +276,7 @@ const braceletList = computed(() => {
       size: localCart.value.metadata.bracelets[i].size,
     });
   }
-  console.log(braceletList);
+  // console.log(braceletList);
   return braceletList;
 });
 
@@ -284,15 +284,15 @@ const questionList = computed(() => {
   if (!$cart.value.items) return [];
   let quantity = 0;
   quantity = $cart.value.items["10"];
-  console.log(quantity);
-  console.log(localCart?.value?.metadata?.bracelets);
+  // console.log(quantity);
+  // console.log(localCart?.value?.metadata?.bracelets);
   
   const questionList = [];
   questionList.push({
     id: 10,
     quantity: quantity
   })
-  console.log(questionList);
+  // console.log(questionList);
   return questionList;
 });
 
@@ -320,7 +320,7 @@ const editQuestion = () => {
 const dry_run_result = ref(false);
 
 const computeTx = async (ev) => {
-  console.log(ev);
+  // console.log(ev);
 
   page.value = "loading";
 
@@ -340,7 +340,7 @@ const computeTx = async (ev) => {
 
   dry_run_result.value = await _dry_run_result.json();
 
-  console.log(dry_run_result.value);
+  // console.log(dry_run_result.value);
 
   page.value = "summary";
 };
@@ -349,7 +349,7 @@ const productEntries = computed(() => dry_run_result.value.entries.filter((entry
 const postageEntry = computed(() => dry_run_result.value.entries.filter((entry) => entry.type === "postage"));
 
 const dialogUpdated = (ev) => {
-  console.log(ev);
+  // console.log(ev);
   if (ev == false) {
     page.value = "list";
   }

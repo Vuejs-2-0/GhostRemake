@@ -91,7 +91,7 @@
         });
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         tx_data.value = data;
         busy.value = false;
     }
@@ -155,7 +155,7 @@
 
         if(!tx_data.value) return;
 
-        console.log(tx_data.value?.status)
+        // console.log(tx_data.value?.status)
         
         return status_map[tx_data.value?.status];
         

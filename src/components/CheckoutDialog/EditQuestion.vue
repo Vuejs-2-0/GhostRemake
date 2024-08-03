@@ -41,7 +41,7 @@ const editQuestion = async (index: number, qIndex: number) => {
   let cartMetadata = { ...$cart.value.metadata };
   questions.value[index].questionArray[qIndex] = value;
   cartMetadata.questions = questions.value;
-  console.log(cartMetadata);
+  // console.log(cartMetadata);
 
   await editQuestionInCart(cartMetadata);
 
@@ -53,7 +53,7 @@ const deleteQuestion = async (index: number, qIndex: number) => {
   questions.value[index].questionArray.splice(qIndex, 1);
   questions.value[index].questionIndex = questions.value[index].questionArray.length;
   cartMetadata.questions = questions.value;
-  console.log(cartMetadata);
+  // console.log(cartMetadata);
 
   await removeQuestionInCart(cartMetadata);
 

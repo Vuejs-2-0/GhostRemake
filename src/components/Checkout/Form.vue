@@ -213,7 +213,7 @@ const addressSearchBusy = ref(false);
 const emits = defineEmits(["submit"]);
 
 const searchAddress = useDebounceFn(async () => {
-  console.log(addressInput.value);
+  // console.log(addressInput.value);
 
   noAddressResult.value = false;
   addressSearchBusy.value = true;
@@ -237,7 +237,7 @@ const searchAddress = useDebounceFn(async () => {
   if (options_req.ok) {
     let options = await options_req.json();
 
-    console.log(options);
+    // console.log(options);
 
     addressOptions.value = options;
   } else {
@@ -251,11 +251,11 @@ const searchAddress = useDebounceFn(async () => {
 const showAddressSearch = computed(() => {
   if (addressOptions.value.length > 0) {
     let addresses = addressOptions.value.map((option) => option.formatted_address);
-    console.log(addresses);
+    // console.log(addresses);
     let matched = addresses.filter((address) => address == addressInput.value);
-    console.log(matched.length);
+    // console.log(matched.length);
     let show = !(matched.length > 0);
-    console.log(show);
+    // console.log(show);
 
     return show;
     // .length > 0;
@@ -328,25 +328,28 @@ const cancelAddressSelection = () => {
 };
 
 const onSubmit = () => {
-  console.log(validatedForm.value);
-
+  // console.log(validatedForm.value);
+  // console.log(guestEmail.value);
   // if(isGuestUser)
   // {
   //   let payload = {
-  //   ...validatedForm.value,
-  //   delivery_method: delivery_method.value,
-  //   email: guestEmail.value}
+  //     ...validatedForm.value,
+  //     delivery_method: delivery_method.value,
+  //     email: guestEmail.value
+  //   };
   // }else{
   //   let payload = {
-  //   ...validatedForm.value,
-  //   delivery_method: delivery_method.value,
-  //   email: userEmail.value}
-  // };
+  //     ...validatedForm.value,
+  //     delivery_method: delivery_method.value,
+  //     email: userEmail.value
+  //   };
+  // }
 
   let payload = {
     ...validatedForm.value,
     delivery_method: delivery_method.value,
-    email: userEmail.value
+    // email: userEmail.value
+    email: isGuestUser ? guestEmail.value : userEmail.value
   };
 
   if (delivery_method.value === "postal") {
@@ -363,7 +366,7 @@ const onSubmit = () => {
 };
 
 onMounted(() => {
-  console.log("Form mounted", userMetadata.value);
+  // console.log("Form mounted", userMetadata.value);
   // console.log("Form", form);
   if(userMetadata.value?.chineseName){
     form.setFieldValue('chineseName', userMetadata.value.chineseName)

@@ -37,7 +37,7 @@
 
     const updateTx = async (ev) => {
 
-        console.log(ev)
+        // console.log(ev)
         
         if(ev.paymentMethod === 'upload_proof'){
             // console.log('upload_proof')

@@ -33,13 +33,13 @@ const $cart = useStore(cart);
 const { user_cart } = toRefs(props);
 let existQuestionNumber = ref(0);
 
-console.log($cart._value.items[10])
+// console.log($cart._value.items[10])
 if($cart._value.items[10] == null){
     existQuestionNumber = 0
 } else {
     existQuestionNumber = $cart._value.items[10]
 }
-console.log(existQuestionNumber)
+// console.log(existQuestionNumber)
 watch(numberOfQuestions, (newVal) => {
     questions.value = Array(newVal).fill("");
 })
@@ -58,8 +58,8 @@ const saveQuestions = async () => {
         questionArray: questionArray,  // Store selected effects here
         questionIndex: questionIndex,
     };
-    console.log(questionIndex)
-    console.log(existQuestionNumber)
+    // console.log(questionIndex)
+    // console.log(existQuestionNumber)
 
     // TODO: Change it become can add new quantity
     let _new_qty = questionIndex + existQuestionNumber;
