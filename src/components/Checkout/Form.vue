@@ -349,7 +349,7 @@ const onSubmit = () => {
     ...validatedForm.value,
     delivery_method: delivery_method.value,
     // email: userEmail.value
-    email: isGuestUser ? guestEmail.value : userEmail.value
+    email: isGuestUser.value ? guestEmail.value : userEmail.value
   };
 
   if (delivery_method.value === "postal") {
