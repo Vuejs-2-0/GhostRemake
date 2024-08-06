@@ -149,7 +149,13 @@ export const removeQuestionInCart = async (metadata) => {
 
   currentCart.metadata = metadata;
 
-  currentCart.items["10"] = currentCart.items["10"] - 1;
+  //Loop through currentCart.metadata.questions and remove the item that consist 0 questionIndex
+  for(let i = 0; i < currentCart.metadata.questions.length; i++){
+    if(currentCart.metadata.questions[i].questionIndex === 0){
+      currentCart.metadata.questions.splice(i, 1);
+      currentCart.items["10"] = currentCart.items["10"] - 1;
+    }
+  }
 
   for(let key of Object.keys(currentCart.items)){
     if(currentCart.items[key] === 0){

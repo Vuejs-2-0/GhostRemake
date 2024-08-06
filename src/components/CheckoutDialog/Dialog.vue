@@ -57,13 +57,12 @@
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
                     <p class="text-lg font-semibold">问题</p>
                   </div>
-                  <p>RM 10.00</p>
-                  <p class="text-[12px] font-light">
-                    <template v-if="product.quantity > 0">数量: {{ product.quantity}}</template>
-                  </p>
+                  <p>RM 100.00</p>
                 </div>
                 <div class="col-span-4 flex justify-center items-center h-full">
-                  <div @click="editQuestion" class="cursor-pointer text-blue-500 underline">编辑</div>
+                  <!-- Which questions set (index) and which page display it -->
+                  <Questionnaire :cart="localCart" :cartIndex="product.id+1"><div class="cursor-pointer text-blue-500 underline">编辑</div></Questionnaire>
+                  <!-- <div @click="editQuestion" class="cursor-pointer text-blue-500 underline">编辑</div> -->
                 </div>
               </div>
             </div>
@@ -86,10 +85,6 @@
                 </Button>
               <!-- </div> -->
             </div>
-          </template>
-
-          <template v-if="page == 'editQuestion'">
-            <EditQuestion :localCart="props.localCart" />
           </template>
 
           <template v-if="page == 'signup'">
@@ -223,13 +218,12 @@ import RemoveButton from "./RemoveButton.vue";
 import { VisuallyHidden } from "radix-vue";
 import SignUp from "@/components/Authentication/SignUp2.vue";
 import Login from "@/components/Authentication/Login.vue";
-import EditQuestion from "./EditQuestion.vue"
 
 const open = ref(false);
-
 const checkedUpdateUserMetadata = ref(true);
 
 import Summary from "./Summary.vue";
+import Questionnaire from "../Questionnaire/Questionnaire.vue";
 // import { User } from "lucide-vue-next";
 // import { effect } from "zod";
 
@@ -284,15 +278,14 @@ const questionList = computed(() => {
   if (!$cart.value.items) return [];
   let quantity = 0;
   quantity = $cart.value.items["10"];
-  // console.log(quantity);
-  // console.log(localCart?.value?.metadata?.bracelets);
   
   const questionList = [];
-  questionList.push({
-    id: 10,
-    quantity: quantity
-  })
-  // console.log(questionList);
+  for (let i = 0; i < quantity; i++) {
+    questionList.push({
+      id: i,
+      quantity: 1,
+    });
+  }
   return questionList;
 });
 
@@ -313,9 +306,9 @@ const goToLoginPage = () => {
   page.value = 'login';
 };
 
-const editQuestion = () => {
-  page.value = 'editQuestion'
-}
+// const editQuestion = () => {
+//   page.value = 'editQuestion'
+// }
 
 const dry_run_result = ref(false);
 

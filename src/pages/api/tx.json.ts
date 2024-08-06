@@ -272,6 +272,36 @@ export const POST: APIRoute = async ({ request, redirect }) => {
           });
           i++;
         }
+      } else if (product.id === 10 && cart.metadata && cart.metadata.questions) {
+        // Loop through all quantities for the product
+        for (let j = 0; j < product.quantity; j++) {
+      
+          // Initialize details for each quantity
+          let details: any[] = [];
+
+          for(let i = 0; i < cart.metadata.questions[j].questionArray.length; i++) {
+            details.push("问题" + (i + 1) + ": " + cart.metadata.questions[j].questionArray[i] + "\n");
+          }
+      
+          // Metadata for each entry
+          let metadata = {
+            label: `1 x ${product.name}`,
+            product: product,
+            quantity: 1,
+            price: "RM100",
+            questionSet: details
+          };
+      
+          // Push the entry into entries array
+          entries.push({
+            entry_id: product.id + j,
+            metadata: metadata,
+            type: "product",
+            value: product.price,
+          });
+      
+          i++;
+        }
       } else {
         let metadata = {
           label: `${product.quantity} x ${product.name}`,
