@@ -1,14 +1,14 @@
 <template>
   <div class="w-full p-6 bg-white shadow-md rounded-lg">
     <div class="space-y-4 pb-5">
-      {{ $cart }}
+      <!-- {{ $cart }} -->
       <div v-for="n in generatedQuestions" :key="n" class="space-y-2">
         <label :for="`question-${n}`" class="block text-sm font-medium text-gray-700">
           问题 {{ n }}
         </label>
         <input type="text" :id="`question-${n}`" v-model="questions[n - 1]" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm rounded-md" />
         <div class="flex items-center space-x-4">
-          <Button @click="editQuestion(n)" class="text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 rounded-lg">更改</Button>
+          <Button v-if="!addQuestionSet" @click="editQuestion(n)" class="text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 rounded-lg">更改</Button>
           <Button @click="deleteQuestion(n)" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 rounded-lg">移除</Button>
         </div>
       </div>
@@ -18,9 +18,16 @@
         </Button>
       </div>
     </div>
-    <Button @click="saveQuestions" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
-      <span>加入购物车</span>
-    </Button>
+    <div v-if="addQuestionSet">
+      <Button @click="saveQuestions" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
+        <span>加入购物车</span>
+      </Button>
+    </div>
+    <div v-else>
+      <Button @click="editAllQuestion" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
+        <span>更新全部问题</span>
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -37,6 +44,7 @@ const $cart = useStore(cart);
 const { user_cart, questionSet } = toRefs(props);
 let latestQuestionSet = ref(questionSet.value);
 let existQuestionNumber = ref(0);
+const addQuestionSet = ref(false);
 
 if ($cart._value.items[10] == null) {
   existQuestionNumber = 0;
@@ -138,6 +146,34 @@ const saveQuestions = async () => {
   window.location.reload();
 };
 
+const editAllQuestion = async () => {
+  const questionIndex = numberOfQuestions.value;
+  let cartMetadata = { ...$cart.value.metadata };
+  const questionArray = questions2.value[latestQuestionSet.value-1].questionArray;
+
+  for (let i = 1; i <= questionIndex; i++) {
+    const value = document.getElementById(`question-${i}`).value;
+
+    // Add validation: Check for empty questions
+    if (value.trim() === "") {
+      alert("请填写所有问题！");
+      return;
+    }
+
+    // If questionArray doesn't have the current index, add a new element
+    if (i - 1 >= questionArray.length) {
+      questionArray.push(value);
+    } else {
+      questionArray[i - 1] = value;
+    }
+  }
+
+  cartMetadata.questions = questions2.value;
+
+  await editQuestionInCart(cartMetadata);
+  alert("成功更改所有问题！");
+};
+
 // Initialize questions array from $cart metadata on mount
 onMounted(() => {
   if ($cart.value.metadata && $cart.value.metadata.questions && $cart.value.metadata.questions[questionSet.value - 1]) {
@@ -150,6 +186,7 @@ onMounted(() => {
       latestQuestionSet.value = 1;
       console.log("latestQuestionSet is undefined, thus set to 1");
     }
+    addQuestionSet.value = true;
   }
 });
 </script>
