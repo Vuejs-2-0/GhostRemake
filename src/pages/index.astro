@@ -1,45 +1,28 @@
 ---
-// import TopNavbar from "../components/TopNavbar.vue";
 import ProductList from "@/components/ProductList.astro";
-// import Main from "../components/Main.vue";
-// import MainText from "../components/MainText.astro";
-// import Navbar from "../components/Navbar.vue";
 import Bracelet from "../components/Bracelet/Bracelet.vue";
-// import About from "../components/About.vue";
-// // import Footer from "../components/Footer.astro";
-// import Footer from "@/components/Footer.astro";
-// import CartStore from "@/components/Product/CartStore.vue";
-// // import SignUp from "@/components/SignUp2.vue";
 import "../styles/globals.css";
 import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 import Layout from "@/layouts/Layout.astro";
 import Questionnaire from "@/components/Questionnaire/Questionnaire.vue";
 
-// import { getProducts } from "../lib/tarpit_gql";
 import { ref } from "vue";
-import { getBookProducts } from "../lib/tarpit_gql";
+import { getBookProducts, getFormById, signUp, signOut, login } from "../lib/tarpit_gql";
 
 
 const products = await getBookProducts();
-
-import { getFormById } from "@/lib/tarpit_gql"
 let form = await getFormById(4)
 let form2 = await getFormById(5)
 
 let info = [1,1,1]
-const { cart, user } = Astro.locals as { cart: any, user: any };
 
+const { cart, user } = Astro.locals as { cart: any, user: any };
 const { session } = Astro.locals as unknown as { session: any };
 
-// import { getUser } from "../lib/tarpit_gql";
-// const existingUser = await getUser("yongwernjie.2003@gmail.com");
-
 // Below is Signup for Astro
-import { signUp, signOut, login } from "../lib/tarpit_gql";
-// import { UserCheck } from "lucide-vue-next";
-
 const userExist = ref(false);
+
 if (session && session.user_id && session.user_id.startsWith("guest")) {
   userExist.value = false;
 } else if (session && session.user_id) {
@@ -81,8 +64,6 @@ if (Astro.request.method === "POST") {
       if (result) {
         const { user, session, cookie } = result;
 
-        // console.log(user, session, cookie);
-
         Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
 
         return Astro.redirect("/");
@@ -105,14 +86,11 @@ if (Astro.request.method === "POST") {
       const hashHex = hashArray
         .map((b) => b.toString(16).padStart(2, "0"))
         .join(""); // convert bytes to hex string
-      // console.log(email, hashHex);
 
       let result = await login(email, hashHex);
 
       if (result) {
         const { user, session, cookie } = result;
-
-        // console.log(user, session, cookie);
 
         Astro.cookies.set(cookie.name, cookie.value, cookie.attributes);
 
@@ -139,8 +117,7 @@ if (Astro.request.method === "POST") {
   <main class="w-full" transition:animate="slide">
     
     <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} userId={user.id} userMetadata={user?.metadata} localCart={cart}/>
-      <!-- <CartStore client:only="vue" user_cart={cart} /> -->
-      <!-- {JSON.stringify(cart)} -->
+
       <section class="mb-12 w-full">
 
         <div class="w-full flex justify-center items-center">
@@ -246,19 +223,4 @@ if (Astro.request.method === "POST") {
 
   </main>
 
-
 </Layout>
-
-<!-- <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>真的友鬼</title>
-  </head>
-  <body class="bg-salmon-50" data-barba="wrapper">
-
-
-    
-
-  </body>
-</html> -->

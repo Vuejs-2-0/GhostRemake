@@ -25,7 +25,6 @@
 
     const dry_run_result = ref(false)
 
-
     const item_subtotal = computed( () => {
 
         let total = 0
@@ -55,12 +54,6 @@
         })
 
         dry_run_result.value = await _dry_run_result.json()
-
-        // console.log(dry_run_result.value)
-
-
-
-        // alert('Form submitted')
     }
 
     const submitTx = async () => {
@@ -78,10 +71,6 @@
         if(_submit_result.redirected){
             window.location.href = _submit_result.url
         }
-
-        // let submit_result = await _submit_result.json()
-
-        // console.log(_submit_result)
 
     }
 

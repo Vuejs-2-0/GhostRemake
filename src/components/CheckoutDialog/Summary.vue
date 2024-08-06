@@ -2,14 +2,12 @@
   <div>
     <div class="w-full grid grid-cols-4 text-center text-sm border-b pb-2 font-bold">
       <p class="text-left pl-1 col-span-2">商品</p>
-      <!-- <p>数量</p> -->
       <p>单价</p>
       <p>小计</p>
     </div>
 
     <div class="w-full">
       <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
-        <!--- <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> -->
         <div class="text-left pl-1 col-span-2">
             <p>{{ entry?.metadata?.label }}</p>
             <p class="text-[12px] font-light">{{ entry?.metadata?.bracelets }}</p>
@@ -22,15 +20,12 @@
             </div>
           </div>
         </div>
-        <!-- <p class="col-span-1 text-sm">{{ entry?.quantity }}</p> -->
         <p class="col-span-1 text-sm">RM {{ entry?.metadata?.product?.price }}</p>
         <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
       </div>
 
       <div v-for="entry in postageEntry" :key="entry?.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
-        <!-- <img :src="product.media.image" alt="Product Image" class="w-full col-span-1 aspect-square bg-white rounded-xl border" /> -->
         <p class="col-span-3 text-left pl-1">{{ entry?.metadata?.label }}</p>
-        <!-- <p class="col-span-1 text-sm"></p> -->
         <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
       </div>
     </div>

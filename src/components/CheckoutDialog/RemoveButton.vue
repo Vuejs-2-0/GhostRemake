@@ -22,24 +22,18 @@
   const _updateCart = async () => {
     // Access and update the cart's metadata
     let cartMetadata = { ...$cart.value.metadata };
-    // console.log(cartMetadata);
-    // console.log(localCart.value);
     
-    // Clone the existing bracelets array to avoid modifying the original reference
     let existingBracelets = [...(localCart.value.metadata.bracelets || [])];
 
-    // The product.id is the number of count of array in bracelet that want to remove. Remove it from existingBracelets
-    // Remove existingBracelets[product.id] from the array
     existingBracelets.splice(product.value.id, 1);
 
     cartMetadata.bracelets = existingBracelets;
-    // console.log(cartMetadata);
 
     await removeBraceletInCart(cartMetadata);
 
     window.location.reload();
     
-    };  
+  };  
 </script>
 
   

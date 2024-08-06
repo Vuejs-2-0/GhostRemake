@@ -118,57 +118,6 @@
         </Button>
       </div>
     </template>
-
-    <!--   <div class="py-4">
-      <Tabs v-model="delivery_method">
-        <TabsList>
-          <TabsTrigger value="postal">Postal</TabsTrigger>
-          <TabsTrigger value="self_pickup">Self Pickup</TabsTrigger>
-        </TabsList>
-        <TabsContent value="postal">
-          <div>
-            <Input @input="searchAddress" type="text" placeholder="Enter your address..." v-model="addressInput" />
-
-            <div v-if="showAddressOptions">
-              <p>Search Result:</p>
-
-              <div class="w-full grid grid-cols-12 justify-center items-center py-2" v-for="option in addressOptions">
-                <div class="col-span-10 text-left">
-                  <p class="">{{ option.formatted_address }}</p>
-                </div>
-                <div class="col-span-2 flex justify-end items-center">
-                  <Button @click="useAddressOption(option)" variant="outline">select</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="self_pickup">
-          <div class="col-span-2">
-            <div class="w-full bg-white shadow sm:rounded-lg border">
-              <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-base font-semibold leading-6 text-gray-900">自取需注意事项</h3>
-                <div class="mt-2 max-w-xl text-sm text-gray-500">
-                  <p>
-                    您需要到
-                    <strong>关丹福禄寿殡葬企业（关丹积善堂后方）</strong>
-                    自取
-                  </p>
-                </div>
-                <div class="mt-3 text-sm leading-6">
-                  <a href="https://www.facebook.com/flsbcare" class="font-semibold text-indigo-600 hover:text-indigo-500">
-                    关丹福禄寿殡葬企业 Facebook
-                    <span aria-hidden="true">&rarr;</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>-->
-
-    <!-- <Button @click="onSubmit">Next</Button> -->
   </div>
 </template>
 
@@ -180,8 +129,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { useDebounceFn } from "@vueuse/core";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -205,7 +152,6 @@ const guestEmail = ref(undefined);
 const addressInput = ref(undefined);
 const addressOptions = ref([]);
 const addressMetadata = ref(undefined);
-// console.log(schema)
 
 const noAddressResult = ref(false);
 const addressSearchBusy = ref(false);
@@ -213,7 +159,6 @@ const addressSearchBusy = ref(false);
 const emits = defineEmits(["submit"]);
 
 const searchAddress = useDebounceFn(async () => {
-  // console.log(addressInput.value);
 
   noAddressResult.value = false;
   addressSearchBusy.value = true;
@@ -237,8 +182,6 @@ const searchAddress = useDebounceFn(async () => {
   if (options_req.ok) {
     let options = await options_req.json();
 
-    // console.log(options);
-
     addressOptions.value = options;
   } else {
     console.error("Failed to fetch address options");
@@ -251,22 +194,16 @@ const searchAddress = useDebounceFn(async () => {
 const showAddressSearch = computed(() => {
   if (addressOptions.value.length > 0) {
     let addresses = addressOptions.value.map((option) => option.formatted_address);
-    // console.log(addresses);
     let matched = addresses.filter((address) => address == addressInput.value);
-    // console.log(matched.length);
     let show = !(matched.length > 0);
-    // console.log(show);
 
     return show;
-    // .length > 0;
-    // .filter(  (address) => (address == addressInput.value)).length > 0;
   }
 
   return true;
 });
 
 const isGuestUser = computed(() => {
-  // props.userId.substring(0, 5) == "guest";
   return (String(userEmail.value).split("@").pop() === "guest.com")
 });
 
@@ -291,18 +228,14 @@ let validatedForm = ref();
 
 const submitPage1 = async () => {
   let { values, valid } = await form.validate();
-  // console.log(result)
 
   if (valid) {
     validatedForm.value = { ...values };
     page.value = 2;
   }
-  // });
 };
 
 const submitPage2 = () => {
-  // page.value = 3;
-
   onSubmit();
 };
 
@@ -328,27 +261,9 @@ const cancelAddressSelection = () => {
 };
 
 const onSubmit = () => {
-  // console.log(validatedForm.value);
-  // console.log(guestEmail.value);
-  // if(isGuestUser)
-  // {
-  //   let payload = {
-  //     ...validatedForm.value,
-  //     delivery_method: delivery_method.value,
-  //     email: guestEmail.value
-  //   };
-  // }else{
-  //   let payload = {
-  //     ...validatedForm.value,
-  //     delivery_method: delivery_method.value,
-  //     email: userEmail.value
-  //   };
-  // }
-
   let payload = {
     ...validatedForm.value,
     delivery_method: delivery_method.value,
-    // email: userEmail.value
     email: isGuestUser.value ? guestEmail.value : userEmail.value
   };
 
@@ -366,8 +281,6 @@ const onSubmit = () => {
 };
 
 onMounted(() => {
-  // console.log("Form mounted", userMetadata.value);
-  // console.log("Form", form);
   if(userMetadata.value?.chineseName){
     form.setFieldValue('chineseName', userMetadata.value.chineseName)
   }
@@ -379,7 +292,5 @@ onMounted(() => {
   if(userMetadata.value?.englishName){
     form.setFieldValue('englishName', userMetadata.value.englishName)
   }
-
-  
 });
 </script>

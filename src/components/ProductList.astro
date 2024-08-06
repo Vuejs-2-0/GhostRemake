@@ -1,12 +1,8 @@
 ---
 const { products } = Astro.props;
-
 import AddButton from '@/components/Product/AddButton.vue';
 import { Button } from "@/components/ui/button";
 import LatestProductAddButton from './Product/LatestProductAddButton.vue';
-// import DetailsButton from '@/components/Product/DetailsButton.vue';
-
-// console.log(products);
 ---
 
 <div class="max-w-sm w-full ">
@@ -18,7 +14,6 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
           <div class="col-span-3">
             <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
             <p>RM 25.00</p>
-            
           </div>
           <div class="flex justify-center items-center">
             <LatestProductAddButton client:only="vue" product={product} />
@@ -34,12 +29,9 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
         <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
         <div class="col-span-5">
           <h3 class="text-lg font-semibold">{product.name}</h3>
-
           <p>RM {product.price}.00</p>
-
         </div>
         <div class="col-span-3">
-          {/* <DetailsButton client:only="vue" product={product} /> */}
           <AddButton client:only="vue" product={product} />
         </div>
       </div>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import Summary from "../components/CheckoutDialog/Summary.vue";
 
 const props = defineProps(["tx"]);
@@ -34,42 +34,27 @@ let status_map = {
     }
 
     const computedStatus = (tx) => {
-
         if(!tx) return;
-
-        // console.log(txs.value?.status)
-        
         return status_map[tx?.status];
-        
     }
 
 </script>
 
 <template>
     <div class="w-full flex justify-center items-center ">
-
-        <!-- {{ tx }} -->
         <div class="w-full space-y-4">
-        
             <article v-for="tx in txs" class="w-full flex justify-center items-center flex-col border-b-2 border-b-salmon-100 py-8">
-
                 <div class="w-full max-w-sm p-4">
                     <div class=" flex justify-start items-center space-x-2">
                         <div class="text-2xl mt-2">{{ computedStatus(tx)?.emoji }}</div>
                         <div class="font-bold text-2xl">{{ computedStatus(tx)?.title }}</div>
                     </div>
-
                     <p>{{ computedStatus(tx)?.description }}</p>
                 </div>
-                
                 <div class="w-full max-w-sm bg-white p-4 rounded-xl ">
-        
                     <Summary :postageEntry="tx.entries.filter((entry) => entry.type === 'postage')" :productEntries="tx.entries.filter((entry) => entry.type == 'product')" :form="tx.form" :value="tx.value"></Summary>
-
                 </div>
-        
             </article> 
-    
         </div>
     </div>
 </template>

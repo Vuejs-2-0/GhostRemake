@@ -9,10 +9,7 @@
 
     const { user_cart } = toRefs(props);
 
-    // import { useStore } from "@nanostores/vue";
     import { initCart } from "@/stores/cart";
-
-    // const $cart = useStore(cart);
 
     initCart(user_cart.value);
 </script>

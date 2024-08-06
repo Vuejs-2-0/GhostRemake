@@ -3,24 +3,17 @@ import Layout from "@/layouts/Layout.astro";
 import ProfileSetting from "@/components/Profile/ProfileSetting.vue";
 import "../styles/globals.css";
 
-// const props = Astro.props
-
 const { user } = Astro.locals as any;
 ---
 
 <Layout title="帐户设置">
-
-    <!-- {JSON.stringify(user)} -->
-
     <div class="w-full flex justify-center items-center mb-8">
         <div class="w-full max-w-sm py-4 text-center bg-white rounded-xl shadow-xl shadow-black/5">
           <h1 class="text-3xl font-bold text-salmon-500 mb-2">账户设置</h1>
           <p class="text-xl text-salmon-400">更改您的个人信息</p>
         </div>
       </div>
-
     <section class="w-full flex flex-col justify-center items-center">
         <ProfileSetting client:only="vue" user={user} />
     </section>
-
 </Layout>
