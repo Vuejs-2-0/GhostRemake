@@ -3,6 +3,7 @@ const { products } = Astro.props;
 
 import AddButton from '@/components/Product/AddButton.vue';
 import { Button } from "@/components/ui/button";
+import LatestProductAddButton from './Product/LatestProductAddButton.vue';
 // import DetailsButton from '@/components/Product/DetailsButton.vue';
 
 // console.log(products);
@@ -10,25 +11,25 @@ import { Button } from "@/components/ui/button";
 
 <div class="max-w-sm w-full ">
   <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
-    <div class="w-full h-48 rounded-xl bg-gray-100/50"></div>
-
-    <div class="w-full flex justify-between items-center mt-4">
-      <div class="col-span-3">
-        <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
-        <p>RM 25.00</p>
-      </div>
-
-      <div class="flex justify-center items-center">
-        <Button class="w-full p-2 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-lg">
-          <iconify-icon class="text-xl" icon="material-symbols:add"></iconify-icon>
-          <span>选购</span>
-        </Button>
-      </div>
-    </div>
+    {
+      products.filter((product:any) => product.id==11).map((product:any) => (
+        <img class="w-full h-48 rounded-xl bg-gray-100/50" src="/img/ProductImage7.webp" alt="真的友鬼7" />
+        <div class="w-full flex justify-between items-center mt-4">
+          <div class="col-span-3">
+            <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
+            <p>RM 25.00</p>
+            
+          </div>
+          <div class="flex justify-center items-center">
+            <LatestProductAddButton client:only="vue" product={product} />
+          </div>
+        </div>
+      ))
+    }
   </article>
 
   {
-    products.filter((product: any) => product.id != 9).map((product: any) => (
+    products.filter((product: any) => product.id != 9 && product.id != 11).map((product: any) => (
       <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
         <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
         <div class="col-span-5">
