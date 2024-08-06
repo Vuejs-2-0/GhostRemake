@@ -140,7 +140,7 @@ if (Astro.request.method === "POST") {
     
     <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} userId={user.id} userMetadata={user?.metadata} localCart={cart}/>
       <!-- <CartStore client:only="vue" user_cart={cart} /> -->
-      <!-- {JSON.stringify(cart)} -->
+      {JSON.stringify(cart)}
       <section class="mb-12 w-full">
 
         <div class="w-full flex justify-center items-center">
@@ -203,8 +203,8 @@ if (Astro.request.method === "POST") {
           </div>
 
           <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
-
-          <Questionnaire client:only="vue" cart={cart} >
+          
+          <Questionnaire client:only="vue" cart={cart} cartIndex={cart.items[10] + 1} >
             <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
               <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
               <span>添加问答</span>
