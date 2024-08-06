@@ -140,7 +140,7 @@ if (Astro.request.method === "POST") {
     
     <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} userId={user.id} userMetadata={user?.metadata} localCart={cart}/>
       <!-- <CartStore client:only="vue" user_cart={cart} /> -->
-      {JSON.stringify(cart)}
+      <!-- {JSON.stringify(cart)} -->
       <section class="mb-12 w-full">
 
         <div class="w-full flex justify-center items-center">
