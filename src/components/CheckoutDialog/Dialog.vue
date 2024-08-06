@@ -60,30 +60,15 @@
                   <p>RM 100.00</p>
                 </div>
                 <div class="col-span-4 flex justify-center items-center h-full">
-                  <!-- Which questions set (index) and which page display it -->
                   <Questionnaire :cart="localCart" :cartIndex="product.id+1"><div class="cursor-pointer text-blue-500 underline">编辑</div></Questionnaire>
-                  <!-- <div @click="editQuestion" class="cursor-pointer text-blue-500 underline">编辑</div> -->
                 </div>
               </div>
             </div>
 
             <div class="pt-8 w-full sticky bottom-4">
-              <!-- <div v-if="isGuestUser">
-                <div class="w-full flex flex-col items-center">
-                  <p class="px-6 pb-4 text-center">
-                    请先登录帐号 
-                    <a @click.prevent="goToLoginPage" href="#" class="text-salmon pl-2">立即登录</a>
-                  </p>
-                  <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3" disabled>
-                    <span class="text-xl text-white">确认</span>
-                  </Button>
-                </div>
-              </div>
-              <div v-else> -->
-                <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
-                  <span class="text-xl text-white">确认</span>
-                </Button>
-              <!-- </div> -->
+              <Button @click="confirmItems()" class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+                <span class="text-xl text-white">确认</span>
+              </Button>
             </div>
           </template>
 
@@ -120,66 +105,16 @@
 
 
             <div class="flex gap-x-2 w-full pt-4 px-2">
-      <div v-if ="isGuestUser==false">
-        <Checkbox v-model:checked="checkedUpdateUserMetadata" />
-        <!-- <div class="grid gap-1.5 leading-none"> -->
-          <label
-            for="terms1"
-            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            保存资料至我的账户
-          </label>
-          
-        <!-- </div> -->
-      </div>   
-    
-  </div>
-
-          <!-- <div class="w-full">
-            <div v-for="entry in productEntries" :key="entry.entry_id" class="w-full grid grid-cols-4 gap-2 mt-4 justify-center items-center text-center">
-              <p class="text-left pl-1 col-span-2">{{ entry?.metadata?.label }} {{ entry?.metadata?.bracelets }}</p>
-              <p class="col-span-1 text-sm">RM {{ entry?.metadata?.product?.price }}</p>
-              <p class="col-span-1 text-sm">RM {{ entry?.value }}</p>
+              <div v-if ="isGuestUser==false">
+                <Checkbox v-model:checked="checkedUpdateUserMetadata" />
+                  <label
+                    for="terms1"
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                   保存资料至我的账户
+                  </label>
+              </div>   
             </div>
-          </div>
-
-            <hr class="my-6 w-full" />
-
-            <div class="w-full">
-              <p class="mb-1 font-bold text-sm">配送方式</p>
-              <div class="w-full">
-                <template v-if="dry_run_result.form.delivery_method == 'postal'">
-                  <p>邮寄</p>
-                  <p class="text-sm mt-1">地址: {{ dry_run_result.form.address }}</p>
-                </template>
-                <template v-if="dry_run_result.form.delivery_method == 'self_pickup'">
-                  <p>自取</p>
-                </template>
-              </div>
-            </div>
-
-            <hr class="my-6 w-full" />
-
-            <div class="w-full">
-              <p class="mb-1 font-bold text-sm">个人资料</p>
-              <p>
-                中文姓名：
-                <span class="text-sm font-light">{{ dry_run_result.form.chineseName }}</span>
-              </p>
-              <p>
-                英文姓名：
-                <span class="text-sm font-light">{{ dry_run_result.form.chineseName }}</span>
-              </p>
-              <p>
-                联络号码：
-                <span class="text-sm font-light">{{ dry_run_result.form.phoneNumber }}</span>
-              </p>
-              <p>
-                电邮地址：
-                <span class="text-sm font-light">{{ dry_run_result.form.email }}</span>
-              </p>
-            </div> -->
-
             <div class="mt-4 pt-4 w-full flex justify-between items-center border-t">
               <div class="">
                 <p class="text-xl">总计</p>
@@ -187,8 +122,8 @@
               </div>
 
               <Button @click="confirmOrder()" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
-                  <span class="text-white">确认并付款</span>
-                </Button>
+                <span class="text-white">确认并付款</span>
+              </Button>
             </div>
           </template>
 
@@ -208,25 +143,20 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from '@/components/ui/checkbox'
-import { ref, toRefs } from "vue";
-import Form from "@/components/Checkout/Form.vue";
-import { computed } from "vue";
+import { ref, toRefs, computed } from "vue";
 import { cart } from "@/stores/cart";
 import { useStore } from "@nanostores/vue";
+import { VisuallyHidden } from "radix-vue";
 import AddButton from "./AddButton.vue";
 import RemoveButton from "./RemoveButton.vue";
-import { VisuallyHidden } from "radix-vue";
+import Summary from "./Summary.vue";
 import SignUp from "@/components/Authentication/SignUp2.vue";
 import Login from "@/components/Authentication/Login.vue";
+import Form from "@/components/Checkout/Form.vue";
+import Questionnaire from "../Questionnaire/Questionnaire.vue";
 
 const open = ref(false);
 const checkedUpdateUserMetadata = ref(true);
-
-import Summary from "./Summary.vue";
-import Questionnaire from "../Questionnaire/Questionnaire.vue";
-// import { User } from "lucide-vue-next";
-// import { effect } from "zod";
-
 const $cart = useStore(cart);
 const props = defineProps({
   form: Object,
@@ -241,12 +171,9 @@ const { localCart } = toRefs(props);
 
 const productList = computed(() => {
   if (!$cart.value.items) return [];
-  // initiate an array to store the filter
   const filtered = products.value.filter(p => $cart.value.items[p.id])
                                  .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));;
-  //If there is a product with id "9", separate it out
   const product9 = filtered.find(p => p.id === 9);
-  //If there is a product with id "9", remove it from the filtered array
   if (product9) {
     filtered.splice(filtered.indexOf(product9), 1);
   }
@@ -257,8 +184,6 @@ const braceletList = computed(() => {
   if (!$cart.value.items) return [];
   let quantity = 0;
   quantity = $cart.value.items["9"];
-  // console.log(quantity);
-  // console.log(localCart?.value?.metadata?.bracelets);
   
   const braceletList = [];
   for (let i = 0; i < quantity; i++) {
@@ -270,7 +195,6 @@ const braceletList = computed(() => {
       size: localCart.value.metadata.bracelets[i].size,
     });
   }
-  // console.log(braceletList);
   return braceletList;
 });
 
@@ -295,32 +219,22 @@ const page = ref("list");
 const isGuestUser = computed(() => props.userId.substring(0, 5) == "guest");
 
 const confirmItems = () => {
-  // if(props.userId.substring(0, 5) == "guest"){
-  //   page.value = "login";
-  // } else{
-    page.value = "form";
-  // }
+  page.value = "form";
 };
 
 const goToLoginPage = () => {
   page.value = 'login';
 };
 
-// const editQuestion = () => {
-//   page.value = 'editQuestion'
-// }
-
 const dry_run_result = ref(false);
 
 const computeTx = async (ev) => {
-  // console.log(ev);
 
   page.value = "loading";
 
   dry_run_result.value = false;
 
   const formData = ev;
-  // console.log(formData)
 
   let _dry_run_result = await fetch("/api/tx.json", {
     method: "POST",
@@ -333,8 +247,6 @@ const computeTx = async (ev) => {
 
   dry_run_result.value = await _dry_run_result.json();
 
-  // console.log(dry_run_result.value);
-
   page.value = "summary";
 };
 
@@ -342,7 +254,6 @@ const productEntries = computed(() => dry_run_result.value.entries.filter((entry
 const postageEntry = computed(() => dry_run_result.value.entries.filter((entry) => entry.type === "postage"));
 
 const dialogUpdated = (ev) => {
-  // console.log(ev);
   if (ev == false) {
     page.value = "list";
   }
@@ -353,10 +264,6 @@ const backToForm = () => {
 };
 
 const confirmOrder = async () => {
-
-  // console.log(dry_run_result.value.form);
-
-  // return
 
   page.value = "payment_loading";
 
@@ -374,7 +281,6 @@ const confirmOrder = async () => {
 
   if (_submit_result.redirected) {
     open.value = false;
-    // window.location.href = _submit_result.url;
     window.swup.navigate(_submit_result.url)
   }
 };

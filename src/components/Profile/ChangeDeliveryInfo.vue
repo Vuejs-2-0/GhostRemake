@@ -41,12 +41,6 @@ const submit = async () => {
     user_metadata.address = addressInput.value
   }
 
-  // console.log(user.value)
-
-  
-
-  // PUT because we are actually updating the user
-
   let result = await fetch('/api/user_data.json', {
     method: 'PUT',
     body: JSON.stringify({

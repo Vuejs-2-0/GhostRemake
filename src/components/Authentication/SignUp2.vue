@@ -56,7 +56,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from "@/components/ui/button";
 
-
 const isSignupOpen = ref(true);
 const email = ref('');
 const password = ref('');
@@ -70,29 +69,23 @@ const switchToSignup = () => {
   isSignupOpen.value = true;
 };
 
-const runConsole = () => {
-  // console.log('Hello, world!');
-};
-
 const handleSubmit = async (operation: string) => {
   const formData = new FormData();
   formData.append('operation', operation);
   formData.append('email', email.value);
   formData.append('password', password.value);
-  
+
   if (operation === 'signup') {
     
     let existingUserResponse = await fetch("/api/check_email.json", {
       method: "POST",
       body: JSON.stringify({
-        email: "yongwernjie.2003@gmail.com"
+        email: email.value
       }),
     });
   
     existingUserResponse = await existingUserResponse.json() as any;
-    let exist = existingUserResponse?.exist
-    // console.log(exist);
-    // return;
+    let exist = existingUserResponse?.exist;
     if(exist) {
       alert('This email is already registered.');
       email.value = null;
@@ -103,17 +96,11 @@ const handleSubmit = async (operation: string) => {
 
     if(password.value !== confirmPassword.value){
       alert('Passwords do not match');
+      password.value = null;
+      confirmPassword.value = null;
       return;
     }
   }
-
-
-  // const existingUser = await getUser("yongwernjie.2003@gmail.com");
-  // alert(existingUser);
-  //   if (existingUser) {
-  //     alert('This email is already registered.');
-  //     return;
-  //   }
 
   try {
     const response = await fetch(window.location.pathname, {
@@ -122,7 +109,6 @@ const handleSubmit = async (operation: string) => {
     });
 
     if (response.ok) {
-        // console.log('Form submitted successfully');
         window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);

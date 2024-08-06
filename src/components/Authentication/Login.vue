@@ -68,29 +68,23 @@ const switchToSignup = () => {
   isSignupOpen.value = true;
 };
 
-const runConsole = () => {
-  // console.log('Hello, world!');
-};
-
 const handleSubmit = async (operation: string) => {
   const formData = new FormData();
   formData.append('operation', operation);
   formData.append('email', email.value);
   formData.append('password', password.value);
-  
+
   if (operation === 'signup') {
     
     let existingUserResponse = await fetch("/api/check_email.json", {
       method: "POST",
       body: JSON.stringify({
-        email: "yongwernjie.2003@gmail.com"
+        email: email.value
       }),
     });
   
     existingUserResponse = await existingUserResponse.json() as any;
-    let exist = existingUserResponse?.exist
-    // console.log(exist);
-    // return;
+    let exist = existingUserResponse?.exist;
     if(exist) {
       alert('This email is already registered.');
       email.value = null;
@@ -101,6 +95,8 @@ const handleSubmit = async (operation: string) => {
 
     if(password.value !== confirmPassword.value){
       alert('Passwords do not match');
+      password.value = null;
+      confirmPassword.value = null;
       return;
     }
   }
@@ -112,7 +108,6 @@ const handleSubmit = async (operation: string) => {
     });
 
     if (response.ok) {
-        // console.log('Form submitted successfully');
         window.location.reload();
     } else {
       console.error('Form submission failed:', response.statusText);
