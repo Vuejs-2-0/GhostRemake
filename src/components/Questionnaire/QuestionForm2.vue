@@ -1,26 +1,29 @@
 <template>
-  <div class="w-full p-6 bg-white shadow-md rounded-lg">
+  <div class="w-full p-6 bg-white rounded-lg">
     <div class="space-y-4 pb-5">
       <!-- {{ $cart }} -->
       <div v-for="n in generatedQuestions" :key="n" class="space-y-2">
-        <label :for="`question-${n}`" class="block text-sm font-medium text-gray-700">
-          问题 {{ n }}
-        </label>
-        <input type="text" :id="`question-${n}`" v-model="questions[n - 1]" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm rounded-md" />
-        <div class="flex items-center space-x-4">
-          <Button v-if="!addQuestionSet" @click="editQuestion(n)" class="text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 rounded-lg">更改</Button>
-          <Button @click="deleteQuestion(n)" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 rounded-lg">移除</Button>
+        <div class="flex items-center justify-between">
+          <label :for="`question-${n}`" class="block text-sm font-medium text-gray-700">
+            问题 {{ n }}
+          </label>
+          <Button @click="deleteQuestion(n)" class="px-2 py-1 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+              <path fill="white" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+            </svg>
+          </Button>
         </div>
+        <input type="text" :id="`question-${n}`" v-model="questions[n - 1]" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm rounded-md" />
       </div>
       <div v-if="numberOfQuestions < 10" class="flex justify-center">
-        <Button @click="addQuestion" class="flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
-          <span class="text-xl font-bold text-gray-700">+</span>
+        <Button @click="addQuestion" class="flex items-center justify-center w-10 h-10 bg-orange-500 hover:bg-orange-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <span class="text-xl font-bold text-white">+</span>
         </Button>
       </div>
     </div>
     <div v-if="addQuestionSet">
       <Button @click="saveQuestions" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
-        <span>加入购物车</span>
+        <span>提交问题</span>
       </Button>
     </div>
     <div v-else>
@@ -36,6 +39,12 @@ import { ref, computed, watch, toRefs, defineProps, onMounted } from "vue";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@nanostores/vue";
 import { cart, editQuestionInCart, updateProductBraceletInCart, removeQuestionInCart } from "@/stores/cart";
+
+import { defineComponent } from 'vue';
+
+defineComponent({
+  name: 'MdiBin',
+});
 
 const props = defineProps(["user_cart", "questionSet"]);
 const numberOfQuestions = ref(1);
@@ -74,18 +83,18 @@ const addQuestion = () => {
 let existingQuestions = [...(user_cart.value.metadata?.questions || [])];
 const questions2 = ref(existingQuestions);
 
-const editQuestion = async (index) => {
-  const value = (document.getElementById(`question-${index}`)).value;
-  console.log("Editing question:", index, value);
-  console.log("Question set:", latestQuestionSet.value);
-  let cartMetadata = { ...$cart.value.metadata };
-  console.log("cartMetadata:", cartMetadata.questions);
-  console.log("questions2:", questions2.value[latestQuestionSet-1]);
-  questions2.value[latestQuestionSet.value-1].questionArray[index-1] = value;
-  cartMetadata.questions = questions2.value;
-  await editQuestionInCart(cartMetadata);
-  alert("成功更改问题！");
-};
+// const editQuestion = async (index) => {
+//   const value = (document.getElementById(`question-${index}`)).value;
+//   console.log("Editing question:", index, value);
+//   console.log("Question set:", latestQuestionSet.value);
+//   let cartMetadata = { ...$cart.value.metadata };
+//   console.log("cartMetadata:", cartMetadata.questions);
+//   console.log("questions2:", questions2.value[latestQuestionSet-1]);
+//   questions2.value[latestQuestionSet.value-1].questionArray[index-1] = value;
+//   cartMetadata.questions = questions2.value;
+//   await editQuestionInCart(cartMetadata);
+//   alert("成功更改问题！");
+// };
 
 const deleteQuestion = async (index) => {
   let cartMetadata = { ...$cart.value.metadata };

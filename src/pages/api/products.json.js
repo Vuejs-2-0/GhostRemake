@@ -23,7 +23,6 @@ const getProducts = async () => {
 }
 
 export async function GET() {
-    // const id = params.id;
     const product = await getProducts();
   
     if (!product) {

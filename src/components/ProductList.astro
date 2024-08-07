@@ -9,7 +9,7 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
   <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
     {
       products.filter((product:any) => product.id==11).map((product:any) => (
-        <img class="w-full h-48 rounded-xl bg-gray-100/50" src="/img/ProductImage7.webp" alt="真的友鬼7" />
+        <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={product.media.image} alt="真的友鬼7" />
         <div class="w-full flex justify-between items-center mt-4">
           <div class="col-span-3">
             <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>

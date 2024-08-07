@@ -481,17 +481,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
 export const PUT: APIRoute = async ({ request, redirect }) => {
   // uuid: string, status: string, paymentType: string, paymentMetadata: any
-  //
+  
   let { uuid, status, paymentType, paymentMetadata } = await request.json();
 
   await updateTx(uuid, status, paymentType, paymentMetadata);
 
   return redirect(`/complete?tx=${uuid}`);
 
-  // return new Response(JSON.stringify(result), {
-  //   status: 200,
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // });
 };

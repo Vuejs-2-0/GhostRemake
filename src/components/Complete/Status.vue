@@ -1,73 +1,25 @@
 <template>
-
     <div class="w-full flex flex-col justify-start items-center pb-8">
-
         <div class="w-full max-w-sm bg-white p-4 rounded-xl shadow-xl flex justify-center items-center">
-
             <template v-if="busy">
-
                 <iconify-icon  class="text-7xl text-salmon" icon="eos-icons:three-dots-loading"></iconify-icon>
-
             </template>
             <template v-else>
-
                <div class="w-full flex justify-center items-center ">
-
                 <div class="w-full">
                     <h1 class="font-bold">{{ computedStatus?.title }}</h1>
                     <p>{{ computedStatus?.description }}</p>
                 </div>
-
                 <div :class="[showRefresh?'ml-2 w-16 ':'w-0 h-0','overflow-hidden']" class="flex justify-center items-center flex-col">
                     <button class="w-12 h-12 rounded-full hover:bg-salmon-100 flex justify-center items-center duration-200" @click="fetchStatus">
-
                         <iconify-icon class="text-salmon text-3xl" icon="material-symbols:refresh"></iconify-icon>
-
                     </button>
-
                     <div class="text-sm">{{ counter }}</div>
-
                 </div>
-
                </div>
             </template>
-
-
         </div>
-
-<!--
-        <!~~ <p>Submission complete.</p> ~~>
-        <!~~ <p>tx: {{ tx_data?.uuid }}</p> ~~>
-        <!~~ <p>type: {{ tx_data?.payment_type }}</p> ~~>
-
-        <br>
-        <br>
-
-        <p v-if="busy">Loading...</p>
-        <p v-else-if="tx_data">Status: {{ tx_data?.status }}</p>
-
-        <br>
-        <br>
-
-        <!~~ <div>
-            {{ tx_data?.form }}
-        </div> ~~>
-
-        <br>
-        <br>
-
-        <template v-if="tx_data?.payment_type == 'stripe' ">
-
-            <template v-if="!(tx_data?.status =='paid' || tx_data?.status == 'rejected')">
-                
-                <h1>Refresh in {{ counter }}</h1>
-                <button class="outline" @click="fetchStatus">Refresh</button>
-            </template>
-
-        </template>-->
-
     </div>
-
 </template>
 
 <script setup>
@@ -154,8 +106,6 @@
     const computedStatus = computed(() => {
 
         if(!tx_data.value) return;
-
-        // console.log(tx_data.value?.status)
         
         return status_map[tx_data.value?.status];
         
