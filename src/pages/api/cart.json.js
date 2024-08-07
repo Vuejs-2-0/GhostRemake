@@ -6,13 +6,6 @@ export async function PUT({request}) {
 
     let data = await updateCart(body);
   
-    // if (!product) {
-    //   return new Response(null, {
-    //     status: 404,
-    //     statusText: 'Not found'
-    //   });
-    // }
-  
     return new Response(
       JSON.stringify(data), {
         status: 200,

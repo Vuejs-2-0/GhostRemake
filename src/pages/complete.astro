@@ -1,6 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-// import { getTxByUUID } from "@/lib/tarpit_gql.ts";
 
 const tx_id = Astro.url.searchParams.get('tx') || '';
 
@@ -23,57 +22,22 @@ let tx = await getTxByUUID(tx_id);
 ---
 
 <Layout title="complete">
-<!-- 
-    <p>tx_id: {tx_id}</p>
-
-    {
-
-redirect_status === 'failed' ? 
-    (
-    <p>failed</p>
-    )
-
-    :
-
-(
-<p>complete</p>
-<br>
     <Status client:only="vue" tx={tx_id} />
-    )
-    
-
-    }
-
-     -->
-
-    <Status client:only="vue" tx={tx_id} />
-
-    
-
     <Summary client:only="vue" tx={tx} />
-
-
     <div class="w-full flex justify-center items-center pt-8">
-
         <div class="w-full max-w-sm flex flex-col justify-center items-center space-y-4">
-
             <a href="/history" class="w-full">
                 <Button class="hover:scale-105 w-full text-xl bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
                     <span class="text-white">前往「我的订单」</span>
-                  </Button>
+                </Button>
             </a>
-
             <a href="/" class="w-full">
                 <Button class="hover:scale-105 w-full text-xl bg-white text-salmon hover:text-white border-2 border-salmon-100 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 duration-300 transition-all scale-100 active:scale-95 p-3">
                     <span class="">返回主页</span>
-                  </Button>
+                </Button>
             </a>
-
         </div>
-
     </div>
     
     <div class="h-[20vh] w-full"></div>
-    
-
 </Layout>

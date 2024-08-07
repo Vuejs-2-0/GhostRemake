@@ -4,8 +4,6 @@ import type { APIRoute } from "astro";
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json();
 
-  // console.log(body);
-
   try {
     let metadata = body.data.object.metadata;
     let status = body.data.object.status;
@@ -15,12 +13,8 @@ export const POST: APIRoute = async ({ request }) => {
     let tx_status = status === "succeeded" ? "paid" : "rejected";
 
     // update the tx status to paid
-
-    // let { uuid, status, paymentType, paymentMetadata } = await request.json();
-
+    
     let result = await updateTx(metadata.tx_uuid, tx_status, "stripe", body);
-
-    // let response = await uploadPaymentProof(base64_data, extension);
 
     return new Response(JSON.stringify(result), {
       headers: {

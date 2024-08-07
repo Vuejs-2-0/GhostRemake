@@ -16,9 +16,6 @@
             </VisuallyHidden>
           </DialogHeader>
 
-          <!-- 123 -->
-          <!-- <div>{{ tx.entries.filter( (entry:any) => (entry.type=='product')) }}</div> -->
-
           <div class="px-2">
             <Summary :postageEntry="tx.entries.filter((entry: any) => entry.type === 'postage')" :productEntries="tx.entries.filter((entry: any) => entry.type == 'product')" :form="tx.form" :value="tx.value"></Summary>
           </div>

@@ -36,11 +36,7 @@
     const { uuid,tx } = toRefs(props)
 
     const updateTx = async (ev) => {
-
-        // console.log(ev)
-        
         if(ev.paymentMethod === 'upload_proof'){
-            // console.log('upload_proof')
             let payload = {
                 ...ev,
                 uuid: uuid.value,
@@ -55,7 +51,6 @@
             })
 
             if(result.redirected){
-                // window.location.href = result.url
                 window.location.replace(result.url)
             }
         }

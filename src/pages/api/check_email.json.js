@@ -18,13 +18,6 @@ export async function POST({request}) {
       console.log(error);
     }
   
-    // if (!product) {
-    //   return new Response(null, {
-    //     status: 404,
-    //     statusText: 'Not found'
-    //   });
-    // }
-  
     return new Response(
       JSON.stringify({
         exist
