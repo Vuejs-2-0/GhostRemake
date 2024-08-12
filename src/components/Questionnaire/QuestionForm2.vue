@@ -43,6 +43,7 @@ import { useStore } from "@nanostores/vue";
 import { cart, editQuestionInCart, updateProductBraceletInCart, removeQuestionInCart } from "@/stores/cart";
 
 import { defineComponent } from 'vue';
+import { number } from "zod";
 
 defineComponent({
   name: 'MdiBin',
@@ -85,20 +86,18 @@ const addQuestion = () => {
 let existingQuestions = [...(user_cart.value.metadata?.questions || [])];
 const questions2 = ref(existingQuestions);
 
-// const editQuestion = async (index) => {
-//   const value = (document.getElementById(`question-${index}`)).value;
-//   console.log("Editing question:", index, value);
-//   console.log("Question set:", latestQuestionSet.value);
-//   let cartMetadata = { ...$cart.value.metadata };
-//   console.log("cartMetadata:", cartMetadata.questions);
-//   console.log("questions2:", questions2.value[latestQuestionSet-1]);
-//   questions2.value[latestQuestionSet.value-1].questionArray[index-1] = value;
-//   cartMetadata.questions = questions2.value;
-//   await editQuestionInCart(cartMetadata);
-//   alert("成功更改问题！");
-// };
-
 const deleteQuestion = async (index) => {
+
+  if(addQuestionSet.value) {
+    if(numberOfQuestions.value == 1) {
+      alert("至少需要一个问题！");
+      return;
+    }
+    questions.value.splice(index - 1, 1);
+    numberOfQuestions.value--;
+    return;
+  }
+
   let cartMetadata = { ...$cart.value.metadata };
   questions2.value[latestQuestionSet.value-1].questionArray.splice(index-1, 1);
   questions2.value[latestQuestionSet.value-1].questionIndex = questions2.value[latestQuestionSet.value-1].questionArray.length;
@@ -111,9 +110,6 @@ const deleteQuestion = async (index) => {
   numberOfQuestions.value--;
 
   alert("成功移除问题！");
-  if(numberOfQuestions.value == 0) {
-    window.location.reload();
-  }
 };
 
 const saveQuestions = async () => {
