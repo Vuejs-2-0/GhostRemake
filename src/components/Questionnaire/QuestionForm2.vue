@@ -1,27 +1,28 @@
 <template>
-  <div class="w-full p-6 bg-white rounded-lg">
-    <div class="space-y-4 pb-5">
+  <div class="w-full bg-white rounded-lg">
+    <div class="">
       <!-- {{ $cart }} -->
-      <div v-for="n in generatedQuestions" :key="n" class="space-y-2">
-        <div class="flex items-center justify-between">
-          <label :for="`question-${n}`" class="block text-sm font-medium text-gray-700">
+      <div v-for="(n,index) in generatedQuestions" :key="n" class="p-4" :class="[index != generatedQuestions.length - 1?'border-b':'']">
+        <div class="flex items-center justify-between mb-2">
+          <label :for="`question-${n}`" class="block font-medium text-gray-700">
             问题 {{ n }}
           </label>
-          <Button @click="deleteQuestion(n)" class="px-2 py-1 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-              <path fill="white" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
-            </svg>
+          <Button @click="deleteQuestion(n)" class="w-8 h-8 text-xl text-salmon-400 bg-salmon-50 focus:ring-4 focus:ring-salmon-300 rounded-lg">
+            <iconify-icon icon="mdi:remove-circle"></iconify-icon>
           </Button>
         </div>
         <input type="text" :id="`question-${n}`" v-model="questions[n - 1]" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm rounded-md" />
       </div>
+
+      
       <div v-if="numberOfQuestions < 10" class="flex justify-center">
-        <Button @click="addQuestion" class="flex items-center justify-center w-10 h-10 bg-orange-500 hover:bg-orange-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
-          <span class="text-xl font-bold text-white">+</span>
+        <Button @click="addQuestion" class="flex items-center justify-center w-10 h-10 bg-salmon-100 text-salmon-500 hover:bg-salmon-500 hover:text-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black text-2xl">
+          <iconify-icon icon="mdi:plus"></iconify-icon>
         </Button>
       </div>
     </div>
-    <div v-if="addQuestionSet">
+    <div class="px-4 pt-4">
+      <div v-if="addQuestionSet">
       <Button @click="saveQuestions" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
         <span>提交问题</span>
       </Button>
@@ -30,6 +31,7 @@
       <Button @click="editAllQuestion" class="w-full py-2 text-white font-medium rounded-md hover:bg-[#FF3300] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF3300]">
         <span>更新全部问题</span>
       </Button>
+    </div>
     </div>
   </div>
 </template>
