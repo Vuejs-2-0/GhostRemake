@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import CartFooterVue from "@/components/CartFooter.vue"
 import Layout from "@/layouts/Layout.astro";
 import Questionnaire from "@/components/Questionnaire/Questionnaire.vue";
+import ImageSlider from "@/components/imageSlider.vue";
+import BraceletPosts from "@/components/BraceletPosts.vue"
 
 import { ref } from "vue";
 import { getBookProducts, getFormById, signUp, signOut, login } from "../lib/tarpit_gql";
@@ -120,8 +122,11 @@ if (Astro.request.method === "POST") {
 
       <section class="mb-12 w-full">
 
-        <div class="w-full flex justify-center items-center">
-          <p class="w-[60%] sm:w-full text-lg text-salmon-300 text-center">揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》</p>
+        <div class="w-full flex justify-center items-center flex-col">
+          <p class="w-[60%] sm:w-full text-2xl text-salmon-400 text-center mb-4">揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》</p>
+          <p class="w-[60%] sm:w-full max-w-md text-center text-salmon-300">
+            《真的友鬼》系列纯粹是以一个见到鬼的人的角度，把自己的所见所闻以文字呈现出来，让读者对这个灵异世界有更多的认识。《真的友鬼3》开始，故事也融入了主角老师解决灵界奇难杂症和旅行中所遇到的精彩灵异事件。神秘的灵异世界，就等你来探索！
+          </p>
         </div>
   
         <div class="w-full flex justify-center items-center mt-4 space-x-4">
@@ -152,11 +157,25 @@ if (Astro.request.method === "POST") {
 
         <div class="w-full bg-white rounded-xl p-4">
           
-          <div class="w-full bg-gray-100/50 aspect-video rounded-md mb-2">
-            <img src="img/horizontal.webp" alt="Bracelet"  class="w-full max-w-[600px] h-auto max-h-[300px] bg-gray-300 rounded-[8px] object-cover">
+          <div class="w-full bg-gray-100/50 aspect-square overflow-hidden rounded-md mb-2">
+             <ImageSlider client:only="vue"></ImageSlider>
           </div>
 
-          <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
+          <div class="py-4">
+
+            <div class="w-full flex justify-between items-center mb-2">
+              
+              <div>
+                <p class="font-semibold">五色绳</p>
+                <p>启动五行力量，引爆无限可能</p>
+              </div>
+
+              <div class="bg-salmon-400 text-white rounded-md p-1 px-2 text-sm">限量制作</div>
+            </div>
+
+            <p class="text-sm text-salmon-300">在编制加持的过程中，五色绳凝聚了各种能量，并能够激发佩戴者自身的潜在能量。无论是戴在手上作为护身符，还是变成锁匙扣使用，五色绳都具备独特的能量属性。它可以为佩戴者带来平安、吉祥和保护的力量。</p>
+
+          </div>
           
           <!-- Pass cart as props to Bracelet -->
           <Bracelet client:only="vue" cart={cart} json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
@@ -167,24 +186,26 @@ if (Astro.request.method === "POST") {
           </Bracelet>
   
           </div>
+
+          <BraceletPosts client:only="vue"></BraceletPosts>
   
         </div>
         <div class="w-full max-w-sm mt-4">
 
-          <h2 class="text-2xl font-semibold text-center mb-4">问题</h2>
+          <h2 class="text-2xl font-semibold text-center mb-4">问事</h2>
 
         <div class="w-full bg-white rounded-xl p-4">
           
           <div class="w-full bg-gray-100/50 aspect-video rounded-md mb-2">
-            <img src="img/ghostFriend4.jpeg" alt="Bracelet"  class="w-full max-w-[600px] h-auto max-h-[250px] bg-gray-300 rounded-[8px] object-cover">
+            <img src="img/book6.png" alt="consult"  class="w-full max-w-[600px] h-auto max-h-[250px] bg-gray-300 rounded-[8px] object-cover">
           </div>
 
-          <p class="py-4">弟者消聽泉筆後造想！爸東早汗丟？苦都抱地娘現海玉采言波法重他校具員蛋。活帶着麻但語卜，歡豆姊世者良目：村每壯喜陽個星，玩寫這斥哭何。</p>
+          <p class="py-4">有问题想咨询或请教老师者，欢迎前来“问事”。每次收费为RM100。</p>
           
           <Questionnaire client:only="vue" cart={cart} cartIndex={cart.items[10] + 1} >
             <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
               <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
-              <span>添加问答</span>
+              <span>我要问事</span>
             </Button>
           </Questionnaire>
   

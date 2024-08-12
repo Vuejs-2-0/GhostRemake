@@ -19,8 +19,8 @@ const { cart, cartIndex } = toRefs(props)
         <slot></slot>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px] p-0 max-h-[90vh] grid gap-4 overflow-y-auto">
-        <div class="grid gap-4 py-4 overflow-y-auto px-6">
-            <DialogTitle class="text-[25px] text-center">问题</DialogTitle>
+        <div class="grid gap-4 py-4 overflow-y-auto">
+            <DialogTitle class="text-[25px] text-center p-4">问题</DialogTitle>
             <DialogDescription></DialogDescription>
             <Form :user_cart="cart" :questionSet="cartIndex" />
         </div>  
