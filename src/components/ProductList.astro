@@ -24,17 +24,20 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
   </article>
 
   {
-    products.filter((product: any) => product.id != 9 && product.id != 11).map((product: any) => (
-      <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
-        <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
-        <div class="col-span-5">
-          <h3 class="text-lg font-semibold">{product.name}</h3>
-          <p>RM {product.price}.00</p>
-        </div>
-        <div class="col-span-3">
-          <AddButton client:only="vue" product={product} />
-        </div>
+    products
+  .filter((product: any) => product.id != 9 && product.id != 11 && product.status === "active")
+  .sort((a: any, b: any) => a.name.localeCompare(b.name))
+  .map((product: any) => (
+    <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
+      <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
+      <div class="col-span-5">
+        <h3 class="text-lg font-semibold">{product.name}</h3>
+        <p>RM {product.price}.00</p>
       </div>
-    ))
+      <div class="col-span-3">
+        <AddButton client:only="vue" product={product} />
+      </div>
+    </div>
+  ))
   }
 </div>
