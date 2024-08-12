@@ -26,7 +26,7 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
   {
     products
   .filter((product: any) => product.id != 9 && product.id != 11 && product.status === "active")
-  .sort((a: any, b: any) => a.name.localeCompare(b.name))
+  .sort((a: any, b: any) => b.name.localeCompare(a.name))
   .map((product: any) => (
     <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
       <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
