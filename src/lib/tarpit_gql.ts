@@ -53,6 +53,13 @@ const getBookProducts = async () => {
             "metadata_id": 7
           }
         }
+      },
+      "include":{
+        "product_metadata_link": {
+          "include": {
+            "metadata": true
+          }
+        }
       }
     }
   }).toPromise()
