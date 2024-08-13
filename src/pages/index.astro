@@ -200,7 +200,8 @@ if (Astro.request.method === "POST") {
             <img src="img/book6.png" alt="consult"  class="w-full max-w-[600px] h-auto max-h-[250px] bg-gray-300 rounded-[8px] object-cover">
           </div>
 
-          <p class="py-4">有问题想咨询或请教老师者，欢迎前来“问事”。每次收费为RM100。</p>
+          <p class="py-4">有问题想咨询或请教老师者，欢迎前来“问事”。每次收费为RM100，提问问题不限。老师得空的时候会回复。
+          </p>
           
           <Questionnaire client:only="vue" cart={cart} cartIndex={cart.items[10] + 1} >
             <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">

@@ -13,7 +13,7 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
         <div class="w-full flex justify-between items-center mt-4">
           <div class="col-span-3">
             <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
-            <p>RM 25.00</p>
+            <p>RM 28.00</p>
           </div>
           <div class="flex justify-center items-center">
             <LatestProductAddButton client:only="vue" product={product} />
@@ -29,13 +29,34 @@ import LatestProductAddButton from './Product/LatestProductAddButton.vue';
   .sort((a: any, b: any) => b.name.localeCompare(a.name))
   .map((product: any) => (
     <div class="w-full grid grid-cols-10 gap-2 mt-4 justify-center items-center">
-      <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
+
+      {
+        product?.product_metadata_link?.filter((meta:any) =>(meta.metadata.key == "disabled")).length > 0 ? (
+          <div class="col-span-2 aspect-square flex justify-center items-center relative">
+            <img src={product.media.image} alt="Product Image" class="w-full h-full bg-white rounded-xl object-cover brightness-50" />
+            <iconify-icon class="absolute text-white text-5xl z-20" icon="line-md:cancel-twotone"></iconify-icon>
+          </div>
+        ):(
+          <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
+        )
+      }
+
+      
       <div class="col-span-5">
         <h3 class="text-lg font-semibold">{product.name}</h3>
         <p>RM {product.price}.00</p>
       </div>
       <div class="col-span-3">
-        <AddButton client:only="vue" product={product} />
+        {
+          product?.product_metadata_link?.filter((meta:any) =>(meta.metadata.key == "disabled")).length > 0 ? (
+          <p class="text-center text-salmon-400 font-semibold">已售罄</p>
+
+          ) : (
+            <AddButton client:only="vue" product={product} />
+
+          )
+        }
+        {/* <AddButton client:only="vue" product={product} /> */}
       </div>
     </div>
   ))
