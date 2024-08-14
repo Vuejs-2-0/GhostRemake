@@ -213,16 +213,36 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request, redirect }) => {
   const { cartId, form, dry_run, update_metadata, user_id } = await request.json();
 
-  console.log(request);
+  // console.log(request);
+
+  let time_1 = new Date().getTime();
+  let time_2 = new Date().getTime();
 
   try {
+
+    time_1 = new Date().getTime();
+
     let cart = await getCart(cartId);
+
+    
     
     // Check metadata got bracelet or not
 
     let item_ids = Object.keys(cart.items).map((key) => parseInt(key));
 
+    time_2 = new Date().getTime();
+
+    console.log("getCart", (time_2 - time_1));
+
+    time_1 = new Date().getTime();
+    
     let products = (await getProductsByIds(item_ids)) as any;
+
+    time_2 = new Date().getTime();
+
+    console.log("getProductsByIds", (time_2 - time_1));
+
+    
 
     products = products.map((product: any) => {
       return {
@@ -232,7 +252,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     });
 
     // create entries
-z
+
     let entries = [];
     let i = 0;
 
@@ -445,10 +465,18 @@ z
           address: form?.address,
         };
 
+        // console.time("updateUserByID");
+        time_1 = new Date().getTime();
+
         await updateUserByID(user_id, user_metadata);
+
+        time_2 = new Date().getTime();
+
+        console.log("updateUserByID", (time_2 - time_1));
 
       }
 
+      time_1 = new Date().getTime();
 
       let tx = await createTx({
         entries: entries,
@@ -464,14 +492,27 @@ z
         ownerId: cart.owner,
       });
 
+      time_2 = new Date().getTime();
+
+      console.log("createTx", (time_2 - time_1));
+
+
+
       // then we also change the cart status to "checked_out"
 
+      // console.time("updateCartStatus");
+      time_1 = new Date().getTime();
+
       await updateCartStatus(cartId, "checked_out");
+
+      time_2 = new Date().getTime();
+
+      console.log("updateCartStatus", (time_2 - time_1));
 
       return redirect(`/pay?tx=${tx.uuid}`);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return new Response(null, {
       status: 404,
       statusText: "Not found",
