@@ -38,6 +38,11 @@ let status_map = {
         return status_map[tx?.status];
     }
 
+    const paymentPage = (tx_uuid) => {
+        console.log(tx_uuid);
+        // window.location.href = `/pay?tx=${tx_uuid}`;
+    }
+
 </script>
 
 <template>
@@ -52,6 +57,7 @@ let status_map = {
                     <p>{{ computedStatus(tx)?.description }}</p>
                 </div>
                 <div class="w-full max-w-sm bg-white p-4 rounded-xl ">
+                    <button @click="paymentPage(tx.uuid)">Direct to payment page</button>
                     <Summary :postageEntry="tx.entries.filter((entry) => entry.type === 'postage')" :productEntries="tx.entries.filter((entry) => entry.type == 'product')" :form="tx.form" :value="tx.value"></Summary>
                 </div>
             </article> 

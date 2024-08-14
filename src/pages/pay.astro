@@ -18,6 +18,10 @@ if (tx.status !== 'pending') {
     return Astro.redirect('/history');
 }
 
+// window.onbeforeunload = function() {
+//     return "您还没有完成付款，确定要离开此页面吗？";
+// };
+
 ---
 
 <Layout title="Pay">

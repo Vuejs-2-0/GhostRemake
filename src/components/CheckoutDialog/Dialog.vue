@@ -33,7 +33,7 @@
                 <AddButton :product="product" />
               </div>
               <div v-for="product in braceletList" :key="product.id" class="w-full grid grid-cols-11 gap-2 mt-4 justify-center items-center">
-                <img src="/img/bracelet.webp" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
+                <img src="/img/bracelet.jpg" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
                 <div class="col-span-5">
                   <div class="flex justify-start items-center">
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
@@ -51,11 +51,11 @@
                 </div>
               </div>
               <div v-for="product in questionList" :key="product.id" class="w-full grid grid-cols-11 gap-2 mt-4 justify-center items-center">
-                <img src="/img/bracelet.webp" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
+                <img src="/img/question.png" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
                 <div class="col-span-5">
                   <div class="flex justify-start items-center">
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
-                    <p class="text-lg font-semibold">问题</p>
+                    <p class="text-lg font-semibold">问事</p>
                   </div>
                   <p>RM 100.00</p>
                 </div>
