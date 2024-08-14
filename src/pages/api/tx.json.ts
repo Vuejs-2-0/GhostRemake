@@ -213,16 +213,25 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request, redirect }) => {
   const { cartId, form, dry_run, update_metadata, user_id } = await request.json();
 
-  console.log(request);
+  // console.log(request);
 
   try {
+
+    console.time("getCart");
+
     let cart = await getCart(cartId);
     
     // Check metadata got bracelet or not
 
     let item_ids = Object.keys(cart.items).map((key) => parseInt(key));
 
+    console.timeEnd("getCart");
+
+    console.time("getProductsByIds");
+
     let products = (await getProductsByIds(item_ids)) as any;
+
+    console.timeEnd("getProductsByIds");
 
     products = products.map((product: any) => {
       return {
@@ -445,10 +454,15 @@ z
           address: form?.address,
         };
 
+        console.time("updateUserByID");
+
         await updateUserByID(user_id, user_metadata);
+
+        console.timeEnd("updateUserByID");
 
       }
 
+      console.time("createTx");
 
       let tx = await createTx({
         entries: entries,
@@ -464,14 +478,20 @@ z
         ownerId: cart.owner,
       });
 
+      console.timeEnd("createTx");
+
       // then we also change the cart status to "checked_out"
 
+      console.time("updateCartStatus");
+
       await updateCartStatus(cartId, "checked_out");
+
+      console.timeEnd("updateCartStatus");
 
       return redirect(`/pay?tx=${tx.uuid}`);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return new Response(null, {
       status: 404,
       statusText: "Not found",
