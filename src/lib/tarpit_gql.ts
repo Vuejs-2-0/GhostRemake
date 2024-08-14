@@ -307,7 +307,7 @@ const getCart = async (cartId: string) => {
 
 const updateCart = async (args:any) => {
 
-  console.log("update cart")
+  // console.log("update cart")
   // first retrieve the server's cart data
 
   let _cart = await getCart(args.cartId);
@@ -475,7 +475,7 @@ const createTx = async (args: any) => {
   // console.log(JSON.stringify(payload));
 
   let result = await client.mutation(CreateTxMutation, payload).toPromise();
-  console.log(result);
+  // console.log(result);
   return result.data.createTx;
 };
 
@@ -515,7 +515,7 @@ const updateTx = async (uuid: string, status: string, paymentType: string, payme
     "paymentMetadata": paymentMetadata
   }).toPromise();
 
-  console.log(result);
+  // console.log(result);
 
   return result.data.updateTx;
 };
