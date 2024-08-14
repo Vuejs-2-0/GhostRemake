@@ -215,23 +215,34 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   // console.log(request);
 
+  let time_1 = new Date().getTime();
+  let time_2 = new Date().getTime();
+
   try {
 
-    console.time("getCart");
+    time_1 = new Date().getTime();
 
     let cart = await getCart(cartId);
+
+    
     
     // Check metadata got bracelet or not
 
     let item_ids = Object.keys(cart.items).map((key) => parseInt(key));
 
-    console.timeEnd("getCart");
+    time_2 = new Date().getTime();
 
-    console.time("getProductsByIds");
+    console.log("getCart", (time_2 - time_1));
 
+    time_1 = new Date().getTime();
+    
     let products = (await getProductsByIds(item_ids)) as any;
 
-    console.timeEnd("getProductsByIds");
+    time_2 = new Date().getTime();
+
+    console.log("getProductsByIds", (time_2 - time_1));
+
+    
 
     products = products.map((product: any) => {
       return {
@@ -454,15 +465,18 @@ export const POST: APIRoute = async ({ request, redirect }) => {
           address: form?.address,
         };
 
-        console.time("updateUserByID");
+        // console.time("updateUserByID");
+        time_1 = new Date().getTime();
 
         await updateUserByID(user_id, user_metadata);
 
-        console.timeEnd("updateUserByID");
+        time_2 = new Date().getTime();
+
+        console.log("updateUserByID", (time_2 - time_1));
 
       }
 
-      console.time("createTx");
+      time_1 = new Date().getTime();
 
       let tx = await createTx({
         entries: entries,
@@ -478,15 +492,22 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         ownerId: cart.owner,
       });
 
-      console.timeEnd("createTx");
+      time_2 = new Date().getTime();
+
+      console.log("createTx", (time_2 - time_1));
+
+
 
       // then we also change the cart status to "checked_out"
 
-      console.time("updateCartStatus");
+      // console.time("updateCartStatus");
+      time_1 = new Date().getTime();
 
       await updateCartStatus(cartId, "checked_out");
 
-      console.timeEnd("updateCartStatus");
+      time_2 = new Date().getTime();
+
+      console.log("updateCartStatus", (time_2 - time_1));
 
       return redirect(`/pay?tx=${tx.uuid}`);
     }
