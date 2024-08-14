@@ -501,11 +501,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       // then we also change the cart status to "checked_out"
 
       // console.time("updateCartStatus");
-      time_1 = new Date().getTime();
+      // time_1 = new Date().getTime();
 
-      await updateCartStatus(cartId, "checked_out");
+      // await updateCartStatus(cartId, "checked_out");
 
-      time_2 = new Date().getTime();
+      // time_2 = new Date().getTime();
 
       console.log("updateCartStatus", (time_2 - time_1));
 
