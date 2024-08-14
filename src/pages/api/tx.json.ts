@@ -483,6 +483,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
       time_2 = new Date().getTime();
 
+      console.log("updateCartStatus", (time_2 - time_1));
+
       time_1 = new Date().getTime();
 
       let tx = await createTx({
