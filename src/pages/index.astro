@@ -116,7 +116,7 @@ if (Astro.request.method === "POST") {
 <Layout>
 
 
-  <main class="w-full" transition:animate="slide">
+  <main class="w-full" transition:animate="slide">{JSON.stringify(cart)}
     
     <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} userId={user.id} userMetadata={user?.metadata} localCart={cart}/>
 

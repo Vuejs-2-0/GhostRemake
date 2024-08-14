@@ -5,15 +5,16 @@ import { Button } from "@/components/ui/button";
 import LatestProductAddButton from './Product/LatestProductAddButton.vue';
 import BookImageSlider from './BookImageSlider.vue';
 
-let latest_product = products.filter((product:any) => product.id==11);
+// let latest_product = products.filter((product:any) => product.id==11);
 
 ---
 
 <div class="max-w-sm w-full ">
-  <!-- <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+  <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
     {
       products.filter((product:any) => product.id==11).map((product:any) => (
-        <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={product.media.image} alt="真的友鬼7" />
+        // <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={product.media.image} alt="真的友鬼7" />
+        <BookImageSlider></BookImageSlider>
         <div class="w-full flex justify-between items-center mt-4">
           <div class="col-span-3">
             <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
@@ -25,10 +26,10 @@ let latest_product = products.filter((product:any) => product.id==11);
         </div>
       ))
     }
-  </article> -->
+  </article>
 
-  <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
-    <!-- <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={product.media.image} alt="真的友鬼7" /> -->
+  <!-- <article class="w-full bg-white p-4 rounded-3xl shadow-lg shadow-slate-100/5">
+    <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={latest_product.media.image} alt="真的友鬼7" /> 
      <BookImageSlider></BookImageSlider>
         <div class="w-full flex justify-between items-center mt-4">
           <div class="col-span-3">
@@ -39,7 +40,7 @@ let latest_product = products.filter((product:any) => product.id==11);
             <LatestProductAddButton client:only="vue" product={latest_product} />
           </div>
         </div>
-  </article>
+  </article> -->
 
   {
     products
