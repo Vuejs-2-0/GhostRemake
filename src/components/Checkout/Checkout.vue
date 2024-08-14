@@ -65,21 +65,12 @@
                 cartId: cart.value.id,
                 dry_run: false
             }),
-            // redirect: 'follow'
+            redirect: 'follow'
         })
 
-        try {
-
-            let { id } = await _submit_result.json()
-            window.location.replace(`/pay?tx=${id}`)
-
-        } catch (error) {
-            console.error(error)
+        if(_submit_result.redirected){
+            window.location.href = _submit_result.url
         }
-
-        // if(_submit_result.redirected){
-        //     window.location.href = _submit_result.url
-        // }
 
     }
 
