@@ -505,13 +505,21 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
       console.log("createTx", (time_2 - time_1));
 
+      return new Response(JSON.stringify({
+        id: tx.uuid,
+      }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
 
       // then we also change the cart status to "checked_out"
 
       
 
-      return redirect(`/pay?tx=${tx.uuid}`);
+      // return redirect(`/pay?tx=${tx.uuid}`);
     }
   } catch (err) {
     // console.log(err);

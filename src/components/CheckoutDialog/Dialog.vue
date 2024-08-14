@@ -276,12 +276,21 @@ const confirmOrder = async () => {
       update_metadata: checkedUpdateUserMetadata.value,
       user_id: props.userId,
     }),
-    redirect: "follow",
+    // redirect: "follow",
   });
 
-  if (_submit_result.redirected) {
+  // if (_submit_result.redirected) {
+  //   open.value = false;
+  //   window.swup.navigate(_submit_result.url)
+  // }
+
+  try {
     open.value = false;
-    window.swup.navigate(_submit_result.url)
+    let { id } = await _submit_result.json()
+    // window.location.replace(`/pay?tx=${id}`)
+    window.swup.navigate(`/pay?tx=${id}`)
+  } catch (error) {
+    console.error(error)
   }
 };
 </script>
