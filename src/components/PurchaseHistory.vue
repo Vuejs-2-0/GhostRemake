@@ -40,7 +40,10 @@ let status_map = {
 
     const paymentPage = (tx_uuid) => {
         console.log(tx_uuid);
-        // window.location.href = `/pay?tx=${tx_uuid}`;
+        if (typeof window !== 'undefined') {
+            // This code will only run in the browser
+            window.location.href = `/pay?tx=${tx_uuid}`;
+        }
     }
 
 </script>
