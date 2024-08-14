@@ -1,4 +1,4 @@
-import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartStatus, updateUserByID } from "../../lib/tarpit_gql";
+import { getCart, getProductsByIds, createTx, updateTx, getTxByUUID, updateCartStatus, updateUserByID, createTxAndUpdateCart } from "../../lib/tarpit_gql";
 
 import type { APIRoute } from "astro";
 
@@ -478,7 +478,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
       time_1 = new Date().getTime();
 
-      let tx = await createTx({
+      let result = await createTxAndUpdateCart({
         entries: entries,
         form: form,
         metadata: {
@@ -490,24 +490,44 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         paymentMetadata: null,
         status: "pending",
         ownerId: cart.owner,
-      });
+      }, cartId);
 
-      time_2 = new Date().getTime();
-
-      console.log("createTx", (time_2 - time_1));
-
+      let tx = result.createTx
+      
 
 
-      // then we also change the cart status to "checked_out"
+      // time_1 = new Date().getTime();
 
-      // console.time("updateCartStatus");
+      // let tx = await createTx({
+      //   entries: entries,
+      //   form: form,
+      //   metadata: {
+      //     cart_id: cartId,
+      //     created_at: new Date().toISOString(),
+      //     email: email_payload
+      //   },
+      //   paymentType: null,
+      //   paymentMetadata: null,
+      //   status: "pending",
+      //   ownerId: cart.owner,
+      // });
+
+      // time_2 = new Date().getTime();
+
+      // console.log("createTx", (time_2 - time_1));
+
+
+
+      // // then we also change the cart status to "checked_out"
+
+      // // console.time("updateCartStatus");
       // time_1 = new Date().getTime();
 
       // await updateCartStatus(cartId, "checked_out");
 
-      // time_2 = new Date().getTime();
+      time_2 = new Date().getTime();
 
-      console.log("updateCartStatus", (time_2 - time_1));
+      console.log("createTxUpdateCart", (time_2 - time_1));
 
       return redirect(`/pay?tx=${tx.uuid}`);
     }
