@@ -307,7 +307,7 @@ const getCart = async (cartId: string) => {
 
 const updateCart = async (args:any) => {
 
-  console.log("update cart")
+  // console.log("update cart")
   // first retrieve the server's cart data
 
   let _cart = await getCart(args.cartId);
@@ -360,6 +360,94 @@ const updateCartStatus = async (cartId: string, status: string) => {
   }).toPromise();
   return data.updateCart;
 }
+
+const createTxAndUpdateCart = async (tx_args: any, cartId: string) => {
+  const CreateTxAndUpdateCartMutation = gql`
+    mutation CreateTxAndUpdateCart(
+      $entries: [EntryInput],
+      $form: JSON,
+      $metadata: [MetadataInput],
+      $paymentType: String,
+      $paymentMetadata: JSON,
+      $status: String,
+      $ownerId: String,
+      $cartId: String!
+    ) {
+      createTx(
+        entries: $entries,
+        form: $form,
+        metadata: $metadata,
+        payment_type: $paymentType,
+        payment_metadata: $paymentMetadata,
+        status: $status,
+        owner_id: $ownerId
+      ) {
+        id
+        uuid
+        form
+        owner_id
+        status
+        value
+        payment_type
+        payment_metadata
+        createdAt
+        entries {
+          id
+          entryId
+          type
+          value
+          metadata
+        }
+        metadata {
+          id
+          type
+          key
+          value
+        }
+      }
+      updateCart(cartId: $cartId, status: "checked_out") {
+        id
+        owner
+        metadata
+        items
+      }
+    }
+  `;
+
+  let payload = { ...tx_args };
+
+  payload.entries = tx_args.entries.map((entry: any) => {
+    return {
+      ...entry,
+      entry_id: String(entry.entry_id),
+    };
+  });
+
+  let _metadata = [];
+
+  for (let key of Object.keys(tx_args.metadata)) {
+    _metadata.push({
+      type: "attribute",
+      key: key,
+      value: tx_args.metadata[key],
+    });
+  }
+
+  payload.metadata = _metadata;
+
+  let result = await client
+    .mutation(CreateTxAndUpdateCartMutation, {
+      ...payload,
+      cartId: cartId,
+    })
+    .toPromise();
+
+  return {
+    createTx: result.data.createTx,
+    updateCart: result.data.updateCart,
+  };
+};
+
 
 const getFormById = async (formId: number) => {
   const GetFormByIdQuery = gql`
@@ -475,7 +563,7 @@ const createTx = async (args: any) => {
   // console.log(JSON.stringify(payload));
 
   let result = await client.mutation(CreateTxMutation, payload).toPromise();
-  console.log(result);
+  // console.log(result);
   return result.data.createTx;
 };
 
@@ -515,7 +603,7 @@ const updateTx = async (uuid: string, status: string, paymentType: string, payme
     "paymentMetadata": paymentMetadata
   }).toPromise();
 
-  console.log(result);
+  // console.log(result);
 
   return result.data.updateTx;
 };
@@ -664,6 +752,7 @@ export {
   getStripePI,
   getTxByID,
   updateUserByID,
-  getUser
+  getUser,
+  createTxAndUpdateCart
 };
 
