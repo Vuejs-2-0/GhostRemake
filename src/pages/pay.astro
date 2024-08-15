@@ -18,11 +18,12 @@ if (tx.status !== 'pending') {
     return Astro.redirect('/history');
 }
 
-// window.onbeforeunload = function() {
-//     return "您还没有完成付款，确定要离开此页面吗？";
-// };
-
 ---
+<script is:inline>
+    window.onbeforeunload = function() {
+        return true;
+    };
+</script>
 
 <Layout title="Pay">
 
@@ -52,5 +53,7 @@ if (tx.status !== 'pending') {
         </div>
 
     </main>
+    
 
 </Layout>
+
