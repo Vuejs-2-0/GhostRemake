@@ -10,13 +10,10 @@ import "../styles/globals.css";
 const { cart } = Astro.locals as any;
 import "@jaxtheprime/vue3-dropzone/dist/style.css";
 import { Button } from "@/components/ui/button";
+import HomeButton from "@/layouts/HomeButton.vue";
 
-let showGoHome = false;
-
-if (Astro.url.pathname !== "/") {
-  console.log(Astro.url.pathname);
-  showGoHome = true;
-}
+const showGoHome = Astro.url.pathname !== "/";
+const paymentPage = Astro.url.pathname === "/pay";
 ---
 
 <!doctype html>
@@ -64,11 +61,17 @@ if (Astro.url.pathname !== "/") {
       showGoHome && (
         <div class="w-full flex justify-center items-center mb-4 sticky top-0 p-2 z-50 bg-salmon-50/50 backdrop-blur-sm border-b border-b-salmon-100">
           <div class="w-full max-w-sm">
-            <a href="/">
-              <Button variant="ghost" class="bg-white hover:bg-salmon-500 hover:text-white text-salmon-500 text-lg duration-300">
-                返回主页
-              </Button>
-            </a>
+            {
+              paymentPage ? (
+                  <HomeButton client:load />
+                ) : (
+                  <a href="/">
+                    <Button variant="ghost" class="bg-white hover:bg-salmon-500 hover:text-white text-salmon-500 text-lg duration-300">
+                      返回主页
+                    </Button>
+                  </a>
+                )
+            }
           </div>
         </div>
       )
