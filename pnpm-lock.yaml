@@ -4,116 +4,117 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-importers:
+dependencies:
+  '@astrojs/check':
+    specifier: ^0.7.0
+    version: 0.7.0(typescript@5.5.4)
+  '@astrojs/cloudflare':
+    specifier: ^10.4.0
+    version: 10.4.2(astro@4.14.2)
+  '@astrojs/tailwind':
+    specifier: ^5.1.0
+    version: 5.1.0(astro@4.14.2)(tailwindcss@3.4.10)
+  '@astrojs/vue':
+    specifier: ^4.4.0
+    version: 4.5.0(astro@4.14.2)(rollup@2.79.1)(vite@5.4.1)(vue@3.4.38)
+  '@fortawesome/fontawesome-free':
+    specifier: ^6.5.2
+    version: 6.6.0
+  '@headlessui/vue':
+    specifier: ^1.7.22
+    version: 1.7.22(vue@3.4.38)
+  '@iconify/vue':
+    specifier: ^4.1.2
+    version: 4.1.2(vue@3.4.38)
+  '@internationalized/date':
+    specifier: ^3.5.4
+    version: 3.5.5
+  '@jaxtheprime/vue3-dropzone':
+    specifier: ^3.3.0
+    version: 3.3.0(vue@3.4.38)
+  '@nanostores/vue':
+    specifier: ^0.10.0
+    version: 0.10.0(nanostores@0.10.3)(vue@3.4.38)
+  '@stripe/stripe-js':
+    specifier: ^3.5.0
+    version: 3.5.0
+  '@swup/astro':
+    specifier: ^1.4.1
+    version: 1.4.1
+  '@twicpics/components':
+    specifier: ^0.30.0
+    version: 0.30.0
+  '@urql/core':
+    specifier: ^5.0.4
+    version: 5.0.6
+  '@vee-validate/zod':
+    specifier: ^4.13.1
+    version: 4.13.2(vue@3.4.38)
+  '@vueuse/core':
+    specifier: ^10.11.0
+    version: 10.11.1(vue@3.4.38)
+  astro:
+    specifier: ^4.10.2
+    version: 4.14.2(rollup@2.79.1)(typescript@5.5.4)
+  class-variance-authority:
+    specifier: ^0.7.0
+    version: 0.7.0
+  clsx:
+    specifier: ^2.1.1
+    version: 2.1.1
+  iconify-icon:
+    specifier: ^2.1.0
+    version: 2.1.0
+  json-schema-to-zod:
+    specifier: ^2.1.0
+    version: 2.4.0
+  lenis:
+    specifier: ^1.1.1
+    version: 1.1.9
+  lucide-vue-next:
+    specifier: ^0.379.0
+    version: 0.379.0(vue@3.4.38)
+  nanostores:
+    specifier: ^0.10.3
+    version: 0.10.3
+  overlayscrollbars:
+    specifier: ^2.8.3
+    version: 2.10.0
+  radix-vue:
+    specifier: ^1.8.2
+    version: 1.9.4(vue@3.4.38)
+  swiper:
+    specifier: ^11.1.9
+    version: 11.1.9
+  tailwind-merge:
+    specifier: ^2.3.0
+    version: 2.5.2
+  tailwindcss:
+    specifier: ^3.4.3
+    version: 3.4.10
+  tailwindcss-animate:
+    specifier: ^1.0.7
+    version: 1.0.7(tailwindcss@3.4.10)
+  typescript:
+    specifier: ^5.4.5
+    version: 5.5.4
+  vee-validate:
+    specifier: ^4.13.1
+    version: 4.13.2(vue@3.4.38)
+  vue:
+    specifier: ^3.4.27
+    version: 3.4.38(typescript@5.5.4)
+  vue-sonner:
+    specifier: ^1.1.4
+    version: 1.1.4
+  zod:
+    specifier: ^3.23.8
+    version: 3.23.8
 
-  .:
-    dependencies:
-      '@astrojs/check':
-        specifier: ^0.7.0
-        version: 0.7.0(typescript@5.5.4)
-      '@astrojs/cloudflare':
-        specifier: ^10.4.0
-        version: 10.4.2(astro@4.14.2)
-      '@astrojs/tailwind':
-        specifier: ^5.1.0
-        version: 5.1.0(astro@4.14.2)(tailwindcss@3.4.10)
-      '@astrojs/vue':
-        specifier: ^4.4.0
-        version: 4.5.0(astro@4.14.2)(rollup@2.79.1)(vite@5.4.1)(vue@3.4.38)
-      '@fortawesome/fontawesome-free':
-        specifier: ^6.5.2
-        version: 6.6.0
-      '@headlessui/vue':
-        specifier: ^1.7.22
-        version: 1.7.22(vue@3.4.38)
-      '@iconify/vue':
-        specifier: ^4.1.2
-        version: 4.1.2(vue@3.4.38)
-      '@internationalized/date':
-        specifier: ^3.5.4
-        version: 3.5.5
-      '@jaxtheprime/vue3-dropzone':
-        specifier: ^3.3.0
-        version: 3.3.0(vue@3.4.38)
-      '@nanostores/vue':
-        specifier: ^0.10.0
-        version: 0.10.0(nanostores@0.10.3)(vue@3.4.38)
-      '@stripe/stripe-js':
-        specifier: ^3.5.0
-        version: 3.5.0
-      '@swup/astro':
-        specifier: ^1.4.1
-        version: 1.4.1
-      '@urql/core':
-        specifier: ^5.0.4
-        version: 5.0.6
-      '@vee-validate/zod':
-        specifier: ^4.13.1
-        version: 4.13.2(vue@3.4.38)
-      '@vueuse/core':
-        specifier: ^10.11.0
-        version: 10.11.1(vue@3.4.38)
-      astro:
-        specifier: ^4.10.2
-        version: 4.14.2(rollup@2.79.1)(typescript@5.5.4)
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      iconify-icon:
-        specifier: ^2.1.0
-        version: 2.1.0
-      json-schema-to-zod:
-        specifier: ^2.1.0
-        version: 2.4.0
-      lenis:
-        specifier: ^1.1.1
-        version: 1.1.9
-      lucide-vue-next:
-        specifier: ^0.379.0
-        version: 0.379.0(vue@3.4.38)
-      nanostores:
-        specifier: ^0.10.3
-        version: 0.10.3
-      overlayscrollbars:
-        specifier: ^2.8.3
-        version: 2.10.0
-      radix-vue:
-        specifier: ^1.8.2
-        version: 1.9.4(vue@3.4.38)
-      swiper:
-        specifier: ^11.1.9
-        version: 11.1.9
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.5.2
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.10
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.10)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.5.4
-      vee-validate:
-        specifier: ^4.13.1
-        version: 4.13.2(vue@3.4.38)
-      vue:
-        specifier: ^3.4.27
-        version: 3.4.38(typescript@5.5.4)
-      vue-sonner:
-        specifier: ^1.1.4
-        version: 1.1.4
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      wrangler:
-        specifier: ^3.60.0
-        version: 3.71.0(@cloudflare/workers-types@4.20240815.0)
+devDependencies:
+  wrangler:
+    specifier: ^3.60.0
+    version: 3.71.0(@cloudflare/workers-types@4.20240815.0)
 
 packages:
 
@@ -6653,7 +6654,12 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@types/babel__core@7.20.5':
+  /@twicpics/components@0.30.0:
+    resolution: {integrity: sha512-wbHNcstIBtJo2x14BYXccyghX0Fgj7wMYltUGl7EordL3/zYwXgPFheO6ddO12X2JgbmWGkrPhhDNsZop5jkLw==}
+    dev: false
+
+  /@types/babel__core@7.20.5:
+    resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
     dependencies:
       '@babel/parser': 7.25.3
       '@babel/types': 7.25.2
