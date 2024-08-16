@@ -13,24 +13,28 @@
                 +
             </Button>
         </div>
-        <Toaster />
+        <Teleport to="#toasterDiv">
+            <Toaster position="top-center" />
+        </Teleport>
     </div>
 </template>
 
 
 <script setup>
-    import { useToast } from '@/components/ui/toast/use-toast'
-    import { Toaster } from '@/components/ui/toast'
+    // import { useToast } from '@/components/ui/toast/use-toast'
+    // import { Toaster } from '@/components/ui/toast'
     import { useDebounceFn } from '@vueuse/core'
     import { Button } from '@/components/ui/button';
     import { toRefs, computed } from 'vue';
     import { cart, updateProductInCart } from '@/stores/cart'
     import { useStore } from '@nanostores/vue';
+    import { Toaster } from '@/components/ui/sonner'
+    import { toast } from 'vue-sonner'
 
     const props = defineProps(["product"]);
     const { product } = toRefs(props);
     const $cart = useStore(cart);
-    const { toast } = useToast()
+    // const { toast } = useToast()
 
     const quantity = computed( () => {
 
@@ -48,16 +52,21 @@
 
     const _updateCart = async (_quantity) => {
         let _new_qty = _quantity + quantity.value;
-        await updateProductInCart(product.value.id, _new_qty);
         debounceToast()
+        await updateProductInCart(product.value.id, _new_qty);
     }
 
     const debounceToast = useDebounceFn(() => {
         // do something, it will be called at most 1 time per second
-        toast({
-            title: '添加成功！',
-            description: '购物车已更新～',
-        });
+        // toast({
+        //     title: '添加成功！',
+        //     description: '购物车已更新～',
+        // });
+
+        toast('添加成功！', {
+        description: '购物车已更新～',
+      })
+
     }, 100)
 
 </script>

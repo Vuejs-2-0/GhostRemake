@@ -458,21 +458,21 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       if (update_metadata) {
         // update user's metadata
 
-        // let user_metadata = {
-        //   chineseName: form.chineseName,
-        //   englishName: form.englishName,
-        //   phoneNumber: form.phoneNumber,
-        //   address: form?.address,
-        // };
+        let user_metadata = {
+          chineseName: form.chineseName,
+          englishName: form.englishName,
+          phoneNumber: form.phoneNumber,
+          address: form?.address,
+        };
 
-        // // console.time("updateUserByID");
-        // time_1 = new Date().getTime();
+        // console.time("updateUserByID");
+        time_1 = new Date().getTime();
 
-        // await updateUserByID(user_id, user_metadata);
+        await updateUserByID(user_id, user_metadata);
 
-        // time_2 = new Date().getTime();
+        time_2 = new Date().getTime();
 
-        // console.log("updateUserByID", (time_2 - time_1));
+        console.log("updateUserByID", (time_2 - time_1));
 
       }
 

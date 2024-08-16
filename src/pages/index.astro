@@ -120,11 +120,11 @@ if (Astro.request.method === "POST") {
     
     <CartFooterVue client:only="vue" form={form} products={products} userExist={userExist.value} email={user.email} userId={user.id} userMetadata={user?.metadata} localCart={cart}/>
 
-      <section class="mb-12 w-full">
+      <section class="sm:px-0 px-4 mb-12 w-full">
 
         <div class="w-full flex justify-center items-center flex-col">
-          <p class="w-[60%] sm:w-full text-2xl text-salmon-400 text-center mb-4">揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》</p>
-          <p class="w-[60%] sm:w-full max-w-md text-center text-salmon-300">
+          <p class="sm:w-[60%] w-full text-2xl text-salmon-400 text-center mb-4">揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》</p>
+          <p class="sm:w-[60%] w-full sm:max-w-md text-center text-salmon-300">
             《真的友鬼》系列纯粹是以一个见到鬼的人的角度，把自己的所见所闻以文字呈现出来，让读者对这个灵异世界有更多的认识。《真的友鬼3》开始，故事也融入了主角老师解决灵界奇难杂症和旅行中所遇到的精彩灵异事件。神秘的灵异世界，就等你来探索！
           </p>
         </div>
@@ -143,13 +143,13 @@ if (Astro.request.method === "POST") {
       </section>
 
   
-      <section class="w-full flex flex-col justify-center items-center">
+      <section class="sm:px-0 px-4 w-full flex flex-col justify-center items-center">
         <ProductList products={products} />
       </section>
   
       <hr class="my-8 border-salmon/10">
   
-      <section class="w-full flex flex-col justify-center items-center">
+      <section class="sm:px-0 px-4 w-full flex flex-col justify-center items-center">
 
       <div class="w-full max-w-sm">
 
@@ -239,7 +239,7 @@ if (Astro.request.method === "POST") {
       </section> -->
   
   
-      <section class="w-full flex justify-center items-center pt-12 pb-[10vh]" >
+      <section class="sm:px-0 px-4 w-full flex justify-center items-center pt-12 pb-[10vh]" >
         <p>© 真的友鬼 2024</p>
       </section>
 
