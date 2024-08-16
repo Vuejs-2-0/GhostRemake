@@ -1,5 +1,5 @@
 ---
-const { products } = Astro.props;
+let { products } = Astro.props;
 import AddButton from '@/components/Product/AddButton.vue';
 import { Button } from "@/components/ui/button";
 import LatestProductAddButton from './Product/LatestProductAddButton.vue';
@@ -7,6 +7,20 @@ import BookImageSlider from './BookImageSlider.vue';
 
 // let latest_product = products.filter((product:any) => product.id==11);
 
+// console.log(products);
+
+// twipics stuff
+
+for(let i=0; i<products.length; i++){
+  products[i].media.image = products[i].media.image.replace("s3.tarpit.app", "tarpit.twic.pics/s3");
+}
+
+// products.map((product:any) => {
+//   product.media.image = product.media.image.replace("https://s3.tarpit.app/products", "https://tarpit.twic.pics/products");
+//   console.log(product.media.image);
+//   return product;
+// });
+https://s3.tarpit.app/product%2FeLwWuB17WdAw29vCeRjBb2LHdxtuW1bE.jpeg
 ---
 
 <div class="max-w-sm w-full ">
@@ -14,7 +28,7 @@ import BookImageSlider from './BookImageSlider.vue';
     {
       products.filter((product:any) => product.id==11).map((product:any) => (
         // <img class="rounded-xl bg-gray-100/50 aspect-square object-cover" src={product.media.image} alt="真的友鬼7" />
-        <BookImageSlider></BookImageSlider>
+        <BookImageSlider client:only="vue" ></BookImageSlider>
         <div class="w-full flex justify-between items-center mt-4">
           <div class="col-span-3">
             <strong class="text-salmon-400 text-2xl tracking-wide">真的友鬼7</strong>
@@ -52,11 +66,11 @@ import BookImageSlider from './BookImageSlider.vue';
       {
         product?.product_metadata_link?.filter((meta:any) =>(meta.metadata.key == "disabled")).length > 0 ? (
           <div class="col-span-2 aspect-square flex justify-center items-center relative">
-            <img src={product.media.image} alt="Product Image" class="w-full h-full bg-white rounded-xl object-cover brightness-50" />
+            <twic-img src={product.media.image} alt="Product Image" class="w-full h-full bg-white rounded-xl object-cover brightness-50" />
             <iconify-icon class="absolute text-white text-5xl z-20" icon="line-md:cancel-twotone"></iconify-icon>
           </div>
         ):(
-          <img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
+          <twic-img src={product.media.image} alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl object-cover" />
         )
       }
 
