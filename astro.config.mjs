@@ -10,7 +10,7 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => tag === "iconify-icon",
+          isCustomElement: (tag) => ["iconify-icon","twic-img"].includes(tag),
         },
       },
     }),

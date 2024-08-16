@@ -4,7 +4,7 @@
         <div class="swiper">
             <div class="swiper-wrapper">
             <div v-for="image in images" class="swiper-slide  aspect-square overflow-hidden rounded-xl ">
-                <img class="w-full h-full object-cover" :src="image" alt="">
+                <img class="w-full h-full object-cover" :src="image"/>
             </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -25,9 +25,9 @@ import { onMounted, toRefs, ref } from 'vue';
 // const { images, options } = toRefs(props)
 
 const images = ref([
-    '/book7.jpg',
-    '/img/new_book.jpg',
-    '/img/book_7_end.jpg'
+    'https://tarpit.twic.pics/ghostfriend/book7.jpg?twic=v1/resize=400&focus=auto',
+    'https://tarpit.twic.pics/ghostfriend/img/new_book.jpg?twic=v1/resize=400&focus=auto',
+    'https://tarpit.twic.pics/ghostfriend/img/book_7_end.jpg?twic=v1/resize=400&focus=auto'
 ])
 
 import Swiper from 'swiper/bundle';

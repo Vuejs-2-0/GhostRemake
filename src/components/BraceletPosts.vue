@@ -16,11 +16,17 @@
 
 <script setup>
 
-    const posts = [
-        "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02Wa1ELhzMrQ9MajfGKMETJJiFp2gmLv94BcaYtc5WutAFF3hzAyQwycDe36xRZDYUl&show_text=true",
-        "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02tjqwUvEpUW3sEPHNC2ni9FAB7oNxo4nP3zCEpXtsbgZJHG7AS8ukDRmG9wzxFuDXl&show_text=true",
-        "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02iKoadCSTW92DSQnw2pYrHpWu8AZhWK67TKmvxpK75Z72gRi4t4uUxo43QskGQ4t8l&show_text=true",
-        "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid0L1zY1QzcYLojm4wJLZC8scSkgoyRq4Rz9Vu7BjqPDyJdDj7cmjVqt1ugAHFGaMBYl&show_text=true"
-    ]
+    import { ref, onMounted } from 'vue'
+
+    const posts = ref([])
+
+    onMounted( () => {
+        posts.value = [
+            "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02Wa1ELhzMrQ9MajfGKMETJJiFp2gmLv94BcaYtc5WutAFF3hzAyQwycDe36xRZDYUl&show_text=true",
+            "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02tjqwUvEpUW3sEPHNC2ni9FAB7oNxo4nP3zCEpXtsbgZJHG7AS8ukDRmG9wzxFuDXl&show_text=true",
+            "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid02iKoadCSTW92DSQnw2pYrHpWu8AZhWK67TKmvxpK75Z72gRi4t4uUxo43QskGQ4t8l&show_text=true",
+            "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmy.ghost.friend%2Fposts%2Fpfbid0L1zY1QzcYLojm4wJLZC8scSkgoyRq4Rz9Vu7BjqPDyJdDj7cmjVqt1ugAHFGaMBYl&show_text=true"
+        ]
+    })
 
 </script>

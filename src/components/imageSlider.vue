@@ -24,11 +24,12 @@ import { onMounted, toRefs, ref } from 'vue';
 
 // const { images, options } = toRefs(props)
 
+
 const images = ref([
-    '/img/bracelet/bracelet1.jpg',
-    '/img/bracelet/bracelet2.jpg',
-    '/img/bracelet/bracelet3.jpg',
-    '/img/bracelet/bracelet4.jpg',
+    'https://tarpit.twic.pics/ghostfriend/img/bracelet/bracelet1.jpg?twic=v1/resize=400&focus=auto',
+    'https://tarpit.twic.pics/ghostfriend/img/bracelet/bracelet2.jpg?twic=v1/resize=400&focus=auto',
+    'https://tarpit.twic.pics/ghostfriend/img/bracelet/bracelet3.jpg?twic=v1/resize=400&focus=auto',
+    'https://tarpit.twic.pics/ghostfriend/img/bracelet/bracelet4.jpg?twic=v1/resize=400&focus=auto',
 ])
 
 import Swiper from 'swiper/bundle';
