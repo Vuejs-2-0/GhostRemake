@@ -22,7 +22,7 @@ let status_map = {
             'emoji': '⏳',
             'description': '您的付款正在处理中。'
         },
-        'canceled': {
+        'void': {
             'title': '订单取消',
             'emoji': '🚫',
             'description': '您的订单已取消。'
