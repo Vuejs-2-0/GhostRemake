@@ -45,7 +45,7 @@
 
       <div v-if="totalItems > 0">
         <Dialog2 :form="props.form" :products="props.products" :userId="props.userId" :localCart="props.localCart" :userEmail="props.email" :userMetadata="userMetadata">
-          <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
+          <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white/20 hover:scale-[101%] shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
             <div class="flex justify-start items-center text-xl">
               <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
               <p>已选 {{totalItems}} 件</p>
@@ -58,7 +58,7 @@
         </Dialog2>
       </div>
       <div v-else>
-        <Button class="w-full bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border border-white shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
+        <Button class="w-full bg-white text-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-100 shadow-xl flex justify-between items-center duration-300 transition-all scale-100 active:scale-95 p-3">
           <div class="flex justify-start items-center text-xl">
             <iconify-icon class="text-2xl mr-2" icon="ion:cart"></iconify-icon>
             <p>请先添加商品</p>

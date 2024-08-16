@@ -136,6 +136,43 @@
         </div>
       </DialogContent>
     </Dialog>
+
+
+    <TransitionRoot as="template" :show="guestModalOpen">
+    <HeadlessDialog class="relative z-10" @close="guestModalOpen = false">
+      <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+            <HeadlessDialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+              <div>
+
+                <p class="text-3xl font-bold text-center py-12">尚未登入</p>
+                
+                <div class="mt-3 text-center sm:mt-5">
+                  
+                  <div class="mt-2">
+                    <p class="text-lg text-gray-500">目前正在以访客身份结账，访客身份无法保存订单。若您有账户，请登入以保存订单。</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 sm:mt-6 space-y-2">
+                <button type="button" class="inline-flex w-full justify-center rounded-md bg-salmon-500 px-3 py-2 font-semibold text-white shadow-sm hover:bg-salmon-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salmon-600" @click="goToLoginPage()">登入或注册</button>
+
+                <button type="button" class="inline-flex w-full justify-center rounded-md bg-salmon-100 px-3 py-2 font-semibold text-salmon-500 shadow-sm hover:bg-salmon-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salmon-600" @click="proceedAsGuest()">以访客身份继续</button>
+                
+              </div>
+            </HeadlessDialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </HeadlessDialog>
+  </TransitionRoot>
+
+
   </div>
 </template>
 
@@ -154,6 +191,7 @@ import SignUp from "@/components/Authentication/SignUp2.vue";
 import Login from "@/components/Authentication/Login.vue";
 import Form from "@/components/Checkout/Form.vue";
 import Questionnaire from "../Questionnaire/Questionnaire.vue";
+import { Dialog as HeadlessDialog, DialogPanel as HeadlessDialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 const open = ref(false);
 const checkedUpdateUserMetadata = ref(true);
@@ -166,6 +204,8 @@ const props = defineProps({
   userEmail: String,
   userMetadata: Object,
 });
+
+const guestModalOpen = ref(false)
 
 const { localCart } = toRefs(props);
 
@@ -219,12 +259,27 @@ const page = ref("list");
 const isGuestUser = computed(() => props.userId.substring(0, 5) == "guest");
 
 const confirmItems = () => {
-  page.value = "form";
+
+  if(isGuestUser.value) {
+    open.value = false;
+    guestModalOpen.value = true;
+  } else {
+    page.value = "form";
+  }
+
 };
 
 const goToLoginPage = () => {
+  guestModalOpen.value = false;
+  open.value = true;
   page.value = 'login';
 };
+
+const proceedAsGuest = () => {
+  guestModalOpen.value = false;
+  open.value = true;
+  page.value = 'form';
+}
 
 const dry_run_result = ref(false);
 

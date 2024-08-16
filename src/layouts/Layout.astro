@@ -39,6 +39,8 @@ const paymentPage = Astro.url.pathname === "/pay";
 
     <CartStore client:only="vue" user_cart={cart} />
 
+    <div id="toasterDiv" class="z-50"></div>
+
     <section class="w-full">
       <div class="w-full h-[300px] overflow-hidden flex justify-center items-center">
         <img class="w-full h-full object-cover blur-[2px] scale-[105%] brightness-75 z-10" src="/img/totoro.jpg" alt="" />
