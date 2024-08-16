@@ -7,7 +7,7 @@
         
             <div v-for="post in posts" class="bg-white rounded-lg aspect-square overflow-hidden flex justify-center items-center hover:ring-4 hover:ring-offset-2 hover:ring-salmon-500 duration-300">
                 <div class="w-full rounded-xl overflow-hidden h-full">
-                    <iframe :src="post" width="100%" height="100%" style="border:none" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    <iframe title="bracelet posts" :src="post" width="100%" height="100%" style="border:none" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                 </div>
             </div>
         </div>
