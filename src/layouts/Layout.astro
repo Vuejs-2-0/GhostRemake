@@ -35,6 +35,24 @@ const paymentPage = Astro.url.pathname === "/pay";
         let _body = document.querySelector("body") as any;
         OverlayScrollbars(_body, {});
       }
+
+    </script>
+
+    <script>
+
+      // import TwicPics webcomponents
+      import { installTwicpics, TwicImg } from "@twicpics/components/webcomponents";
+      // import TwicPics components css
+      import "@twicpics/components/style.css";
+
+      installTwicpics( {
+  // domain is mandatory
+  "domain": `https://tarpit.twic.pics`
+} );
+
+customElements.define( `twic-img`, TwicImg );
+
+
     </script>
 
     <CartStore client:only="vue" user_cart={cart} />
@@ -43,12 +61,12 @@ const paymentPage = Astro.url.pathname === "/pay";
 
     <section class="w-full">
       <div class="w-full h-[300px] overflow-hidden flex justify-center items-center">
-        <img class="w-full h-full object-cover blur-[2px] scale-[105%] brightness-75 z-10" src="/img/totoro.jpg" alt="" />
+        <twic-img class="w-full h-full object-cover blur-[2px] scale-[105%] brightness-75 z-10" src="/img/totoro.jpg" alt="" />
       </div>
 
       <div class="w-full flex justify-center items-center mt-[-6rem]">
         <div class="w-48 h-48 bg-white rounded-2xl z-20 shadow-xl overflow-hidden">
-          <img src="/book7.jpg" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="" />
+          <twic-img src="/book7.jpg" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="" />
         </div>
       </div>
     </section>

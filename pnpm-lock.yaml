@@ -41,6 +41,9 @@ dependencies:
   '@swup/astro':
     specifier: ^1.4.1
     version: 1.4.1
+  '@twicpics/components':
+    specifier: ^0.30.0
+    version: 0.30.0
   '@urql/core':
     specifier: ^5.0.4
     version: 5.0.6
@@ -3289,6 +3292,10 @@ packages:
   /@trysound/sax@0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
+    dev: false
+
+  /@twicpics/components@0.30.0:
+    resolution: {integrity: sha512-wbHNcstIBtJo2x14BYXccyghX0Fgj7wMYltUGl7EordL3/zYwXgPFheO6ddO12X2JgbmWGkrPhhDNsZop5jkLw==}
     dev: false
 
   /@types/babel__core@7.20.5:
