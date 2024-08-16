@@ -4,7 +4,7 @@
         <div class="swiper">
             <div class="swiper-wrapper">
             <div v-for="image in images" class="swiper-slide  aspect-square overflow-hidden ">
-                <img class="w-full h-full object-cover" :src="image" alt="">
+                <img class="w-full h-full object-cover" :src="image" alt="bracelet image">
             </div>
             </div>
             <div class="swiper-pagination"></div>
