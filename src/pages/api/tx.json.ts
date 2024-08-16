@@ -428,7 +428,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       html: email_template,
       subject: "真的友鬼: 🎉 付款成功",
       to: [form.email],
-      from: '友鬼团队 <admin@ghostfriend.my>'
+      from: '友鬼团队 <admin@updates.ghostfriend.my>'
     })
 
     if (dry_run) {
