@@ -145,7 +145,7 @@ if (Astro.request.method === "POST") {
 
   
       <section class="sm:px-0 px-4 w-full flex flex-col justify-center items-center">
-        <ProductList products={products} />
+        <ProductList client:visible products={products} />
       </section>
   
       <hr class="my-8 border-salmon/10">
@@ -218,26 +218,6 @@ if (Astro.request.method === "POST") {
   
   
       </section>
-  
-      <!-- <hr class="my-8 border-salmon/10">
-  
-  
-      <section class="w-full flex justify-center items-center ">
-  
-        <div class="w-full max-w-sm flex justify-center items-center flex-col space-y-8">
-  
-          {
-            info.map( () => 
-            <div class="px-8 w-full">
-            <div class="w-full aspect-square bg-white shadow-md rounded-xl">
-            </div>
-          </div>
-          )
-          }
-  
-        </div>
-  
-      </section> -->
   
   
       <section class="sm:px-0 px-4 w-full flex justify-center items-center pt-12 pb-[10vh]" >
