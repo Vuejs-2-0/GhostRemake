@@ -159,10 +159,10 @@ const renderEmail = (args:any) => {
           trows += `<tr>
           <td style="padding-top: 16px; padding-bottom: 16px;">
             ${entry.metadata.label}
-            <p style="font-size: 14px; color: #64748b">${entry.metadata.bracelet}</p>
+            <p style="font-size: 14px; color: #64748b">${entry?.metadata?.bracelets}</p>
           </td>
           <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">${entry.metadata.quantity}</td>
-          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry.metadata.price).toFixed(2)}</td>
+          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry?.metadata?.product?.price).toFixed(2)}</td>
         </tr>`
 
       } else {
