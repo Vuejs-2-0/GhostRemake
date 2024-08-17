@@ -71,24 +71,24 @@
         <div :class="[delivery_method == 'postal' ? 'max-h-[300px]' : 'max-h-0']" class="overflow-hidden duration-500">
           <p class="mt-8 mb-1 px-2">请输入收件地址</p>
 
-          <div v-if="!showAddressSearch" class="w-full flex justify-between items-center border rounded-md py-2 px-3 space-x-4">
+          <!--<div v-if="!showAddressSearch" class="w-full flex justify-between items-center border rounded-md py-2 px-3 space-x-4">
             <div class="flex justify-start items-center space-x-2">
               <iconify-icon icon="carbon:checkmark-filled" class="text-2xl text-salmon"></iconify-icon>
               <p class="text-sm whitespace-break-spaces">{{ addressInput }}</p>
             </div>
 
             <Button @click="cancelAddressSelection()" variant="outline" class="text-sm min-h-0 h-auto p-1 px-2">取消</Button>
-          </div>
+          </div>-->
 
-          <template v-else>
+          <!-- <template v-else> -->
             <div class="p-1">
               <Input @input="searchAddress" type="text" placeholder="Enter your address..." v-model="addressInput" class="focus-visible:ring-salmon-500" />
             </div>
 
             <div class="w-full flex justify-start items-center">
-              <div class="bg-red-100 text-red-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="noAddressResult">未找到地址，请输入完整地址</div>
+               <div class="bg-red-100 text-red-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="noAddressResult">未找到地址，请输入完整地址</div>
 
-              <div class="bg-salmon-100 text-salmon-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="showAddressOptions">请选择以下地址</div>
+              <!--<div class="bg-salmon-100 text-salmon-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="showAddressOptions">请选择以下地址</div> -->
 
               <div class="bg-salmon-100 text-salmon-500 p-1.5 px-3 text-sm rounded-xl mt-4 flex justify-center items-center" v-if="addressSearchBusy">
                 <span>搜寻中&nbsp;</span>
@@ -96,7 +96,11 @@
               </div>
             </div>
 
-            <div v-if="showAddressOptions" class="space-y-2 pt-2">
+            <div class="p-2"  v-if="showPostageCost">
+              <p>邮费总计: RM{{ Number(postageCostPreview).toFixed(2) }}</p>
+            </div>
+
+            <!-- <div v-if="showAddressOptions" class="space-y-2 pt-2">
               <div class="w-full grid grid-cols-12 justify-center items-center py-2 border text-sm rounded-md p-2 px-3" v-for="option in addressOptions">
                 <div class="col-span-10 text-left w-full pr-1 whitespace-break-spaces">
                   <p class="">{{ option.formatted_address }}</p>
@@ -105,8 +109,8 @@
                   <Button @click="useAddressOption(option)" class="text-sm bg-salmon-500 hover:bg-salmon-600 min-h-0 h-auto p-1 px-2">确认</Button>
                 </div>
               </div>
-            </div>
-          </template>
+            </div> -->
+          <!-- </template> -->
         </div>
       </div>
 
@@ -135,9 +139,9 @@ import { toTypedSchema } from "@vee-validate/zod";
 
 import { jsonSchemaToZod } from "json-schema-to-zod";
 
-const props = defineProps(["json_schema", "field_config","userEmail","userMetadata"]);
+const props = defineProps(["json_schema", "field_config","userEmail","userMetadata","products"]);
 
-const { json_schema, field_config, userEmail, userMetadata} = toRefs(props);
+const { json_schema, field_config, userEmail, userMetadata, products} = toRefs(props);
 
 const schema = eval(jsonSchemaToZod(json_schema.value));
 
@@ -153,13 +157,80 @@ const addressInput = ref(undefined);
 const addressOptions = ref([]);
 const addressMetadata = ref(undefined);
 
+const postageCostPreview = ref(-1);
+
 const noAddressResult = ref(false);
 const addressSearchBusy = ref(false);
 
 const emits = defineEmits(["submit"]);
 
+const preview_postage = (_address_metadata) => {
+  let address_metadata = _address_metadata;
+
+      let postage_cost_map = {
+        west_malaysia: { label: "West Malaysia", value: 10 },
+        east_malaysia: { label: "East Malaysia", value: 15 },
+        singapore: { label: "Singapore", value: 69.8 },
+        taiwan: { label: "Taiwan", value: 71.85 },
+        hong_kong: { label: "Hong Kong", value: 69.62 },
+        usa: { label: "USA", value: 82.98 },
+        default: { label: "Others", value: 82.98 },
+      };
+
+      let detect_non_malaysia_shipping = (_address_metadata) => {
+        for (let component of _address_metadata.address_components) {
+          if (component.types.includes("country")) {
+            if (component.short_name === "MY") {
+              return false;
+            } else if (component.short_name === "SG") {
+              return postage_cost_map["singapore"];
+            } else if (component.short_name === "TW") {
+              return postage_cost_map["taiwan"];
+            } else if (component.short_name === "HK") {
+              return postage_cost_map["hong_kong"];
+            } else if (component.short_name === "US") {
+              return postage_cost_map["usa"];
+            } else {
+              return postage_cost_map["default"];
+            }
+          }
+        }
+
+        return postage_cost_map["default"];
+
+      };
+
+      let atomic_shipping_type = detect_non_malaysia_shipping(address_metadata);
+
+      if (atomic_shipping_type === false) {
+        // check if east or west malaysia
+
+        let state = address_metadata.address_components.find((component) => component.types.includes("administrative_area_level_1"));
+
+        if ((state && state.long_name === "Sabah") || state.long_name === "Sarawak") {
+          atomic_shipping_type = postage_cost_map["east_malaysia"];
+        } else {
+          atomic_shipping_type = postage_cost_map["west_malaysia"];
+        }
+      }
+
+      // the atomic postage cost is calculated, but each "unit" is bundled in 3 products
+      // i.e. 1 postage cost for 3 products, if 4-6 products, then 2 postage cost
+
+      
+      let productCount = products.value.reduce((acc, product) => {
+        return acc + product.quantity;
+      }, 0);
+      
+      console.log(productCount);
+      let total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
+
+      return total_postage_cost;
+}
+
 const searchAddress = useDebounceFn(async () => {
 
+  postageCostPreview.value = -1;
   noAddressResult.value = false;
   addressSearchBusy.value = true;
 
@@ -181,8 +252,14 @@ const searchAddress = useDebounceFn(async () => {
 
   if (options_req.ok) {
     let options = await options_req.json();
+    console.log(options);
+    // addressOptions.value = options;
 
-    addressOptions.value = options;
+    if(options.length > 0) {
+      addressMetadata.value = options[0];
+      postageCostPreview.value = preview_postage(options[0]);
+    }
+
   } else {
     console.error("Failed to fetch address options");
     noAddressResult.value = true;
@@ -207,18 +284,26 @@ const isGuestUser = computed(() => {
   return (String(userEmail.value).split("@").pop() === "guest.com")
 });
 
-const showAddressOptions = computed(() => {
-  if (addressInput.value?.length < 3) return false;
-
-  if (addressOptions.value.length > 0) {
-    return !addressOptions.value.map((option) => option.formatted_address).includes(addressInput.value);
+const showPostageCost = computed(() => {
+  if(postageCostPreview.value > 0){
+    return true;
+  } else {
+    return false;
   }
 });
 
-const useAddressOption = (option) => {
-  addressInput.value = option.formatted_address;
-  addressMetadata.value = option;
-};
+// const showAddressOptions = computed(() => {
+//   if (addressInput.value?.length < 3) return false;
+
+//   if (addressOptions.value.length > 0) {
+//     return !addressOptions.value.map((option) => option.formatted_address).includes(addressInput.value);
+//   }
+// });
+
+// const useAddressOption = (option) => {
+//   addressInput.value = option.formatted_address;
+//   addressMetadata.value = option;
+// };
 
 const backPage1 = () => {
   page.value = 1;
@@ -245,7 +330,7 @@ const validPage2 = computed(() => {
   }
 
   if (delivery_method.value == "postal") {
-    return !showAddressSearch.value && addressInput.value;
+    return (postageCostPreview.value > 0 )&& addressInput.value;
   }
 
   return false;

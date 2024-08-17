@@ -4,7 +4,7 @@
       <DialogTrigger @click="open = true" class="w-full outline-none">
         <slot></slot>
       </DialogTrigger>
-      <DialogContent class="p-1 w-full max-w-sm max-h-[85vh] overflow-y-auto rounded-xl">
+      <DialogContent class="p-1 w-full max-w-sm sm:max-h-[85vh] max-h-[100dvh] overflow-y-auto rounded-xl">
         <VisuallyHidden asChild>
           <DialogTitle>Checkout Modal</DialogTitle>
         </VisuallyHidden>
@@ -25,7 +25,7 @@
                 <img :src="product.media.image" alt="Product Image" class="w-full col-span-2 aspect-square bg-white rounded-xl border object-cover" />
                 <div class="col-span-5">
                   <div class="flex justify-start items-center">
-                    <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
+                    <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">{{product.quantity}}x</div>
                     <p class="text-lg font-semibold">{{ product.name }}</p>
                   </div>
                   <p>RM {{ product.price }}.00</p>
@@ -82,7 +82,7 @@
 
           <template v-if="page == 'form'">
             <div class="w-full">
-              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" :userEmail="userEmail" :userMetadata="userMetadata" @submit="computeTx" />
+              <Form class="w-full" :json_schema="form.schema.definitions.zodSchema" :field_config="form.metadata.field_config" :userEmail="userEmail" :userMetadata="userMetadata" :products="productList" @submit="computeTx" />
             </div>
           </template>
 
