@@ -59,6 +59,7 @@ onMounted(async () => {
       metadata: {
         tx_uuid: tx.value.uuid,
       },
+      payment_method_types: ["card","apple_pay","google_pay","grabpay"],
     }),
   });
 
@@ -68,6 +69,7 @@ onMounted(async () => {
 
   elements.value = stripe.value.elements({
     clientSecret: client_secret,
+    paymentMethodOrder: ["card","apple_pay","google_pay","grabpay"],
   });
 
   const paymentElement = elements.value.create("payment");

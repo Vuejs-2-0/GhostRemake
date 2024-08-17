@@ -397,7 +397,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       // the atomic postage cost is calculated, but each "unit" is bundled in 3 products
       // i.e. 1 postage cost for 3 products, if 4-6 products, then 2 postage cost
 
-      let total_postage_cost = Math.ceil(products.length / 3) * Number(atomic_shipping_type?.value);
+      let productCount = entries.filter((entry) => entry.type === "product").reduce((acc, entry) => acc + entry.metadata.quantity, 0);
+
+      let total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
 
       entries.push({
         entry_id: "postage",
