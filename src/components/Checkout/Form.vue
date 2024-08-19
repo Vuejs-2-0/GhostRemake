@@ -143,13 +143,19 @@ const props = defineProps(["json_schema", "field_config","userEmail","userMetada
 
 const { json_schema, field_config, userEmail, userMetadata, products} = toRefs(props);
 
-const schema = eval(jsonSchemaToZod(json_schema.value));
+let text_schema = jsonSchemaToZod(json_schema.value)
+
+text_schema = text_schema.replace(`"phoneNumber": z.string()`, `"phoneNumber": z.string().transform((value) => String(value) )`)
+
+const schema = eval(text_schema);
 
 const page = ref(1);
 
 const form = useForm({
   validationSchema: toTypedSchema(schema),
 });
+
+console.log(form)
 
 const delivery_method = ref(undefined);
 const guestEmail = ref(undefined);
