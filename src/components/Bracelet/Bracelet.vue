@@ -15,7 +15,8 @@ const props = defineProps(["cart","json_schema","field_config"])
 const { cart, json_schema, field_config } = toRefs(props)
 </script>
 <template> 
-  <Dialog>
+  <div>
+    <Dialog>
     <DialogTrigger class="w-full">
       <slot></slot>
     </DialogTrigger>
@@ -27,6 +28,7 @@ const { cart, json_schema, field_config } = toRefs(props)
       </div>  
     </DialogContent>
   </Dialog>
+  </div>
 </template>
   
   

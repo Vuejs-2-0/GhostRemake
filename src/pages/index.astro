@@ -205,10 +205,7 @@ if (Astro.request.method === "POST") {
           </p>
           
           <Questionnaire client:only="vue" cart={cart} cartIndex={cart.items[10] + 1} >
-            <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
-              <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
-              <span>我要问事</span>
-            </Button>
+            
           </Questionnaire>
   
           </div>
