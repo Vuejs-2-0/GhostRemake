@@ -11,7 +11,7 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/check": "^.7.0",
+    "@astrojs/check": "0.7.0",
     "@astrojs/cloudflare": "10.4.2",
     "@astrojs/tailwind": "5.1.0",
     "@astrojs/vue": "4.5.0",

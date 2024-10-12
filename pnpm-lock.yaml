@@ -9,16 +9,16 @@ importers:
   .:
     dependencies:
       '@astrojs/check':
-        specifier: ^0.7.0
+        specifier: 0.7.0
         version: 0.7.0(typescript@5.5.4)
       '@astrojs/cloudflare':
-        specifier: ^10.4.0
+        specifier: 10.4.2
         version: 10.4.2(astro@4.14.2(@types/node@22.3.0)(rollup@2.79.1)(terser@5.31.6)(typescript@5.5.4))
       '@astrojs/tailwind':
-        specifier: ^5.1.0
+        specifier: 5.1.0
         version: 5.1.0(astro@4.14.2(@types/node@22.3.0)(rollup@2.79.1)(terser@5.31.6)(typescript@5.5.4))(tailwindcss@3.4.10)
       '@astrojs/vue':
-        specifier: ^4.4.0
+        specifier: 4.5.0
         version: 4.5.0(astro@4.14.2(@types/node@22.3.0)(rollup@2.79.1)(terser@5.31.6)(typescript@5.5.4))(rollup@2.79.1)(vite@5.4.1(@types/node@22.3.0)(terser@5.31.6))(vue@3.4.38(typescript@5.5.4))
       '@fortawesome/fontawesome-free':
         specifier: ^6.5.2
@@ -57,7 +57,7 @@ importers:
         specifier: ^10.11.0
         version: 10.11.1(vue@3.4.38(typescript@5.5.4))
       astro:
-        specifier: ^4.10.2
+        specifier: 4.14.2
         version: 4.14.2(@types/node@22.3.0)(rollup@2.79.1)(terser@5.31.6)(typescript@5.5.4)
       class-variance-authority:
         specifier: ^0.7.0
