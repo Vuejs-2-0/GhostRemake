@@ -18,7 +18,10 @@ const { cart, json_schema, field_config } = toRefs(props)
   <div>
     <Dialog>
     <DialogTrigger class="w-full">
-      <slot></slot>
+      <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
+              <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
+              <span>订制五色绳</span>
+            </Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[425px] p-0 max-h-[90vh]">
       <div class="grid gap-4 py-4 overflow-y-auto px-6">
