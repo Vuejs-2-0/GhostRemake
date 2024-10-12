@@ -179,12 +179,7 @@ if (Astro.request.method === "POST") {
           </div>
           
           <!-- Pass cart as props to Bracelet -->
-          <Bracelet client:only="vue" cart={cart} json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}>
-            <Button class="w-full p-2.5 px-5 bg-salmon-500 rounded-xl min-h-0 h-auto text-white space-x-2 hover:bg-salmon-100 hover:text-salmon-500 pl-3 text-xl">
-              <iconify-icon class="text-2xl" icon="material-symbols:add"></iconify-icon>
-              <span>订制五色绳</span>
-            </Button>
-          </Bracelet>
+          <Bracelet client:only="vue" cart={cart} json_schema={form2.schema.definitions.zodSchema} field_config={form2.metadata.field_config}></Bracelet>
   
           </div>
 
