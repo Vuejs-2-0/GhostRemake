@@ -319,6 +319,9 @@ let validatedForm = ref();
 
 const submitPage1 = async () => {
   let { values, valid } = await form.validate();
+  
+  // Cast values.phoneNumber to string if it is not already a string
+  values.phoneNumber = typeof values.phoneNumber === 'string' ? values.phoneNumber : String(values.phoneNumber);
 
   if (valid) {
     validatedForm.value = { ...values };
