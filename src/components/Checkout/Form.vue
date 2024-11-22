@@ -228,7 +228,7 @@ const preview_postage = (_address_metadata) => {
         return acc + product.quantity;
       }, 0);
       
-      console.log(productCount);
+      //console.log(productCount);
       let total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
 
       return total_postage_cost;
@@ -258,7 +258,7 @@ const searchAddress = useDebounceFn(async () => {
 
   if (options_req.ok) {
     let options = await options_req.json();
-    console.log(options);
+    // console.log(options);
     // addressOptions.value = options;
 
     if(options.length > 0) {

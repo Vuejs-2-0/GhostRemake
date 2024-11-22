@@ -13,6 +13,8 @@ export async function POST({ request }) {
 
     const { results, status } = await response.json();
 
+    console.log('results', results);
+
     if (status == "OK") {
         return new Response(
             JSON.stringify(results), {

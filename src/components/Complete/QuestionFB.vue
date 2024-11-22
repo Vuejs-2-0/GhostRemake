@@ -59,7 +59,7 @@ watchEffect(() => {
     const message = `「问事」\nID: ${order_Id}\n\n${formattedQuestions}\n注: 老师得空的时候会回复，请耐心等待`;
     const encodedMessage = encodeURIComponent(message); // Encode the message for the URL
     messengerLink.value = `http://m.me/my.ghost.friend?text=${encodedMessage}`;
-    console.log(messengerLink.value);
+    // console.log(messengerLink.value);
   } else {
     messengerLink.value = ''; // Clear the link if no questions
   }
