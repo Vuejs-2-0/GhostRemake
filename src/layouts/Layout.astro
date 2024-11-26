@@ -73,11 +73,19 @@ const paymentPage = Astro.url.pathname === "/pay";
 
     <script>
       import posthog from "posthog-js";
+      
+      declare global {
+        interface Window {
+          posthog: any;
+        }
+      }
 
       posthog.init("phc_W0fpjwbfFc24W9hE0d2VbrKDabDy7ezk6C9fs58jmhZ", {
         api_host: "https://us.i.posthog.com",
         person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
       });
+
+      window.posthog = posthog;
     </script>
 
     <CartStore client:only="vue" user_cart={cart} />

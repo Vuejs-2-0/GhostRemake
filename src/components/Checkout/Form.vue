@@ -371,6 +371,12 @@ const onSubmit = () => {
     };
   }
 
+  console.log(payload);
+
+  if(window?.posthog){
+    window.posthog.capture("checkout_submit", payload);
+  }
+
   emits("submit", payload);
 };
 
