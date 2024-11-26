@@ -272,7 +272,7 @@ const searchAddress = useDebounceFn(async () => {
   }
 
   addressSearchBusy.value = false;
-}, 350);
+}, 1000);
 
 const showAddressSearch = computed(() => {
   if (addressOptions.value.length > 0) {
