@@ -67,58 +67,71 @@
             </div>
           </div>
         </div>
-
-        <div :class="[delivery_method == 'postal' ? 'max-h-[300px]' : 'max-h-0']" class="overflow-hidden duration-500">
-          <p class="mt-8 mb-1 px-2">请输入收件地址</p>
-
-          <!--<div v-if="!showAddressSearch" class="w-full flex justify-between items-center border rounded-md py-2 px-3 space-x-4">
-            <div class="flex justify-start items-center space-x-2">
-              <iconify-icon icon="carbon:checkmark-filled" class="text-2xl text-salmon"></iconify-icon>
-              <p class="text-sm whitespace-break-spaces">{{ addressInput }}</p>
-            </div>
-
-            <Button @click="cancelAddressSelection()" variant="outline" class="text-sm min-h-0 h-auto p-1 px-2">取消</Button>
-          </div>-->
-
-          <!-- <template v-else> -->
-            <div class="p-1">
-              <Input @input="searchAddress" type="text" placeholder="Enter your address..." v-model="addressInput" class="focus-visible:ring-salmon-500" />
-            </div>
-
-            <div class="w-full flex justify-start items-center">
-               <div class="bg-red-100 text-red-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="noAddressResult">未找到地址，请输入完整地址</div>
-
-              <!--<div class="bg-salmon-100 text-salmon-500 p-1.5 px-3 text-sm rounded-xl mt-4" v-if="showAddressOptions">请选择以下地址</div> -->
-
-              <div class="bg-salmon-100 text-salmon-500 p-1.5 px-3 text-sm rounded-xl mt-4 flex justify-center items-center" v-if="addressSearchBusy">
-                <span>搜寻中&nbsp;</span>
-                <iconify-icon icon="eos-icons:three-dots-loading" class="text-2xl text-salmon"></iconify-icon>
-              </div>
-            </div>
-
-            <div class="p-2"  v-if="showPostageCost">
-              <p>邮费总计: RM{{ Number(postageCostPreview).toFixed(2) }}</p>
-            </div>
-
-            <!-- <div v-if="showAddressOptions" class="space-y-2 pt-2">
-              <div class="w-full grid grid-cols-12 justify-center items-center py-2 border text-sm rounded-md p-2 px-3" v-for="option in addressOptions">
-                <div class="col-span-10 text-left w-full pr-1 whitespace-break-spaces">
-                  <p class="">{{ option.formatted_address }}</p>
-                </div>
-                <div class="col-span-2 flex justify-end items-center pl-4">
-                  <Button @click="useAddressOption(option)" class="text-sm bg-salmon-500 hover:bg-salmon-600 min-h-0 h-auto p-1 px-2">确认</Button>
-                </div>
-              </div>
-            </div> -->
-          <!-- </template> -->
-        </div>
       </div>
 
       <div class="w-full flex justify-between items-center pt-4">
         <Button @click="backPage1()" variant="outline">上一步</Button>
 
-        <Button :disabled="!validPage2" @click="submitPage2()" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
+        <Button :disabled="!delivery_method" @click="submitPage2()" class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3">
           <span class="text-white">下一步</span>
+        </Button>
+      </div>
+    </template>
+
+    <template v-if="page == 3">
+      <div class="py-12">
+        <h1 class="text-2xl font-semibold text-center">请输入收件地址</h1>
+      </div>
+
+      <div class="space-y-4">
+        <div class="p-1">
+          <Input 
+            type="text" 
+            placeholder="Enter your address..." 
+            v-model="addressInput" 
+            class="focus-visible:ring-salmon-500" 
+          />
+        </div>
+
+        <Button 
+          @click="validateAddress" 
+          :disabled="!addressInput || addressSearchBusy"
+          class="w-full bg-salmon-500 hover:bg-salmon-600"
+        >
+          <span v-if="!addressSearchBusy">确认地址</span>
+          <div v-else class="flex items-center justify-center gap-2">
+            <span>验证中</span>
+            <iconify-icon icon="eos-icons:three-dots-loading" class="text-2xl"></iconify-icon>
+          </div>
+        </Button>
+
+        <div class="w-full flex justify-start items-center">
+          <div class="bg-red-100 text-red-500 p-1.5 px-3 text-sm rounded-xl" v-if="noAddressResult">
+            未找到地址，请输入完整地址
+          </div>
+        </div>
+
+        <div v-if="addressValidated" class="p-4 border rounded-lg space-y-2">
+          <div class="flex items-center gap-2">
+            <iconify-icon icon="carbon:checkmark-filled" class="text-green-500 text-xl"></iconify-icon>
+            <p class="font-medium">地址已确认</p>
+          </div>
+          <p class="text-gray-600">{{ addressInput }}</p>
+          <div class="pt-2">
+            <p class="font-medium">邮费总计: RM{{ Number(postageCostPreview).toFixed(2) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full flex justify-between items-center pt-4">
+        <Button @click="backPage2()" variant="outline">上一步</Button>
+
+        <Button 
+          :disabled="!addressValidated" 
+          @click="onSubmit()" 
+          class="bg-salmon-500 rounded-2xl min-h-0 h-auto hover:bg-salmon-500 border-2 border-salmon-400 shadow-xl duration-300 transition-all scale-100 active:scale-95 p-3"
+        >
+          <span class="text-white">确认</span>
         </Button>
       </div>
     </template>
@@ -126,13 +139,11 @@
 </template>
 
 <script setup>
-import { toRefs, ref, computed, onMounted } from "vue";
+import { toRefs, ref, computed, onMounted, watch } from "vue";
 import * as z from "zod";
 import { AutoForm, AutoFormField } from "@/components/ui/auto-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { useDebounceFn } from "@vueuse/core";
 
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -167,6 +178,8 @@ const postageCostPreview = ref(-1);
 
 const noAddressResult = ref(false);
 const addressSearchBusy = ref(false);
+
+const addressValidated = ref(false);
 
 const emits = defineEmits(["submit"]);
 
@@ -234,57 +247,41 @@ const preview_postage = (_address_metadata) => {
       return total_postage_cost;
 }
 
-const searchAddress = useDebounceFn(async () => {
-
+const validateAddress = async () => {
+  addressValidated.value = false;
   postageCostPreview.value = -1;
   noAddressResult.value = false;
   addressSearchBusy.value = true;
 
-  if (addressInput.value?.length < 3) {
-    addressSearchBusy.value = false;
-    return;
-  }
+  try {
+    let options_req = await fetch("/api/address.json", {
+      method: "POST",
+      body: JSON.stringify({
+        address: addressInput.value,
+      }),
+    });
 
-  // reset the options
-  addressOptions.value = [];
-  noAddressResult.value = false;
-
-  let options_req = await fetch("/api/address.json", {
-    method: "POST",
-    body: JSON.stringify({
-      address: addressInput.value,
-    }),
-  });
-
-  if (options_req.ok) {
-    let options = await options_req.json();
-    // console.log(options);
-    // addressOptions.value = options;
-
-    if(options.length > 0) {
-      addressMetadata.value = options[0];
-      postageCostPreview.value = preview_postage(options[0]);
+    if (options_req.ok) {
+      let options = await options_req.json();
+      
+      if(options.length > 0) {
+        addressMetadata.value = options[0];
+        postageCostPreview.value = preview_postage(options[0]);
+        addressValidated.value = true;
+        noAddressResult.value = false;
+      } else {
+        noAddressResult.value = true;
+      }
+    } else {
+      noAddressResult.value = true;
     }
-
-  } else {
-    console.error("Failed to fetch address options");
+  } catch (error) {
+    console.error("Failed to validate address:", error);
     noAddressResult.value = true;
+  } finally {
+    addressSearchBusy.value = false;
   }
-
-  addressSearchBusy.value = false;
-}, 1000);
-
-const showAddressSearch = computed(() => {
-  if (addressOptions.value.length > 0) {
-    let addresses = addressOptions.value.map((option) => option.formatted_address);
-    let matched = addresses.filter((address) => address == addressInput.value);
-    let show = !(matched.length > 0);
-
-    return show;
-  }
-
-  return true;
-});
+};
 
 const isGuestUser = computed(() => {
   return (String(userEmail.value).split("@").pop() === "guest.com")
@@ -329,20 +326,24 @@ const submitPage1 = async () => {
   }
 };
 
+const backPage2 = () => {
+  page.value = 2;
+};
+
 const submitPage2 = () => {
-  onSubmit();
+  if (delivery_method.value === 'self_pickup') {
+    onSubmit();
+  } else {
+    page.value = 3;
+  }
 };
 
 const validPage2 = computed(() => {
-  if (delivery_method.value == "self_pickup") {
-    return true;
-  }
+  return delivery_method.value !== undefined;
+});
 
-  if (delivery_method.value == "postal") {
-    return (postageCostPreview.value > 0 )&& addressInput.value;
-  }
-
-  return false;
+const validPage3 = computed(() => {
+  return addressValidated.value;
 });
 
 const selectDeliveryMethod = (method) => {
@@ -392,5 +393,11 @@ onMounted(() => {
   if(userMetadata.value?.englishName){
     form.setFieldValue('englishName', userMetadata.value.englishName)
   }
+});
+
+watch(addressInput, () => {
+  addressValidated.value = false;
+  postageCostPreview.value = -1;
+  noAddressResult.value = false;
 });
 </script>

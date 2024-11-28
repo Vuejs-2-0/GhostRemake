@@ -4,7 +4,7 @@
       <DialogTrigger @click="open = true" class="w-full outline-none">
         <slot></slot>
       </DialogTrigger>
-      <DialogContent class="p-1 w-full max-w-sm sm:max-h-[85vh] max-h-[100dvh] overflow-y-auto rounded-xl">
+      <DialogContent class="p-1 w-full max-w-sm sm:max-h-[85vh] max-h-[90dvh] h-auto overflow-y-auto rounded-xl">
         <VisuallyHidden asChild>
           <DialogTitle>Checkout Modal</DialogTitle>
         </VisuallyHidden>
