@@ -254,24 +254,22 @@ const validateAddress = async () => {
   addressSearchBusy.value = true;
 
   try {
-    let options_req = await fetch("/api/address.json", {
-      method: "POST",
-      body: JSON.stringify({
-        address: addressInput.value,
-      }),
-    });
-
-    if (options_req.ok) {
-      let options = await options_req.json();
-      
-      if(options.length > 0) {
-        addressMetadata.value = options[0];
-        postageCostPreview.value = preview_postage(options[0]);
-        addressValidated.value = true;
-        noAddressResult.value = false;
-      } else {
-        noAddressResult.value = true;
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addressInput.value)}&key=AIzaSyDZ4CXCTm6__5wf_IOlBA9L5JbLm7-sR3I`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
       }
+    );
+
+    const { results, status } = await response.json();
+    
+    if (status === "OK" && results.length > 0) {
+      addressMetadata.value = results[0];
+      postageCostPreview.value = preview_postage(results[0]);
+      addressValidated.value = true;
+      noAddressResult.value = false;
     } else {
       noAddressResult.value = true;
     }
