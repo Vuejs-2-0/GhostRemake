@@ -59,8 +59,13 @@
                   </div>
                   <p>RM 1000.00</p>
                 </div>
-                <div class="col-span-4 flex justify-center items-center h-full">
-                  <Questionnaire :cart="localCart" :cartIndex="product.id+1"><div class="cursor-pointer text-blue-500 underline">编辑</div></Questionnaire>
+                <div class="col-span-4 flex justify-center items-center gap-2">
+                  <Questionnaire :operation="'edit'" :cart="localCart" :cartIndex="product.id+1"></Questionnaire>
+                  <div class="flex justify-center items-center h-full">
+                    <Button @click="removeQuestionProduct(product)" class="bg-salmon-100 text-salmon-500 hover:bg-salmon-100 hover:text-salmon-500 text-sm px-3 py-1 rounded-md">
+                      移除
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -181,7 +186,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from "@/components/ui/button";
 import { Checkbox } from '@/components/ui/checkbox'
 import { ref, toRefs, computed } from "vue";
-import { cart } from "@/stores/cart";
+import { cart, updateProductInCart } from "@/stores/cart";
 import { useStore } from "@nanostores/vue";
 import { VisuallyHidden } from "radix-vue";
 import AddButton from "./AddButton.vue";
@@ -339,4 +344,9 @@ const confirmOrder = async () => {
     window.swup.navigate(_submit_result.url)
   }
 };
+
+const removeQuestionProduct = async (product) => {
+  console.log(product);
+  await updateProductInCart(10, 0);
+}
 </script>

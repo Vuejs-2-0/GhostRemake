@@ -308,8 +308,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             label: `1 x ${product.name}`,
             product: product,
             quantity: 1,
-            price: "RM100",
-            questionSet: details
+            price: "RM1000",
+            questionSet: details,
+            dob: cart.metadata.dob,
+            gender: cart.metadata.gender,
+            birthTime: cart.metadata.birthTime
           };
       
           // Push the entry into entries array

@@ -31,7 +31,7 @@
 
     await removeBraceletInCart(cartMetadata);
 
-    window.location.reload();
+    // window.location.reload();
     
   };  
 </script>

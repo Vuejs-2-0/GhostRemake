@@ -8,6 +8,7 @@ export const initCart = async (cart_data) => {
 export const updateProductInCart = async (id, quantity) => {
 
   const currentCart = cart.get();
+  console.log(currentCart);
   currentCart.items[id] = quantity;
 
   for(let key of Object.keys(currentCart.items)){
