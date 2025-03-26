@@ -308,7 +308,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             label: `1 x ${product.name}`,
             product: product,
             quantity: 1,
-            price: "RM1000",
+            price: "388",
             questionSet: details,
             dob: cart.metadata.dob,
             gender: cart.metadata.gender,

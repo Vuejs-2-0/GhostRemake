@@ -57,7 +57,7 @@
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
                     <p class="text-lg font-semibold">问题</p>
                   </div>
-                  <p>RM 1000.00</p>
+                  <p>RM 388.00</p>
                 </div>
                 <div class="col-span-4 flex justify-center items-center gap-2">
                   <Questionnaire :operation="'edit'" :cart="localCart" :cartIndex="product.id+1"></Questionnaire>
