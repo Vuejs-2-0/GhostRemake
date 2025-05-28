@@ -39,7 +39,7 @@
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
                     <p class="text-lg font-semibold">五色绳</p>
                   </div>
-                  <p>RM 28.00</p>
+                  <p>RM 38.00</p>
                   <p class="text-[12px] font-light">
                     <template v-if="product.effect && product.effect.length > 0">效果: {{ product.effect.join(', ') }}, </template>
                     大小: {{ product.size }}
