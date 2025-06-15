@@ -266,14 +266,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
           let details = "";
           if (cart.metadata.bracelets[i].effect && typeof cart.metadata.bracelets[i].effect === 'object') {
-            let effects = cart.metadata.bracelets[i].effect.join(', ');
+            let effects = cart.metadata.bracelets[i]?.effect.join(', ');
             details += `效果: ${effects}`;
           }
           if (cart.metadata.bracelets[i].size) {
-            details += `\n大小: ${cart.metadata.bracelets[i].size}`;
+            details += `\n大小: ${cart.metadata.bracelets[i]?.size}`;
           }
           if (cart.metadata.bracelets[i].comment) {
-            details += `\n备注: ${cart.metadata.bracelets[i].comment}`;
+            details += `\n备注: ${cart.metadata.bracelets[i]?.comment}`;
           }
 
           let metadata = {
