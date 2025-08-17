@@ -58,6 +58,9 @@
               <p class="text-left">自取地点:</p>
               <strong>关丹福禄寿殡葬企业（关丹积善堂后方）</strong>
             </div>
+            <div class="mt-2 p-3 rounded-md bg-gray-100 text-sm text-gray-700">
+              <p>温馨提醒：选择自取后，请等待我们的团队通知您前来取货。在收到通知前，请勿自行前往，以免白跑一趟。</p>
+            </div>
             <div class="mt-3 text-sm leading-6 w-full">
               <a href="https://www.facebook.com/flsbcare" class="font-semibold text-salmon-400 underline hover:text-salmon-500 flex justify-start items-center space-x-2 w-full">
                 <iconify-icon class="text-lg" icon="akar-icons:facebook-fill"></iconify-icon>

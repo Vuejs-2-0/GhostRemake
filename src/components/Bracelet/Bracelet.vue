@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { ref, toRefs } from 'vue'
 import {
   Dialog,
-  DialogContent,
+  DialogScrollContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
@@ -23,13 +23,15 @@ const { cart, json_schema, field_config } = toRefs(props)
               <span>订制五色绳</span>
             </Button>
     </DialogTrigger>
-    <DialogContent class="sm:max-w-[425px] p-0 max-h-[90vh]">
-      <div class="grid gap-4 py-4 overflow-y-auto px-6">
+    <DialogScrollContent class="sm:max-w-[425px]">
+      <DialogHeader>
         <DialogTitle class="text-[25px] text-center">五色绳</DialogTitle>
         <DialogDescription></DialogDescription>
+      </DialogHeader>
+      <div class="grid gap-4 py-4 px-1">
         <Form :user_cart="cart" :json_schema="json_schema" :field_config="field_config" />
       </div>  
-    </DialogContent>
+    </DialogScrollContent>
   </Dialog>
   </div>
 </template>

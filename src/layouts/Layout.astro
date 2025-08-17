@@ -33,14 +33,14 @@ const paymentPage = Astro.url.pathname === "/pay";
     <meta property="og:url" content="https://ghostfriend.my/" />
     <meta property="og:title" content="真的友鬼" />
     <meta property="og:description" content="揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》" />
-    <meta property="og:image" content="tarpit.twic.pics/ghostfriend/book7.jpg" />
+    <meta property="og:image" content="/book8.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://ghostfriend.my/" />
     <meta property="twitter:title" content="真的友鬼" />
     <meta property="twitter:description" content="揭开神秘的灵异世界，有趣的鬼故事集就在《真的友鬼》" />
-    <meta property="twitter:image" content="tarpit.twic.pics/ghostfriend/book7.jpg" />
+    <meta property="twitter:image" content="tarpit.twic.pics/ghostfriend/book8.jpg" />
 
     <link rel="icon" href="/logo.png" type="image/png" />
   </head>
@@ -94,12 +94,14 @@ const paymentPage = Astro.url.pathname === "/pay";
 
     <section class="w-full">
       <div class="w-full h-[300px] overflow-hidden flex justify-center items-center">
-        <twic-img ratio="16:9" class="w-full h-[300px] object-cover blur-[2px] scale-[110%] brightness-75 z-10" src="ghostfriend/img/totoro.jpg" alt="main page background"></twic-img>
+        <!-- <twic-img ratio="16:9" class="w-full h-[300px] object-cover blur-[2px] scale-[110%] brightness-75 z-10" src="ghostfriend/img/totoro.jpg" alt="main page background"></twic-img> -->
+         <img src="/book8.jpg" class="w-full h-[300px] object-cover blur-[8px] scale-[110%] brightness-75 z-10" alt="main page background">
       </div>
 
       <div class="w-full flex justify-center items-center mt-[-6rem]">
         <div class="w-48 h-48 bg-white rounded-2xl z-20 shadow-xl overflow-hidden">
-          <twic-img src="ghostfriend/book7.jpg" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="main page icon"></twic-img>
+          <!-- <twic-img src="ghostfriend/book7.jpg" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="main page icon"></twic-img> -->
+           <img src="/book8.jpg" class="w-full h-full object-cover scale-[160%] translate-y-6 translate-x-2" alt="main page icon">
         </div>
       </div>
     </section>

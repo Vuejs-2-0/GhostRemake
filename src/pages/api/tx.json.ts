@@ -153,7 +153,7 @@ const renderEmail = (args:any) => {
   for(let entry of entries) {
     if(entry.type === 'product') {
 
-      if(entry.metadata.product.id === 9) {
+      if(entry.metadata.product.id === 9 || entry.metadata.product.id === 12) {
 
           
           trows += `<tr>
