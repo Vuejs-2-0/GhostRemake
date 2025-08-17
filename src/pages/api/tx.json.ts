@@ -153,7 +153,7 @@ const renderEmail = (args:any) => {
   for(let entry of entries) {
     if(entry.type === 'product') {
 
-      if(entry.metadata.product.id === 9 || entry.metadata.product.id === 12) {
+      if(entry.metadata.product.id === 9 || entry.metadata.product.id === 12 || entry.metadata.product.id === 13) {
 
           
           trows += `<tr>
@@ -256,11 +256,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     let entries = [];
     let i = 0;
 
-    // Check if item with ID "9" exists and handle metadata
+    // Check if item with ID "9" or "13" exists and handle metadata
     for (let product of products) {
 
-      // If the product ID is 9 and there are bracelets in the metadata
-      if (product.id === 9 && cart.metadata && cart.metadata.bracelets) {
+      // If the product ID is 9 or 13 and there are bracelets in the metadata
+      if ((product.id === 9 || product.id === 13) && cart.metadata && cart.metadata.bracelets) {
         // Loop through all quantity for the product
         for (let j = 0; j < product.quantity; j++) {
 
@@ -349,6 +349,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       // first divide by country
 
       let address_metadata = form.metadata.address_metadata;
+      const isMalaysia = address_metadata.address_components?.some((component: any) => component.types.includes("country") && component.short_name === "MY");
 
       let postage_cost_map = {
         west_malaysia: { label: "West Malaysia", value: 10 },
@@ -402,7 +403,19 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
       let productCount = entries.filter((entry) => entry.type === "product").reduce((acc, entry) => acc + entry.metadata.quantity, 0);
 
-      let total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
+      let total_postage_cost: number;
+
+      if (isMalaysia) {
+        // Apply new rule only for West Malaysia; keep East at RM15 flat
+        if (atomic_shipping_type?.label === "East Malaysia") {
+          total_postage_cost = 15;
+        } else {
+          total_postage_cost = productCount <= 4 ? 10 : 13;
+        }
+      } else {
+        // Non-Malaysia: keep existing tiering logic
+        total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
+      }
 
       entries.push({
         entry_id: "postage",

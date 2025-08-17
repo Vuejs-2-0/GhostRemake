@@ -95,7 +95,7 @@ const braceletType = ref('normal');
 
 const quantity = computed(() => {
   if ($cart.value?.items) {
-    const productId = braceletType.value === 'special' ? '12' : '9';
+    const productId = braceletType.value === 'special' ? '13' : '9';
     let _item = $cart.value?.items[productId];
     if (_item) {
       return _item;
@@ -123,7 +123,7 @@ const _updateCart = async () => {
     return;
   }
 
-  const productId = braceletType.value === 'special' ? '12' : '9';
+  const productId = braceletType.value === 'special' ? '13' : '9';
   let _new_qty = 1 + quantity.value;
 
   let newBracelet = {

@@ -245,7 +245,17 @@ const preview_postage = (_address_metadata) => {
       }, 0);
       
       //console.log(productCount);
-      let total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
+      const isMalaysia = address_metadata.address_components?.some((component) => component.types.includes("country") && component.short_name === "MY");
+      let total_postage_cost = undefined;
+      if (isMalaysia) {
+        if (atomic_shipping_type?.label === "East Malaysia") {
+          total_postage_cost = 15;
+        } else {
+          total_postage_cost = productCount <= 4 ? 10 : 13;
+        }
+      } else {
+        total_postage_cost = Math.ceil(productCount / 3) * Number(atomic_shipping_type?.value);
+      }
 
       return total_postage_cost;
 }

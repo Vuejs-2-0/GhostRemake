@@ -72,13 +72,13 @@ export const updateProductBraceletInCart = async (id, quantity, metadata) => {
   return data
 }
 
-export const removeBraceletInCart = async (metadata) => {
+export const removeBraceletInCart = async (metadata, productId) => {
 
   const currentCart = cart.get();
 
   currentCart.metadata = metadata;
 
-  currentCart.items["9"] = currentCart.items["9"] - 1;
+  currentCart.items[productId] = currentCart.items[productId] - 1;
 
   for(let key of Object.keys(currentCart.items)){
     if(currentCart.items[key] === 0){

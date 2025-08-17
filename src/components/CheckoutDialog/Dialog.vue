@@ -37,9 +37,9 @@
                 <div class="col-span-5">
                   <div class="flex justify-start items-center">
                     <div class="p-0.5 bg-salmon-50 rounded-md px-2 text-sm mr-2 text-salmon-500">1 x</div>
-                    <p class="text-lg font-semibold">五色绳</p>
+                    <p class="text-lg font-semibold">{{ product.name }}</p>
                   </div>
-                  <p>RM 38.00</p>
+                  <p>RM {{ product.price }}</p>
                   <p class="text-[12px] font-light">
                     <template v-if="product.effect && product.effect.length > 0">效果: {{ product.effect.join(', ') }}, </template>
                     大小: {{ product.size }}
@@ -219,28 +219,31 @@ const productList = computed(() => {
   const filtered = products.value.filter(p => $cart.value.items[p.id])
                                  .map(p => ({ ...p, quantity: $cart.value.items[p.id] }));;
   const product9 = filtered.find(p => p.id === 9);
+  const product13 = filtered.find(p => p.id === 13);
   if (product9) {
     filtered.splice(filtered.indexOf(product9), 1);
+  }
+  if (product13) {
+    filtered.splice(filtered.indexOf(product13), 1);
   }
   return filtered;
 });
 
 const braceletList = computed(() => {
-  if (!$cart.value.items) return [];
-  let quantity = 0;
-  quantity = $cart.value.items["9"];
+  if (!localCart.value.metadata?.bracelets) return [];
   
-  const braceletList = [];
-  for (let i = 0; i < quantity; i++) {
-    braceletList.push({
-      id: i,
+  return localCart.value.metadata.bracelets.map((bracelet, index) => {
+    return {
+      id: index, // this is the index in the array, used for removal
       quantity: 1,
-      comment: localCart.value.metadata.bracelets[i].comment,
-      effect: localCart.value.metadata.bracelets[i].effect,
-      size: localCart.value.metadata.bracelets[i].size,
-    });
-  }
-  return braceletList;
+      comment: bracelet.comment,
+      effect: bracelet.effect,
+      size: bracelet.size,
+      type: bracelet.type, // 'normal' or 'special'
+      price: bracelet.type === 'special' ? '88.00' : '38.00',
+      name: bracelet.type === 'special' ? '特款五色绳' : '五色绳'
+    };
+  });
 });
 
 const questionList = computed(() => {

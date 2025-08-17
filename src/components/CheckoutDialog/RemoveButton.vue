@@ -25,14 +25,17 @@
     
     let existingBracelets = [...(localCart.value.metadata.bracelets || [])];
 
+    // Determine which product ID to decrement based on the bracelet type
+    const removedBraceletType = existingBracelets[product.value.id].type;
+    
     existingBracelets.splice(product.value.id, 1);
 
     cartMetadata.bracelets = existingBracelets;
 
-    await removeBraceletInCart(cartMetadata);
+    // Pass the correct product ID to the cart store function
+    const productIdToRemove = removedBraceletType === 'special' ? '13' : '9';
 
-    // window.location.reload();
-    
+    await removeBraceletInCart(cartMetadata, productIdToRemove);
   };  
 </script>
 

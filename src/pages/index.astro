@@ -12,6 +12,14 @@ import BraceletPosts from "@/components/BraceletPosts.vue"
 import { ref } from "vue";
 import { getBookProducts, getFormById, signUp, signOut, login } from "../lib/tarpit_gql";
 
+// Check if current time is before target time (2025-08-22 00:55)
+const targetTime = new Date(2025, 7, 22, 0, 55, 0, 0);
+const currentTime = new Date();
+
+if (currentTime < targetTime) {
+  return Astro.redirect('/countdown');
+}
+
 // const products = await getBookProducts();
 // let form = await getFormById(4)
 // let form2 = await getFormById(5)
