@@ -1,5 +1,5 @@
 ---
-// Simple countdown to 2025-08-22 00:55
+// Countdown to UNIX epoch seconds: 1755881700
 ---
 
 <!doctype html>
@@ -126,7 +126,9 @@
     </div>
 
     <script>
-      const target = new Date(2025, 7, 22, 0, 55, 0, 0).getTime();
+      // Target UNIX epoch in seconds
+      const targetEpochSeconds = 1755881700;
+      const target = targetEpochSeconds * 1000;
       
       function updateCountdown() {
         const now = Date.now();
@@ -137,6 +139,9 @@
           const finishedEl = document.getElementById('finished');
           if (finishedEl) finishedEl.style.display = 'block';
           clearInterval(timer);
+          // Redirect to index when countdown finishes
+          window.location.replace('/');
+          return;
         }
         
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));

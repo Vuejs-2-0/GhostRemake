@@ -12,13 +12,13 @@ import BraceletPosts from "@/components/BraceletPosts.vue"
 import { ref } from "vue";
 import { getBookProducts, getFormById, signUp, signOut, login } from "../lib/tarpit_gql";
 
-// // Check if current time is before target time (2025-08-22 00:55)
-// const targetTime = new Date(2025, 7, 22, 0, 55, 0, 0);
-// const currentTime = new Date();
+// Gate by UNIX epoch seconds (1755881700)
+const releaseEpochSeconds = 1755881700;
+const nowSeconds = Math.floor(Date.now() / 1000);
 
-// if (currentTime < targetTime) {
-//   return Astro.redirect('/countdown');
-// }
+if (nowSeconds < releaseEpochSeconds) {
+  return Astro.redirect('/countdown');
+}
 
 // const products = await getBookProducts();
 // let form = await getFormById(4)
