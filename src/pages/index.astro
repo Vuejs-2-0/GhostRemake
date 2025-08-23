@@ -12,13 +12,6 @@ import BraceletPosts from "@/components/BraceletPosts.vue"
 import { ref } from "vue";
 import { getBookProducts, getFormById, signUp, signOut, login } from "../lib/tarpit_gql";
 
-// Gate by UNIX epoch seconds (1755881700)
-const releaseEpochSeconds = 1755881700;
-const nowSeconds = Math.floor(Date.now() / 1000);
-
-if (nowSeconds < releaseEpochSeconds) {
-  return Astro.redirect('/countdown');
-}
 
 // const products = await getBookProducts();
 // let form = await getFormById(4)
