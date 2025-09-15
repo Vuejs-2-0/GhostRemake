@@ -89,7 +89,7 @@ const form = useForm({
 
 const braceletTypeOptions = ref([
   { id: 'normal', title: '普通五色绳', description: '常规款，含效果选择', price: 'RM 38/条' },
-  { id: 'special', title: '特款五色绳', description: '八字定制，需等待一个月出货', price: 'RM 88/条' },
+  { id: 'special', title: '特款五色绳', description: '八字定制，需等待一个月出货', price: 'RM 288/条' },
 ]);
 const braceletType = ref('normal');
 
