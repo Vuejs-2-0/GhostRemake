@@ -37,12 +37,12 @@
         </div>
 
         <div class="w-full space-y-2">
-          <Button @click="selectDeliveryMethod('self_pickup')" :class="[delivery_method == 'self_pickup' ? 'bg-salmon-50' : 'bg-white']" class="w-full border border-gray-200 rounded-md min-h-0 h-auto hover:bg-salmon-50 duration-300 transition-all scale-100 active:scale-95 p-4 group">
+          <!-- <Button @click="selectDeliveryMethod('self_pickup')" :class="[delivery_method == 'self_pickup' ? 'bg-salmon-50' : 'bg-white']" class="w-full border border-gray-200 rounded-md min-h-0 h-auto hover:bg-salmon-50 duration-300 transition-all scale-100 active:scale-95 p-4 group">
             <div class="w-full flex justify-between items-center">
               <p class="text-lg font-semibold text-salmon-500 group-hover:text-salmon-600">自取</p>
               <iconify-icon :class="[delivery_method == 'self_pickup' ? 'scale-100' : 'scale-0']" icon="carbon:checkmark-filled" class="text-xl text-salmon duration-300 overflow-hidden"></iconify-icon>
             </div>
-          </Button>
+          </Button> -->
 
           <Button @click="selectDeliveryMethod('postal')" :class="[delivery_method == 'postal' ? 'bg-salmon-50' : 'bg-white']" class="w-full border border-gray-200 rounded-md min-h-0 h-auto hover:bg-salmon-50 duration-300 transition-all scale-100 active:scale-95 p-4 group">
             <div class="w-full flex justify-between items-center">
