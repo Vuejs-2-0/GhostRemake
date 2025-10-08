@@ -35,29 +35,33 @@ export const onRequest = async (context, next) => {
 
 	let getSession = async (sessionId) => {
 		try {
-		
-			if(sessionId) {
-				let { session, user:auth_user, cookie } = await validateSession(sessionId);
-				return { session, user:auth_user, cookie };
+			if (sessionId) {
+				let { session, user: auth_user, cookie } = await validateSession(sessionId);
+				return { session, user: auth_user, cookie };
 			}
-		
-		} catch(error){
-		
+		} catch (error) {
+			// ignore and fallback to guest session
 		}
 
-		let { user:auth_user, cookie, session} = await newGuestSession({});
-		// console.log(result);
-		// create a new cart for the guest
-
-		return { session, user:auth_user, cookie };
-
+		try {
+			let { user: auth_user, cookie, session } = await newGuestSession({});
+			return { session, user: auth_user, cookie };
+		} catch (e) {
+			return { session: null, user: null, cookie: null };
+		}
 	}
 
 	let { session, user:auth_user, cookie } = await getSession(sessionId);
 
 	context.locals.session = session;
-	context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+	if (cookie?.name) {
+		context.cookies.set(cookie.name, cookie.value, cookie.attributes);
+	}
 
+
+	if (!auth_user?.id) {
+		return next();
+	}
 
 	let { user, cart, tx} = await getUserData(auth_user.id);
 

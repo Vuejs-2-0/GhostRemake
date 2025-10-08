@@ -245,29 +245,33 @@ const newCart = async (ownerId: string) => {
   return data.createCart;
 }
 
-const newGuestSession = async (metadata:any) => {
-    const NewGuestSessionMutation = gql`
-      mutation GuestSession($metadata: JSON) {
-        guestSession(metadata: $metadata) {
-          session {
-            id
-            userId
-            fresh
-            expiresAt
-          }
-          user {
-            id
-            email
-            metadata
-          }
-          cookie
+const newGuestSession = async (metadata: any) => {
+  const NewGuestSessionMutation = gql`
+    mutation GuestSession($metadata: JSON) {
+      guestSession(metadata: $metadata) {
+        session {
+          id
+          userId
+          fresh
+          expiresAt
         }
+        user {
+          id
+          email
+          metadata
+        }
+        cookie
       }
-    `;
+    }
+  `;
 
-    let { data } = await client.mutation(NewGuestSessionMutation, { metadata }).toPromise();
+  const result = await client.mutation(NewGuestSessionMutation, { metadata }).toPromise();
 
-  return data.guestSession;
+  if (!result || result.error || !result.data || !result.data.guestSession) {
+    throw new Error(result?.error?.message ?? 'Failed to create guest session');
+  }
+
+  return result.data.guestSession;
 }
 
 const signOut = async (email: string) => {
