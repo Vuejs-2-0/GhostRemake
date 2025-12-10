@@ -1,6 +1,25 @@
 <template>
   <div class="w-full max-w-sm pt-4">
     <div class="w-full">
+      <!-- Bank Information -->
+      <div class="bg-salmon-50 border-2 border-salmon-200 rounded-xl p-4 mb-4">
+        <h3 class="text-lg font-semibold text-salmon-600 mb-3">银行资料 / Bank Information</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">银行:</span>
+            <span class="font-medium text-gray-900">OCBC Bank</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">账户号码:</span>
+            <span class="font-medium text-gray-900">1452036362</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">账户名称:</span>
+            <span class="font-medium text-gray-900">Leong Chen Chen</span>
+          </div>
+        </div>
+      </div>
+
       <Vue3Dropzone ref="dropzone" height="300px" v-model="files" />
 
       <p v-if="uploadBusy">Loading...</p>

@@ -240,7 +240,7 @@ const braceletList = computed(() => {
       effect: bracelet.effect,
       size: bracelet.size,
       type: bracelet.type, // 'normal' or 'special'
-      price: bracelet.type === 'special' ? '88.00' : '38.00',
+      price: bracelet.type === 'special' ? '288.00' : '38.00',
       name: bracelet.type === 'special' ? '特款五色绳' : '五色绳'
     };
   });

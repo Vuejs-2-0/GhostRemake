@@ -162,7 +162,7 @@ const renderEmail = (args:any) => {
             <p style="font-size: 14px; color: #64748b">${entry?.metadata?.bracelets}</p>
           </td>
           <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">${entry.metadata.quantity}</td>
-          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry?.metadata?.product?.price).toFixed(2)}</td>
+          <td style="padding-top: 16px; padding-bottom: 16px; text-align: right;">RM ${Number(entry.value).toFixed(2)}</td>
         </tr>`
 
       } else {
@@ -276,11 +276,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             details += `\n备注: ${cart.metadata.bracelets[i]?.comment}`;
           }
 
+          // Set price based on product ID: ID 13 = RM 288, ID 9 = RM 38
+          const braceletPrice = product.id === 13 ? 288 : 38;
+          const priceLabel = product.id === 13 ? "RM288" : "RM38";
+
           let metadata = {
             label: `1 x ${product.name}`,
             product: product,
             quantity: 1,
-            price: "RM38",
+            price: priceLabel,
             bracelets: details
           };
     
@@ -288,7 +292,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             entry_id: product.id + j,
             metadata: metadata,
             type: "product",
-            value: product.price,
+            value: braceletPrice,
           });
           i++;
         }
