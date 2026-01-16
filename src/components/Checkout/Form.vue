@@ -159,7 +159,7 @@ const { json_schema, field_config, userEmail, userMetadata, products} = toRefs(p
 
 let text_schema = jsonSchemaToZod(json_schema.value)
 
-text_schema = text_schema.replace(`"phoneNumber": z.string()`, `"phoneNumber": z.string().transform((value) => String(value) )`)
+text_schema = text_schema.replace(`"phoneNumber": z.string()`, `"phoneNumber": z.coerce.string()`)
 
 const schema = eval(text_schema);
 
@@ -398,7 +398,7 @@ onMounted(() => {
   }
 
   if(userMetadata.value?.phoneNumber){
-    form.setFieldValue('phoneNumber', userMetadata.value.phoneNumber)
+    form.setFieldValue('phoneNumber', String(userMetadata.value.phoneNumber))
   }
 
   if(userMetadata.value?.englishName){
