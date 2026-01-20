@@ -15,7 +15,7 @@ const client = new Client({
 
 const getProducts = async () => {
 
-    const RunProductQuery = gql`
+  const RunProductQuery = gql`
     mutation RunProductQuery($subject: String!, $method: String!, $query: JSON!) {
         runProductQuery(subject: $subject, method: $method, query: $query) {
             result
@@ -23,14 +23,19 @@ const getProducts = async () => {
     }
     `;
 
-    let { data } = await client.mutation(RunProductQuery, {
-      "subject": "product",
-      "method": "findMany",
-      "query": {}
-    }).toPromise()
+  let result = await client.mutation(RunProductQuery, {
+    "subject": "product",
+    "method": "findMany",
+    "query": {}
+  }).toPromise()
 
-    return data.runProductQuery.result.result
-      
+  if (result.error || !result.data) {
+    console.error('getProducts error:', result.error);
+    return [];
+  }
+
+  return result.data.runProductQuery?.result?.result || []
+
 }
 
 const getBookProducts = async () => {
@@ -43,7 +48,7 @@ const getBookProducts = async () => {
   }
   `;
 
-  let { data } = await client.mutation(RunProductQuery, {
+  let result = await client.mutation(RunProductQuery, {
     "subject": "product",
     "method": "findMany",
     "query": {
@@ -54,7 +59,7 @@ const getBookProducts = async () => {
           }
         }
       },
-      "include":{
+      "include": {
         "product_metadata_link": {
           "include": {
             "metadata": true
@@ -64,13 +69,18 @@ const getBookProducts = async () => {
     }
   }).toPromise()
 
-  return data.runProductQuery.result.result
-    
+  if (result.error || !result.data) {
+    console.error('getBookProducts error:', result.error);
+    return [];
+  }
+
+  return result.data.runProductQuery?.result?.result || []
+
 }
 
 const signUp = async (email: string, signature: string) => {
 
-    const RunSignupQuery = gql`
+  const RunSignupQuery = gql`
         mutation Signup($email: String!, $signature: String!, $metadata: JSON) {
             signup(email: $email, signature: $signature, metadata: $metadata) {
                 session {
@@ -89,15 +99,17 @@ const signUp = async (email: string, signature: string) => {
         }
     `;
 
-    let { data } = await client.mutation(RunSignupQuery, {
-        "email": email,
-        "signature": signature,
-        "metadata": {}
-      }).toPromise()
+  let result = await client.mutation(RunSignupQuery, {
+    "email": email,
+    "signature": signature,
+    "metadata": {}
+  }).toPromise()
 
-    //   console.log(result)
+  if (result.error || !result.data) {
+    throw new Error(`signUp failed: ${result.error?.message || 'No data'}`);
+  }
 
-    return data.signup
+  return result.data.signup
 
 
 }
@@ -112,11 +124,15 @@ const validateSession = async (sessionId: string) => {
       }
     }
   `;
-  let { data } = await client.mutation(ValidateSessionQuery, {
+  let result = await client.mutation(ValidateSessionQuery, {
     "sessionId": sessionId
   }).toPromise();
 
-  return data.validateSession;
+  if (result.error || !result.data) {
+    throw new Error(`validateSession failed: ${result.error?.message || 'No data'}`);
+  }
+
+  return result.data.validateSession;
 }
 
 
@@ -140,16 +156,21 @@ const login = async (email: string, signature: string) => {
     }
   `;
 
-  let { data } = await client.mutation(LoginMutation, {
+  let result = await client.mutation(LoginMutation, {
     "email": email,
     "signature": signature,
     "metadata": {}
   }).toPromise();
-  return data.login;
+
+  if (result.error || !result.data) {
+    throw new Error(`login failed: ${result.error?.message || 'No data'}`);
+  }
+
+  return result.data.login;
 }
 
 const getUser = async (email: string) => {
-  
+
   const GetUserByEmailQuery = gql`
     query GetUserByEmail($email: String!) {
       getUserByEmail(email: $email) {
@@ -161,17 +182,21 @@ const getUser = async (email: string) => {
       }
     }
   `;
-  let { data } = await client.query(GetUserByEmailQuery, {
+  let result = await client.query(GetUserByEmailQuery, {
     "email": email,
   }).toPromise();
 
+  if (result.error || !result.data) {
+    throw new Error(`getUser failed: ${result.error?.message || 'No data'}`);
+  }
+
   return {
-    user: data.getUserByEmail.user
+    user: result.data.getUserByEmail.user
   };
 }
 
 const getUserData = async (userId: string) => {
-  
+
   const GetUserQuery = gql`
     query GetUserByID($userId: String!, $status: String!) {
       getUserByID(userID: $userId) {
@@ -214,15 +239,19 @@ const getUserData = async (userId: string) => {
       }
     }
   `;
-  let { data } = await client.query(GetUserQuery, {
+  let result = await client.query(GetUserQuery, {
     "userId": userId,
     "status": "active"
   }).toPromise();
 
+  if (result.error || !result.data) {
+    throw new Error(`getUserData failed: ${result.error?.message || 'No data'}`);
+  }
+
   return {
-    user: data.getUserByID.user,
-    cart: data.getCartByOwner,
-    tx: data.getTxByOwner
+    user: result.data.getUserByID.user,
+    cart: result.data.getCartByOwner,
+    tx: result.data.getTxByOwner
   };
 }
 
@@ -237,16 +266,20 @@ const newCart = async (ownerId: string) => {
       }
     }
   `;
-  let { data } = await client.mutation(CreateCartMutation, {
+  let result = await client.mutation(CreateCartMutation, {
     "metadata": null,
     "owner": ownerId
   }).toPromise();
-  // console.log(data);
-  return data.createCart;
+
+  if (result.error || !result.data) {
+    throw new Error(`newCart failed: ${result.error?.message || 'No data'}`);
+  }
+
+  return result.data.createCart;
 }
 
-const newGuestSession = async (metadata:any) => {
-    const NewGuestSessionMutation = gql`
+const newGuestSession = async (metadata: any) => {
+  const NewGuestSessionMutation = gql`
       mutation GuestSession($metadata: JSON) {
         guestSession(metadata: $metadata) {
           session {
@@ -265,9 +298,19 @@ const newGuestSession = async (metadata:any) => {
       }
     `;
 
-    let { data } = await client.mutation(NewGuestSessionMutation, { metadata }).toPromise();
+  let result = await client.mutation(NewGuestSessionMutation, { metadata }).toPromise();
 
-  return data.guestSession;
+  if (result.error) {
+    console.error('newGuestSession GraphQL error:', result.error);
+    throw new Error(`Failed to create guest session: ${result.error.message}`);
+  }
+
+  if (!result.data?.guestSession) {
+    console.error('newGuestSession returned no data:', result);
+    throw new Error('Failed to create guest session: No data returned');
+  }
+
+  return result.data.guestSession;
 }
 
 const signOut = async (email: string) => {
@@ -281,10 +324,15 @@ const signOut = async (email: string) => {
         }
       }
     `;
-    let { data } = await client.mutation(SignoutMutation, {
-      "email": email
-    }).toPromise();
-    return data.signout;
+  let result = await client.mutation(SignoutMutation, {
+    "email": email
+  }).toPromise();
+
+  if (result.error || !result.data) {
+    throw new Error(`signOut failed: ${result.error?.message || 'No data'}`);
+  }
+
+  return result.data.signout;
 }
 
 const getCart = async (cartId: string) => {
@@ -299,13 +347,17 @@ const getCart = async (cartId: string) => {
     }
   `;
 
-  let { data } = await client.query(GetCartQuery, {
+  let result = await client.query(GetCartQuery, {
     "cartId": cartId
   }).toPromise();
-  return data.getCart;
+
+  if (result.error || !result.data) {
+    throw new Error(`getCart failed: ${result.error?.message || 'No data'}`);
+  }
+  return result.data.getCart;
 }
 
-const updateCart = async (args:any) => {
+const updateCart = async (args: any) => {
 
   // console.log("update cart")
   // first retrieve the server's cart data
@@ -318,7 +370,7 @@ const updateCart = async (args:any) => {
   if (args.owner) _cart.owner = args.owner;
   if (args.metadata) _cart.metadata = args.metadata;
 
-  
+
 
   _cart.cartId = args.cartId;
   delete _cart.id;
@@ -338,8 +390,12 @@ const updateCart = async (args:any) => {
     }
   `;
 
-  let {data} = await client.mutation(UpdateCartMutation, _cart).toPromise();
-  return data.updateCart;
+  let result = await client.mutation(UpdateCartMutation, _cart).toPromise();
+
+  if (result.error || !result.data) {
+    throw new Error(`updateCart failed: ${result.error?.message || 'No data'}`);
+  }
+  return result.data.updateCart;
 }
 
 
@@ -354,11 +410,15 @@ const updateCartStatus = async (cartId: string, status: string) => {
       }
     }
   `;
-  let { data } = await client.mutation(UpdateCartMutation, {
+  let result = await client.mutation(UpdateCartMutation, {
     "cartId": cartId,
     "status": status
   }).toPromise();
-  return data.updateCart;
+
+  if (result.error || !result.data) {
+    throw new Error(`updateCartStatus failed: ${result.error?.message || 'No data'}`);
+  }
+  return result.data.updateCart;
 }
 
 const createTxAndUpdateCart = async (tx_args: any, cartId: string) => {
@@ -462,10 +522,15 @@ const getFormById = async (formId: number) => {
       }
     }
   `;
-  let { data } = await client.query(GetFormByIdQuery, {
+  let result = await client.query(GetFormByIdQuery, {
     "formId": formId
   }).toPromise();
-  return data.getFormById;
+
+  if (result.error || !result.data) {
+    console.error('getFormById error:', result.error);
+    return null;
+  }
+  return result.data.getFormById;
 }
 
 const getProductsByIds = async (productIds: number[]) => {
@@ -538,7 +603,7 @@ const createTx = async (args: any) => {
     }
   `;
 
-  let payload = {...args};
+  let payload = { ...args };
 
   payload.entries = args.entries.map((entry: any) => {
     return {
@@ -549,7 +614,7 @@ const createTx = async (args: any) => {
 
   let _metadata = []
 
-  for(let key of Object.keys(args.metadata)){
+  for (let key of Object.keys(args.metadata)) {
     _metadata.push({
       type: 'attribute',
       key: key,

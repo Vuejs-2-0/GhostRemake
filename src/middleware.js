@@ -4,7 +4,7 @@
 import { validateSession, getUserData, newCart, newGuestSession } from "./lib/tarpit_gql";
 
 export const onRequest = async (context, next) => {
-    // if context path's has /api, then we just return next()
+	// if context path's has /api, then we just return next()
 
 	// console.log(context.url.pathname);
 
@@ -13,9 +13,9 @@ export const onRequest = async (context, next) => {
 	// }
 
 
-    // if(context.url.pathname.startsWith('/api')) {
-    //     return next()
-    // }
+	// if(context.url.pathname.startsWith('/api')) {
+	//     return next()
+	// }
 
 	// // if (context.request.method !== "GET") {
 	// // 	const originHeader = context.request.headers.get("Origin");
@@ -29,47 +29,68 @@ export const onRequest = async (context, next) => {
 
 	const sessionId = context.cookies.get("auth_session")?.value ?? null;
 
-	
 
-// console.log(sessionId);
+
+	// console.log(sessionId);
 
 	let getSession = async (sessionId) => {
 		try {
-		
-			if(sessionId) {
-				let { session, user:auth_user, cookie } = await validateSession(sessionId);
-				return { session, user:auth_user, cookie };
+
+			if (sessionId) {
+				let { session, user: auth_user, cookie } = await validateSession(sessionId);
+				return { session, user: auth_user, cookie };
 			}
-		
-		} catch(error){
-		
+
+		} catch (error) {
+			console.error('validateSession error:', error);
 		}
 
-		let { user:auth_user, cookie, session} = await newGuestSession({});
-		// console.log(result);
-		// create a new cart for the guest
-
-		return { session, user:auth_user, cookie };
+		try {
+			let { user: auth_user, cookie, session } = await newGuestSession({});
+			return { session, user: auth_user, cookie };
+		} catch (error) {
+			console.error('newGuestSession error:', error);
+			// Return a fallback anonymous session when backend is unavailable
+			return {
+				session: null,
+				user: { id: 'anonymous', email: null, metadata: {} },
+				cookie: { name: 'auth_session', value: '', attributes: { path: '/' } }
+			};
+		}
 
 	}
 
-	let { session, user:auth_user, cookie } = await getSession(sessionId);
+	let { session, user: auth_user, cookie } = await getSession(sessionId);
 
 	context.locals.session = session;
 	context.cookies.set(cookie.name, cookie.value, cookie.attributes);
 
+	let user = null;
+	let cart = [];
+	let tx = [];
 
-	let { user, cart, tx} = await getUserData(auth_user.id);
+	// Only fetch user data if we have a valid (non-anonymous) user
+	if (auth_user.id && auth_user.id !== 'anonymous') {
+		try {
+			let userData = await getUserData(auth_user.id);
+			user = userData.user;
+			cart = userData.cart;
+			tx = userData.tx;
 
-	if (cart?.length <= 0) {
-		await newCart(auth_user.id);
-		let new_data = await getUserData(auth_user.id);
-		cart = new_data.cart;
+			if (cart?.length <= 0) {
+				await newCart(auth_user.id);
+				let new_data = await getUserData(auth_user.id);
+				cart = new_data.cart;
+			}
+
+			tx = tx.sort((a, b) => {
+				return b.id - a.id;
+			})
+		} catch (error) {
+			console.error('getUserData error:', error);
+			// Continue with empty user/cart/tx
+		}
 	}
-
-	tx = tx.sort((a, b) => {
-		return b.id - a.id;
-	})
 
 	context.locals.user = user;
 	context.locals.cart = cart[0];
@@ -100,14 +121,14 @@ export const onRequest = async (context, next) => {
 	// 			let new_data = await getUserData(auth_user.id);
 	// 			cart = new_data.cart;
 	// 		}
-			
+
 
 	// 		context.locals.user = user;
 	// 		context.locals.cart = cart[0];
 	// 		context.locals.tx = tx;
 
 	// 	}
-		
+
 	// } else {
 
 	// 	// make a guest session
@@ -127,14 +148,14 @@ export const onRequest = async (context, next) => {
 	// 	context.locals.cart = cart[0];
 	// 	context.locals.tx = tx;
 
-		
+
 
 	// }
 
 	// first validate the session
 
 
-	
+
 	// if (!sessionId) {
 	// 	context.locals.user = null;
 	// 	context.locals.session = null;
@@ -167,5 +188,5 @@ export const onRequest = async (context, next) => {
 
 	return next();
 
-    
+
 }
